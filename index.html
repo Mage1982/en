@@ -3,89 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyíri Gábor</title>
+    <title>Nyíri Gábor - Közösségi Média</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,900;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* Alapvető stílusok a test (body) elemhez */
+        /* --- ALAP STÍLUSOK ÉS TEXT GLITCH --- */
+
         body {
             background-color: #000; /* Fekete háttér */
             color: #fff; /* Fehér betűszín */
-            font-family: 'Roboto', sans-serif; /* Roboto betűtípus, fallback sans-serif */
+            font-family: 'Roboto', sans-serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden; /* Glitch effekt miatt fontos, hogy ne okozzon scrollozást */
+            overflow: hidden;
+            position: relative;
         }
 
-        /* Glitch effekt animáció (Noir stílusban, fekete-fehér) */
+        /* Glitch effekt animáció (Noir stílusban) */
         @keyframes glitch {
-            0% {
-                text-shadow: 2px 0 0 #fff, -2px 0 0 #fff; /* Alap fekete-fehér árnyékok */
-                transform: translate(0);
-            }
-            20% {
-                text-shadow: 2px 0 0 #fff, -2px 0 0 #fff;
-            }
-            21% {
-                text-shadow: -5px 0 0 #fff, 5px 0 0 #fff; /* Nagyobb eltolás */
-                transform: translate(5px);
-            }
-            40% {
-                text-shadow: -5px 0 0 #fff, 5px 0 0 #fff;
-            }
-            41% {
-                text-shadow: 3px 0 0 #fff, -3px 0 0 #fff;
-                transform: translate(-3px);
-            }
-            60% {
-                text-shadow: 3px 0 0 #fff, -3px 0 0 #fff;
-            }
-            61% {
-                text-shadow: -1px 0 0 #fff, 1px 0 0 #fff;
-                transform: translate(1px);
-            }
-            80% {
-                text-shadow: -1px 0 0 #fff, 1px 0 0 #fff;
-            }
-            81% {
-                text-shadow: 0 0 0 #fff, 0 0 0 #fff;
-                transform: translate(0);
-            }
-            100% {
-                text-shadow: 0 0 0 #fff, 0 0 0 #fff;
-            }
+            0% { text-shadow: 2px 0 0 #fff, -2px 0 0 #fff; transform: translate(0); }
+            21% { text-shadow: -5px 0 0 #fff, 5px 0 0 #fff; transform: translate(5px); }
+            41% { text-shadow: 3px 0 0 #fff, -3px 0 0 #fff; transform: translate(-3px); }
+            61% { text-shadow: -1px 0 0 #fff, 1px 0 0 #fff; transform: translate(1px); }
+            81% { text-shadow: 0 0 0 #fff, 0 0 0 #fff; transform: translate(0); }
+            100% { text-shadow: 0 0 0 #fff, 0 0 0 #fff; }
+        }
+
+        /* Szöveges tartalom konténer */
+        .content {
+            z-index: 10;
+            text-align: center;
         }
 
         /* Nyíri Gábor stílusa */
         .nev {
-            font-size: 6em; /* Nagyon nagy betűméret */
-            font-weight: 900; /* Nagyon vastag (Black) */
+            font-size: 6em;
+            font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 0.1em;
-            animation: glitch 1.5s infinite alternate; /* Glitch animáció alkalmazása */
+            animation: glitch 1.5s infinite alternate;
         }
 
         /* nyirigabor.hu stílusa */
         .url {
-            font-size: 1.5em; /* Kisebb betűméret */
-            font-weight: 300; /* Vékony betűvastagság (Light) */
-            font-style: italic; /* Dőlt */
-            color: rgba(255, 255, 255, 0.7); /* Enyhén áttetsző fehér, a hangsúly csökkentésére */
+            font-size: 1.5em;
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1em; /* Kicsit több hely az ikonok felett */
+        }
+
+        /* --- KÖZÖSSÉGI IKONOK STÍLUSA --- */
+
+        .social-icons {
+            display: flex;
+            gap: 20px; /* Ikonok közötti távolság */
+            margin-top: 1em;
+        }
+
+        .icon-link {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .social-icon {
+            font-size: 3em; /* Ikon mérete */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Enyhe árnyék */
+        }
+
+        /* Hover effektek */
+        .icon-link:hover {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1); /* Erősebb árnyék */
+        }
+        .icon-link.instagram:hover {
+            color: #E1306C; /* Instagram márkaszín */
+        }
+        .icon-link.facebook:hover {
+            color: #4267B2; /* Facebook márkaszín */
         }
 
     </style>
 </head>
 <body>
 
-    <div class="nev">
-        Nyíri Gábor
+    <div class="content">
+        <div class="nev">
+            Nyíri Gábor
+        </div>
+        <div class="url">
+            nyirigabor.hu
+        </div>
     </div>
+    
+    <div class="social-icons">
+        
+        <a href="https://www.instagram.com/nyirigabee/" target="_blank" class="icon-link instagram">
+            <i class="fab fa-instagram social-icon"></i>
+        </a>
 
-    <div class="url">
-        nyirigabor.hu
+        <a href="https://www.facebook.com/nyiri.gabee" target="_blank" class="icon-link facebook">
+            <i class="fab fa-facebook-f social-icon"></i>
+        </a>
     </div>
 
 </body>
