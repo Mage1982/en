@@ -3,115 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyíri Gábor - Indie Landing Page (Stabil)</title>
+    <title>Nyíri Gábor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,900;1,300&display=swap" rel="stylesheet">
     <style>
-        /* Alap beállítások */
-        :root {
-            --main-bg: #000;
-            --main-text: #fff;
-            --secondary-text: #aaa;
-            /* Garancia a talpatlan fontra */
-            --font-main: 'Arial', sans-serif;
-        }
-
-        /* Body: Flexbox a tökéletes központosításért */
+        /* Alapvető stílusok a test (body) elemhez */
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--main-bg);
-            color: var(--main-text);
-            font-family: var(--font-main);
-            /* Központosítási trükkök */
+            background-color: #000; /* Fekete háttér */
+            color: #fff; /* Fehér betűszín */
+            font-family: 'Roboto', sans-serif; /* Roboto betűtípus, fallback sans-serif */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; 
-            overflow: hidden; 
-            font-smooth: always;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Indie konténer */
-        .container {
-            text-align: center;
-            padding: 20px;
-            z-index: 10;
-        }
-
-        /* Fő cím - KÖNNYEN KEZELHETŐ BETŰTÍPUS */
-        h1 {
-            font-family: var(--font-main);
-            font-size: 11vw;
-            line-height: 0.85;
+            height: 100vh;
             margin: 0;
-            letter-spacing: -0.3vw; 
-            /* Extra vastag, hogy a sans-serif font is erőteljes legyen */
-            font-weight: 900; 
-            position: relative; 
-            cursor: pointer;
-            transition: color 0.3s ease;
-            white-space: nowrap; 
-            text-transform: uppercase; 
+            overflow: hidden; /* Glitch effekt miatt fontos, hogy ne okozzon scrollozást */
         }
 
-        h1:hover {
-            color: #ddd; 
-        }
-
-        /* Glitch/Zavar effekt animáció */
+        /* Glitch effekt animáció (Noir stílusban, fekete-fehér) */
         @keyframes glitch {
-            /* Glitch effekt változatlanul, de lehet, hogy az RGB színek túl vadak helyi fájl esetén. 
-               Ha továbbra sem látszik, ezt az egész 'h1' blokkot töröld ki, és csak a 'h1' stílust hagyd meg! */
             0% {
-                text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), 0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-                transform: translate(0.025em, 0.025em);
+                text-shadow: 2px 0 0 #fff, -2px 0 0 #fff; /* Alap fekete-fehér árnyékok */
+                transform: translate(0);
             }
-            14% { text-shadow: none; transform: none; }
-            15% {
-                text-shadow: -0.05em 0 0 rgba(255, 0, 0, 0.75), 0.05em 0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
-                transform: translate(-0.025em, -0.025em);
+            20% {
+                text-shadow: 2px 0 0 #fff, -2px 0 0 #fff;
             }
-            29% { text-shadow: none; transform: none; }
-            30% {
-                text-shadow: 0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.05em 0 rgba(0, 255, 0, 0.75), 0.05em 0.025em 0 rgba(0, 0, 255, 0.75);
-                transform: translate(0.05em, -0.025em);
+            21% {
+                text-shadow: -5px 0 0 #fff, 5px 0 0 #fff; /* Nagyobb eltolás */
+                transform: translate(5px);
             }
-            44% { text-shadow: none; transform: none; }
-            100% { text-shadow: none; transform: none; }
-        }
-        
-        h1 {
-            animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate;
-            animation-duration: 7s; 
+            40% {
+                text-shadow: -5px 0 0 #fff, 5px 0 0 #fff;
+            }
+            41% {
+                text-shadow: 3px 0 0 #fff, -3px 0 0 #fff;
+                transform: translate(-3px);
+            }
+            60% {
+                text-shadow: 3px 0 0 #fff, -3px 0 0 #fff;
+            }
+            61% {
+                text-shadow: -1px 0 0 #fff, 1px 0 0 #fff;
+                transform: translate(1px);
+            }
+            80% {
+                text-shadow: -1px 0 0 #fff, 1px 0 0 #fff;
+            }
+            81% {
+                text-shadow: 0 0 0 #fff, 0 0 0 #fff;
+                transform: translate(0);
+            }
+            100% {
+                text-shadow: 0 0 0 #fff, 0 0 0 #fff;
+            }
         }
 
-        /* URL cím */
-        .url-text {
-            display: block;
-            margin-top: 10px;
-            font-size: clamp(16px, 1.5vw, 24px); 
-            color: var(--secondary-text);
-            text-decoration: none;
-            font-family: var(--font-main);
-            font-style: normal;
-            transition: color 0.3s ease, letter-spacing 0.3s ease;
-            letter-spacing: 0.25em; 
-            font-weight: 400; /* Kisebb betűknél legyen vékonyabb */
+        /* Nyíri Gábor stílusa */
+        .nev {
+            font-size: 6em; /* Nagyon nagy betűméret */
+            font-weight: 900; /* Nagyon vastag (Black) */
+            text-transform: uppercase;
+            margin-bottom: 0.1em;
+            animation: glitch 1.5s infinite alternate; /* Glitch animáció alkalmazása */
         }
 
-        .url-text:hover {
-            color: var(--main-text);
-            letter-spacing: 0.35em;
+        /* nyirigabor.hu stílusa */
+        .url {
+            font-size: 1.5em; /* Kisebb betűméret */
+            font-weight: 300; /* Vékony betűvastagság (Light) */
+            font-style: italic; /* Dőlt */
+            color: rgba(255, 255, 255, 0.7); /* Enyhén áttetsző fehér, a hangsúly csökkentésére */
         }
 
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>NYÍRI GÁBOR</h1>
-        
-        <a href="https://nyirigabor.hu" class="url-text" target="_blank">nyirigabor.hu</a>
+    <div class="nev">
+        Nyíri Gábor
+    </div>
+
+    <div class="url">
+        nyirigabor.hu
     </div>
 
 </body>
