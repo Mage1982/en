@@ -15,8 +15,8 @@
         /* --- ALAP STÍLUSOK --- */
 
         body {
-            background-color: #000; /* Fekete háttér */
-            color: #fff; /* Fehér betűszín */
+            background-color: #000;
+            color: #fff;
             font-family: 'Roboto', sans-serif;
             display: flex;
             flex-direction: column;
@@ -32,10 +32,10 @@
             text-align: center;
         }
 
-        /* nyirigabor.hu stílusa - Kisebb és hajszálvékony */
+        /* nyirigabor.hu stílusa */
         .domain {
-            font-size: 2em; /* Méret */
-            font-weight: 300; /* Hajszálvékony (Light) */
+            font-size: 2em;
+            font-weight: 300;
             font-style: italic; 
             color: #fff;
             margin-bottom: 20px;
@@ -62,12 +62,38 @@
             color: #ffcc00;
         }
         
-        /* Telefon ikon stílusa és animáció */
+        /* Telefon ikon stílusa (a phone-icon osztály) */
         .phone-icon {
-            /* Alap stílus az ikonhoz */
+            /* Kezdeti állapot a bevezető animációhoz: átlátszó és kicsi */
+            opacity: 0;
+            transform: scale(0.5);
+            
+            /* Animáció alkalmazása: 1 másodperces lassú beúszás, egy kattintás után */
+            animation: iconIntro 1s ease-out forwards;
+            animation-delay: 0.5s; /* Késleltetés, hogy ne azonnal jelenjen meg */
+
+            /* Alap árnyék */
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            /* Animáció alkalmazása */
-            animation: phonePulse 2s infinite ease-in-out;
+            /* Állítsuk be a tranzíciót a hover animációhoz */
+            transition: text-shadow 0.3s; 
+        }
+
+        /* Látványos bevezető animáció: ikon méretének és átlátszóságának növelése */
+        @keyframes iconIntro {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Kurzornál pulzáló animáció: csak hover esetén pulzál */
+        .phone-link:hover .phone-icon {
+            animation: phonePulse 1.5s infinite ease-in-out;
+            /* Fontos: az alap animációt hoverkor felülírja a pulzáló animáció */
         }
 
         /* Az animáció kulcskockái: enyhe árnyék pulzálás */
@@ -97,28 +123,23 @@
             text-decoration: none;
             color: #fff;
             transition: color 0.3s, text-shadow 0.3s;
-            /* Eltávolítva a keret és a padding, hogy a Facebook és Insta egyforma legyen */
         }
 
         .social-icon {
-            font-size: 3em; /* Mindkét ikon 3em méretű lesz */
+            font-size: 3em;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
         
-        /* Hover effektek */
+        /* Hover effektek (az ikon árnyék pulzálása) */
         .icon-link:hover {
             text-shadow: 0 0 15px rgba(255, 255, 255, 1);
         }
-        /* Instagram hover: */
         .icon-link.instagram:hover {
             color: #E1306C;
         }
-        /* Facebook hover: Most már nincs lekerekített keret, csak a színes árnyék */
         .icon-link.facebook:hover {
             color: #4267B2;
         }
-
-        /* Eltávolítva a Blogger stílus */
 
     </style>
 </head>
@@ -148,7 +169,7 @@
             <i class="fab fa-instagram social-icon"></i>
         </a>
         
-        </div>
+    </div>
 
 </body>
 </html>
