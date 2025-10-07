@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nyirigabor.hu - Minimál</title>
+    <title>nyirigabor.hu - Gépelés Effektus</title>
     
-    <link rel="icon" type="image/png" sizes="32x32" href="nyg.png">
-    <link rel="icon" href="nyg.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="nyg.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png"> 
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -32,42 +31,101 @@
             text-align: center;
         }
 
-        /* nyirigabor.hu stílusa - Kisebb és hajszálvékony */
+        /* --- GÉPELÉS EFFEKTUS ANIMÁCIÓK --- */
+
+        /* 1. Gépelés animáció: Fokozatosan növeli a szöveg szélességét */
+        /* 14 lépés (steps) = a nyirigabor.hu összes karaktere */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* 2. Villogó kurzor animáció: Létrehozza a villogó hatást a jobb oldali szegélyen */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #fff; } /* Fehér kurzor */
+        }
+
+
+        /* nyirigabor.hu stílusa - Kisebb, hajszálvékony és gépelés effektus */
         .domain {
-            font-size: 2em; /* Méret */
+            font-size: 2em;
             font-weight: 300; /* Hajszálvékony (Light) */
             font-style: italic; 
             color: #fff;
-            margin-bottom: 20px; /* Távolság a telefonszámtól */
-        }
-        
-        /* --- TELEFONSZÁM STÍLUSA --- */
-        
-        .contact-info {
-            margin-bottom: 20px; /* Távolság az ikonoktól */
-        }
-        
-        .phone-link {
-            font-size: 1.2em; /* Kicsit nagyobb, mint a domain */
-            font-weight: 300; /* Hajszálvékony */
-            color: #fff;
-            text-decoration: none; /* Aláhúzás eltávolítása */
-            display: inline-flex; /* Az ikon és a szöveg egy sorban */
-            align-items: center;
-            gap: 10px; /* Távolság az ikon és a szám között */
-            transition: color 0.3s;
-        }
-        
-        .phone-link:hover {
-            color: #ffcc00; /* Enyhe sárga hover szín */
+            margin-bottom: 0.5em;
+            
+            /* Gépelés effektushoz szükséges stílusok */
+            overflow: hidden; /* Elrejti a szöveget, ami túlnyúlik a beállított szélességen */
+            white-space: nowrap; /* Megakadályozza, hogy a szöveg új sorba törjön */
+            width: 0; /* Kezdetben nulla szélesség */
+            border-right: 0.15em solid #fff; /* A kurzor (vastag fehér szegély) */
+            
+            /* Animációk alkalmazása */
+            animation: 
+              typing 3.5s steps(14) 1s forwards, /* 3.5s alatt, 14 lépésben, 1s késleltetéssel indul */
+              blink-caret .75s step-end infinite; /* Villogó kurzor, a gépelés után is marad */
         }
 
         /* --- KÖZÖSSÉGI IKONOK STÍLUSA --- */
 
         .social-icons {
             display: flex;
-            gap: 20px; /* Ikonok közötti távolság */
+            gap: 20px;
             margin-top: 0;
         }
 
-        .icon-
+        .icon-link {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .social-icon {
+            font-size: 3em;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Hover effektek */
+        .icon-link:hover {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+        }
+        .icon-link.instagram:hover {
+            color: #E1306C;
+        }
+        .icon-link.facebook:hover {
+            color: #4267B2;
+        }
+        .icon-link.blogger:hover {
+            color: #FF7300;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <div class="domain">
+            nyirigabor.hu
+        </div>
+    </div>
+    
+    <div class="social-icons">
+        
+        <a href="https://www.facebook.com/nyiri.gabee" target="_blank" class="icon-link facebook">
+            <i class="fab fa-facebook-f social-icon"></i>
+        </a>
+
+        <a href="https://www.instagram.com/nyirigabee/" target="_blank" class="icon-link instagram">
+            <i class="fab fa-instagram social-icon"></i>
+        </a>
+
+        <a href="https://freemindalchemist.blogspot.com/" target="_blank" class="icon-link blogger">
+            <i class="fab fa-blogger social-icon"></i>
+        </a>
+        
+    </div>
+
+</body>
+</html>
