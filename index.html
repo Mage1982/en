@@ -6,8 +6,7 @@
     <title>nyirigabor.hu - Minimál</title>
     
     <link rel="icon" type="image/x-icon" href="favicon.ico"> 
-    
-    <link rel="icon" type="image/png" href="nyg_fav.png"> 
+    <link rel="icon" type="image/png" href="nyg.png"> 
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -38,7 +37,28 @@
             font-weight: 300; /* Hajszálvékony (Light) */
             font-style: italic; 
             color: #fff;
-            margin-bottom: 0.5em; /* Távolság az ikonoktól */
+            margin-bottom: 20px; /* Távolság a telefonszámtól */
+        }
+        
+        /* --- TELEFONSZÁM STÍLUSA --- */
+        
+        .contact-info {
+            margin-bottom: 20px; /* Távolság az ikonoktól */
+        }
+        
+        .phone-link {
+            font-size: 1.2em; /* Kicsit nagyobb, mint a domain */
+            font-weight: 300; /* Hajszálvékony */
+            color: #fff;
+            text-decoration: none; /* Aláhúzás eltávolítása */
+            display: inline-flex; /* Az ikon és a szöveg egy sorban */
+            align-items: center;
+            gap: 10px; /* Távolság az ikon és a szám között */
+            transition: color 0.3s;
+        }
+        
+        .phone-link:hover {
+            color: #ffcc00; /* Enyhe sárga hover szín */
         }
 
         /* --- KÖZÖSSÉGI IKONOK STÍLUSA --- */
@@ -83,6 +103,14 @@
         <div class="domain">
             nyirigabor.hu
         </div>
+        
+        <div class="contact-info">
+            <a href="tel:+36205018184" class="phone-link">
+                <i class="fas fa-phone"></i> 
+                +36 20 501 8184
+            </a>
+        </div>
+        
     </div>
     
     <div class="social-icons">
@@ -91,12 +119,4 @@
             <i class="fab fa-facebook-f social-icon"></i>
         </a>
 
-        <a href="https://www.instagram.com/nyirigabee/" target="_blank" class="icon-link instagram">
-            <i class="fab fa-instagram social-icon"></i>
-        </a>
-        
-    </div>
-
-</body>
-</html>
-
+        <a href="https://www.instagram.
