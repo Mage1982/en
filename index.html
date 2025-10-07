@@ -15,7 +15,6 @@
         /* --- ALAP STÍLUSOK --- */
 
         body {
-            background-color: #000; /* Fekete háttér */
             color: #fff; /* Fehér betűszín */
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -24,12 +23,58 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; 
+            position: relative; 
         }
 
-        /* Szöveges tartalom konténer */
-        .content {
+        /* Háttér konténer a Ken Burns effektushoz */
+        .background-ken-burns {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* A ::before réteg mögé kerüljön */
+            overflow: hidden; /* A kép kilógó részeit levágja */
+        }
+
+        .background-ken-burns img {
+            width: 100%; /* Kezdeti méret */
+            height: 100%; /* Kezdeti méret */
+            object-fit: cover; /* A kép kitölti a konténert, arányosan */
+            transform: scale(1); /* Kezdeti zoom szint */
+            transform-origin: center center; /* Zoom középről indul */
+            animation: kenBurnsEffect 25s infinite alternate ease-in-out; /* Animáció alkalmazása */
+        }
+
+        /* Ken Burns effektus animáció kulcskockák */
+        @keyframes kenBurnsEffect {
+            0% {
+                transform: scale(1) translateX(0%);
+                transform-origin: top left; /* Enyhe mozgás balról felülről */
+            }
+            100% {
+                transform: scale(1.2) translateX(-5%); /* Nagyítás és enyhe eltolás */
+                transform-origin: bottom right; /* Enyhe mozgás jobbról alulról */
+            }
+        }
+
+        /* Áttetsző réteg a háttérkép felett */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* 70% áttetszőség */
+            z-index: -1; /* A tartalom alá, de a háttérkép fölé */
+        }
+
+        /* Szöveges tartalom konténer (a réteg fölé) */
+        .content, .social-icons, .contact-info {
             text-align: center;
+            z-index: 1; 
         }
 
         /* nyirigabor.hu stílusa */
@@ -41,38 +86,6 @@
             margin-bottom: 20px;
         }
         
-        /* --- KÉP STÍLUSA --- */
-        .main-image-container {
-            margin-bottom: 30px; /* Távolság a domain és a telefonszám között */
-            position: relative;
-            opacity: 0; /* Kezdeti átlátszatlanság az animációhoz */
-            transform: translateY(20px); /* Kicsit lejjebb helyezve az animációhoz */
-            animation: fadeInSlideUp 1s ease-out forwards; /* Animáció alkalmazása */
-            animation-delay: 1s; /* Késleltetés, hogy a domain után jelenjen meg */
-        }
-
-        .main-image {
-            max-width: 80vw; /* Max. szélesség: 80% a viewport szélességéből */
-            max-height: 40vh; /* Max. magasság: 40% a viewport magasságából */
-            width: auto;
-            height: auto;
-            border-radius: 15px; /* Lekerekített sarkok */
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); /* Finom fehér árnyék */
-            display: block; /* Eltávolítja a kép alatti extra helyet */
-        }
-
-        /* Animáció a kép beúszásához */
-        @keyframes fadeInSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* --- TELEFONSZÁM STÍLUSA & ANIMÁCIÓ --- */
         
         .contact-info {
@@ -94,6 +107,7 @@
             color: #ffcc00;
         }
         
+        /* Telefon ikon stílusa (a phone-icon osztály) */
         .phone-icon {
             opacity: 0;
             transform: scale(0.5);
@@ -105,6 +119,7 @@
             transition: text-shadow 0.3s; 
         }
 
+        /* Látványos bevezető animáció: ikon méretének és átlátszóságának növelése */
         @keyframes iconIntro {
             0% {
                 opacity: 0;
@@ -116,10 +131,12 @@
             }
         }
         
+        /* Kurzornál pulzáló animáció: csak hover esetén pulzál */
         .phone-link:hover .phone-icon {
             animation: phonePulse 1.5s infinite ease-in-out;
         }
 
+        /* Az animáció kulcskockái: enyhe árnyék pulzálás */
         @keyframes phonePulse {
             0% {
                 text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
@@ -153,6 +170,7 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
         
+        /* Hover effektek (az ikon árnyék pulzálása) */
         .icon-link:hover {
             text-shadow: 0 0 15px rgba(255, 255, 255, 1);
         }
@@ -166,14 +184,13 @@
     </style>
 </head>
 <body>
+    <div class="background-ken-burns">
+        <img src="concert_image.jpg" alt="Háttérkép" loading="lazy">
+    </div>
 
     <div class="content">
         <div class="domain">
             nyirigabor.hu
-        </div>
-        
-        <div class="main-image-container">
-            <img src="concert_image.jpg" alt="Koncert kép" class="main-image">
         </div>
         
         <div class="contact-info">
