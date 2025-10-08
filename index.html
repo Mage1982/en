@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -5,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>nyirigabor.hu - Minimál</title>
     
-    <link rel="icon" type="image/png" sizes="32x32" href="nyg.png">
-    <link rel="icon" href="nyg.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="nyg.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png"> 
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -15,6 +15,7 @@
         /* --- ALAP STÍLUSOK --- */
 
         body {
+            background-color: #000; /* Fekete háttér */
             color: #fff; /* Fehér betűszín */
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -23,138 +24,28 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden; 
-            position: relative; 
+            overflow: hidden;
         }
 
-        /* Háttér konténer a Ken Burns effektushoz */
-        .background-ken-burns {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2; /* A ::before réteg mögé kerüljön */
-            overflow: hidden; /* A kép kilógó részeit levágja */
-        }
-
-        .background-ken-burns img {
-            width: 100%; /* Kezdeti méret */
-            height: 100%; /* Kezdeti méret */
-            object-fit: cover; /* A kép kitölti a konténert, arányosan */
-            transform: scale(1); /* Kezdeti zoom szint */
-            transform-origin: center center; /* Zoom középről indul */
-            animation: kenBurnsEffect 25s infinite alternate ease-in-out; /* Animáció alkalmazása */
-        }
-
-        /* Ken Burns effektus animáció kulcskockák */
-        @keyframes kenBurnsEffect {
-            0% {
-                transform: scale(1) translateX(0%);
-                transform-origin: top left; /* Enyhe mozgás balról felülről */
-            }
-            100% {
-                transform: scale(1.2) translateX(-5%); /* Nagyítás és enyhe eltolás */
-                transform-origin: bottom right; /* Enyhe mozgás jobbról alulról */
-            }
-        }
-
-        /* Áttetsző réteg a háttérkép felett */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* 70% áttetszőség */
-            z-index: -1; /* A tartalom alá, de a háttérkép fölé */
-        }
-
-        /* Szöveges tartalom konténer (a réteg fölé) */
-        .content, .social-icons, .contact-info {
+        /* Szöveges tartalom konténer */
+        .content {
             text-align: center;
-            z-index: 1; 
         }
 
-        /* nyirigabor.hu stílusa */
+        /* nyirigabor.hu stílusa - Kisebb és hajszálvékony */
         .domain {
-            font-size: 2em;
-            font-weight: 300;
+            font-size: 2em; /* Méret */
+            font-weight: 300; /* Hajszálvékony (Light) */
             font-style: italic; 
             color: #fff;
-            margin-bottom: 20px;
+            margin-bottom: 0.5em; /* Távolság az ikonoktól */
         }
-        
-        /* --- TELEFONSZÁM STÍLUSA & ANIMÁCIÓ --- */
-        
-        .contact-info {
-            margin-bottom: 20px;
-        }
-        
-        .phone-link {
-            font-size: 1.2em;
-            font-weight: 300;
-            color: #fff;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.3s;
-        }
-        
-        .phone-link:hover {
-            color: #ffcc00;
-        }
-        
-        /* Telefon ikon stílusa (a phone-icon osztály) */
-        .phone-icon {
-            opacity: 0;
-            transform: scale(0.5);
-            
-            animation: iconIntro 1s ease-out forwards;
-            animation-delay: 0.5s; 
-
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            transition: text-shadow 0.3s; 
-        }
-
-        /* Látványos bevezető animáció: ikon méretének és átlátszóságának növelése */
-        @keyframes iconIntro {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        /* Kurzornál pulzáló animáció: csak hover esetén pulzál */
-        .phone-link:hover .phone-icon {
-            animation: phonePulse 1.5s infinite ease-in-out;
-        }
-
-        /* Az animáció kulcskockái: enyhe árnyék pulzálás */
-        @keyframes phonePulse {
-            0% {
-                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            }
-            50% {
-                text-shadow: 0 0 15px rgba(255, 255, 255, 1);
-            }
-            100% {
-                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            }
-        }
-
 
         /* --- KÖZÖSSÉGI IKONOK STÍLUSA --- */
 
         .social-icons {
             display: flex;
-            gap: 20px;
+            gap: 20px; /* Ikonok közötti távolság */
             margin-top: 0;
         }
 
@@ -166,40 +57,32 @@
         }
 
         .social-icon {
-            font-size: 3em;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            font-size: 3em; /* Ikon mérete */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Enyhe árnyék */
         }
-        
-        /* Hover effektek (az ikon árnyék pulzálása) */
+
+        /* Hover effektek */
         .icon-link:hover {
-            text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1); /* Erősebb árnyék */
         }
         .icon-link.instagram:hover {
-            color: #E1306C;
+            color: #E1306C; /* Instagram márkaszín */
         }
         .icon-link.facebook:hover {
-            color: #4267B2;
+            color: #4267B2; /* Facebook márkaszín */
+        }
+        .icon-link.blogger:hover {
+            color: #FF7300; /* Blogger/narancs szín */
         }
 
     </style>
 </head>
 <body>
-    <div class="background-ken-burns">
-        <img src="concert_image.jpg" alt="Háttérkép" loading="lazy">
-    </div>
 
     <div class="content">
         <div class="domain">
             nyirigabor.hu
         </div>
-        
-        <div class="contact-info">
-            <a href="tel:+36205018184" class="phone-link">
-                <i class="fas fa-phone phone-icon"></i> 
-                +36 20 501 8184
-            </a>
-        </div>
-        
     </div>
     
     <div class="social-icons">
@@ -210,6 +93,10 @@
 
         <a href="https://www.instagram.com/nyirigabee/" target="_blank" class="icon-link instagram">
             <i class="fab fa-instagram social-icon"></i>
+        </a>
+
+        <a href="https://freemindalchemist.blogspot.com/" target="_blank" class="icon-link blogger">
+            <i class="fab fa-blogger social-icon"></i>
         </a>
         
     </div>
