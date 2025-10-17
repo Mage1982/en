@@ -3,6 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>nyirigabor.hu - Minimál</title>
+    <meta name="description" content="Szükség van Rád!">
+
+    <meta property="og:url" content="https://nyirigabor.hu/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="nyirigabor.hu - Minimál">
+    <meta property="og:description" content="Szükség van Rád!">
+    <meta property="og:image" content="">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="nyirigabor.hu">
+    <meta property="twitter:url" content="https://nyirigabor.hu/">
+    <meta name="twitter:title" content="nyirigabor.hu - Minimál">
+    <meta name="twitter:description" content="Szükség van Rád!">
+    <meta property="twitter:image" content="">
+
     <link rel="icon" type="image/png" sizes="32x32" href="nyg.png">
     <link rel="icon" href="nyg.png">
     <link rel="apple-touch-icon" sizes="180x180" href="nyg.png">
@@ -13,7 +30,7 @@
         /* --- ALAP STÍLUSOK --- */
 
         body {
-            /* Az eredeti fekete háttér eltávolítva, a háttérkép veszi át a szerepet */
+            background-color: #000; /* Fekete háttér */
             color: #fff; /* Fehér betűszín */
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -24,30 +41,13 @@
             margin: 0;
             overflow: hidden; 
             position: relative; 
-            
-            /* --- HÁTTÉRKÉP (LYUKAS ZÁSZLÓ) STÍLUSAI --- */
-            background-image: url('lyukas_zaszlo_hatter.png'); /* !!! Fájlnév frissítendő !!! */
-            background-size: cover; /* Borító méret */
-            background-position: center center;
-            background-attachment: fixed; /* Hogy a háttér ne görgessön, ha lenne görgetés */
-        }
-
-        /* ÁTTETSZŐ FEKETE RÉTEG A JOBB OLVASHATÓSÁGÉRT */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4); /* 40% áttetsző fekete réteg */
-            z-index: 0; /* A tartalom alá */
+            /* Eltávolítva a háttérképhez és áttetsző réteghez szükséges stílusok */
         }
 
         /* Szöveges tartalom konténer (a réteg fölé) */
         .content {
             text-align: center;
-            z-index: 1; /* A réteg fölött legyen */
+            z-index: 1; 
         }
 
         /* nyirigabor.hu stílusa */
@@ -56,12 +56,14 @@
             font-weight: 300;
             font-style: italic; 
             color: #fff;
-            margin-bottom: 30px; 
+            margin-bottom: 30px; /* Megnövelt távolság, mivel a telefonszám kikerült */
         }
         
+        /* Eltávolítva a TELEFONSZÁM STÍLUSA, ANIMÁCIÓK (.contact-info, .phone-link, @keyframes) */
+
         /* --- VISSZASZÁMLÁLÓ STÍLUSOK --- */
         .countdown-container {
-            margin: 20px 0 40px 0; 
+            margin: 20px 0 40px 0; /* Helyezés a domain és az ikonok közé */
             text-align: center;
             z-index: 1;
         }
@@ -69,25 +71,25 @@
         #countdown {
             display: flex;
             justify-content: center;
-            gap: 15px; 
-            font-size: 1.5em; 
+            gap: 15px; /* Kisebb távolság */
+            font-size: 1.5em; /* Kicsit kisebb betűméret */
         }
 
         .time-unit {
             padding: 5px 10px;
             border-radius: 5px;
-            /* Enyhén áttetsző FEHÉR háttér a jobb kontrasztért a zászlóval */
-            background-color: rgba(255, 255, 255, 0.2); 
-            color: #fff; 
+            /* Fekete-fehér illeszkedés */
+            background-color: rgba(255, 255, 255, 0.1); /* Enyhén áttetsző fehér háttér */
+            color: #fff; /* Fehér szöveg */
             min-width: 60px;
         }
 
         .label {
             display: block;
-            font-size: 0.4em; 
+            font-size: 0.4em; /* Még kisebb felirat */
             font-weight: 300;
             margin-top: 2px;
-            color: #ccc; 
+            color: #ccc; /* Halványabb felirat */
         }
 
         #message {
@@ -203,5 +205,3 @@
 
 </body>
 </html>
-
-
