@@ -30,6 +30,7 @@
         /* --- ALAP STÍLUSOK --- */
 
         body {
+            background-color: #000; /* Fekete háttér visszaállítva */
             color: #fff; /* Fehér betűszín */
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -40,15 +41,11 @@
             margin: 0;
             overflow: hidden; 
             position: relative; 
-            
-            /* --- HÁTTÉRKÉP (LYUKAS ZÁSZLÓ) STÍLUSAI --- */
-            background-image: url('lyukas_zaszlo_hatter.jpg'); 
-            background-size: cover; 
-            background-position: center center;
-            background-attachment: fixed; 
+            /* Háttérkép stílusai eltávolítva */
         }
 
-        /* ÁTTETSZŐ FEKETE RÉTEG A JOBB OLVASHATÓSÁGÉRT */
+        /* ÁTTETSZŐ FEKETE RÉTEG STÍLUSAI ELTÁVOLÍTVA */
+        /*
         body::before {
             content: '';
             position: absolute;
@@ -59,6 +56,7 @@
             background-color: rgba(0, 0, 0, 0.4); 
             z-index: 0; 
         }
+        */
 
         /* Szöveges tartalom konténer (a réteg fölé) */
         .content {
@@ -121,7 +119,7 @@
         .time-unit {
             padding: 5px 10px;
             border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2); 
+            background-color: rgba(255, 255, 255, 0.2); /* Maradhat, vagy lehet teljesen átlátszó: transparent */
             color: #fff; 
             min-width: 60px;
         }
