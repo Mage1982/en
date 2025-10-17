@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nyirigabor.hu - Minimál</title>
-    
     <link rel="icon" type="image/png" sizes="32x32" href="nyg.png">
     <link rel="icon" href="nyg.png">
     <link rel="apple-touch-icon" sizes="180x180" href="nyg.png">
@@ -15,7 +13,7 @@
         /* --- ALAP STÍLUSOK --- */
 
         body {
-            background-color: #000; /* Fekete háttér */
+            /* Az eredeti fekete háttér eltávolítva, a háttérkép veszi át a szerepet */
             color: #fff; /* Fehér betűszín */
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -26,13 +24,30 @@
             margin: 0;
             overflow: hidden; 
             position: relative; 
-            /* Eltávolítva a háttérképhez és áttetsző réteghez szükséges stílusok */
+            
+            /* --- HÁTTÉRKÉP (LYUKAS ZÁSZLÓ) STÍLUSAI --- */
+            background-image: url('lyukas_zaszlo_hatter.jpg'); /* !!! Fájlnév frissítendő !!! */
+            background-size: cover; /* Borító méret */
+            background-position: center center;
+            background-attachment: fixed; /* Hogy a háttér ne görgessön, ha lenne görgetés */
+        }
+
+        /* ÁTTETSZŐ FEKETE RÉTEG A JOBB OLVASHATÓSÁGÉRT */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* 40% áttetsző fekete réteg */
+            z-index: 0; /* A tartalom alá */
         }
 
         /* Szöveges tartalom konténer (a réteg fölé) */
         .content {
             text-align: center;
-            z-index: 1; 
+            z-index: 1; /* A réteg fölött legyen */
         }
 
         /* nyirigabor.hu stílusa */
@@ -41,14 +56,12 @@
             font-weight: 300;
             font-style: italic; 
             color: #fff;
-            margin-bottom: 30px; /* Megnövelt távolság, mivel a telefonszám kikerült */
+            margin-bottom: 30px; 
         }
         
-        /* Eltávolítva a TELEFONSZÁM STÍLUSA, ANIMÁCIÓK (.contact-info, .phone-link, @keyframes) */
-
         /* --- VISSZASZÁMLÁLÓ STÍLUSOK --- */
         .countdown-container {
-            margin: 20px 0 40px 0; /* Helyezés a domain és az ikonok közé */
+            margin: 20px 0 40px 0; 
             text-align: center;
             z-index: 1;
         }
@@ -56,25 +69,25 @@
         #countdown {
             display: flex;
             justify-content: center;
-            gap: 15px; /* Kisebb távolság */
-            font-size: 1.5em; /* Kicsit kisebb betűméret */
+            gap: 15px; 
+            font-size: 1.5em; 
         }
 
         .time-unit {
             padding: 5px 10px;
             border-radius: 5px;
-            /* Fekete-fehér illeszkedés */
-            background-color: rgba(255, 255, 255, 0.1); /* Enyhén áttetsző fehér háttér */
-            color: #fff; /* Fehér szöveg */
+            /* Enyhén áttetsző FEHÉR háttér a jobb kontrasztért a zászlóval */
+            background-color: rgba(255, 255, 255, 0.2); 
+            color: #fff; 
             min-width: 60px;
         }
 
         .label {
             display: block;
-            font-size: 0.4em; /* Még kisebb felirat */
+            font-size: 0.4em; 
             font-weight: 300;
             margin-top: 2px;
-            color: #ccc; /* Halványabb felirat */
+            color: #ccc; 
         }
 
         #message {
@@ -153,7 +166,6 @@
 
 <script>
     // A céldátum (2026. április 12. 00:00:00)
-    // A jelenlegi időpont: 2025. október 17. 13:01:30 CEST
     const targetDate = new Date("April 12, 2026 00:00:00").getTime();
 
     // Frissíti a visszaszámlálót másodpercenként
