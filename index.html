@@ -46,6 +46,44 @@
         
         /* Eltávolítva a TELEFONSZÁM STÍLUSA, ANIMÁCIÓK (.contact-info, .phone-link, @keyframes) */
 
+        /* --- VISSZASZÁMLÁLÓ STÍLUSOK --- */
+        .countdown-container {
+            margin: 20px 0 40px 0; /* Helyezés a domain és az ikonok közé */
+            text-align: center;
+            z-index: 1;
+        }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Kisebb távolság */
+            font-size: 1.5em; /* Kicsit kisebb betűméret */
+        }
+
+        .time-unit {
+            padding: 5px 10px;
+            border-radius: 5px;
+            /* Fekete-fehér illeszkedés */
+            background-color: rgba(255, 255, 255, 0.1); /* Enyhén áttetsző fehér háttér */
+            color: #fff; /* Fehér szöveg */
+            min-width: 60px;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.4em; /* Még kisebb felirat */
+            font-weight: 300;
+            margin-top: 2px;
+            color: #ccc; /* Halványabb felirat */
+        }
+
+        #message {
+            margin-top: 15px;
+            font-style: italic;
+            font-size: 1em;
+            color: #fff;
+        }
+
         /* --- KÖZÖSSÉGI IKONOK STÍLUSA --- */
 
         .social-icons {
@@ -87,6 +125,69 @@
             nyirigabor.hu
         </div>
         
+        <div class="countdown-container">
+            <div id="countdown">
+                <div class="time-unit">
+                    <span id="days">00</span>
+                    <span class="label">NAP</span>
+                </div>
+                <div class="time-unit">
+                    <span id="hours">00</span>
+                    <span class="label">ÓRA</span>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes">00</span>
+                    <span class="label">PERC</span>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds">00</span>
+                    <span class="label">MÁSODPERC</span>
+                </div>
+            </div>
+            <p id="message"></p>
+        </div>
         </div>
     
     <div class="social-icons">
+        </div>
+
+<script>
+    // A céldátum (2026. április 12. 00:00:00)
+    // A jelenlegi időpont: 2025. október 17. 13:01:30 CEST
+    const targetDate = new Date("April 12, 2026 00:00:00").getTime();
+
+    // Frissíti a visszaszámlálót másodpercenként
+    const countdownFunction = setInterval(function() {
+
+        // Mai dátum és idő
+        const now = new Date().getTime();
+
+        // Két dátum közötti távolság (ezredmásodpercben)
+        const distance = targetDate - now;
+
+        // Időegységek számítása
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Eredmények megjelenítése a megfelelő elemekben
+        // Két számjeggyé alakítás (0x formátum)
+        const formatTime = (time) => time < 10 ? "0" + time : time;
+        
+        document.getElementById("days").innerHTML = formatTime(days);
+        document.getElementById("hours").innerHTML = formatTime(hours);
+        document.getElementById("minutes").innerHTML = formatTime(minutes);
+        document.getElementById("seconds").innerHTML = formatTime(seconds);
+
+        // Ha lejárt a visszaszámlálás
+        if (distance < 0) {
+            clearInterval(countdownFunction);
+            document.getElementById("countdown").innerHTML = "00:00:00:00";
+            document.getElementById("message").innerHTML = "A céldátum elérkezett! 🚀";
+        }
+    }, 1000); // 1000 ms = 1 másodperc
+</script>
+
+</body>
+</html>
