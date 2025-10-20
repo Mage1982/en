@@ -10,19 +10,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="nyirigabor.hu - Minimál">
     <meta property="og:description" content="Szükség van Rád!">
-    <meta property="og:image" content="">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="nyirigabor.hu">
-    <meta property="twitter:url" content="https://nyirigabor.hu/">
-    <meta name="twitter:title" content="nyirigabor.hu - Minimál">
-    <meta name="twitter:description" content="Szükség van Rád!">
-    <meta property="twitter:image" content="">
-
-    <link rel="icon" type="image/png" sizes="32x32" href="nyg.png">
-    <link rel="icon" href="nyg.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="nyg.png">
-    
+    <link rel="icon" type="image/png" href="nyg.png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -47,9 +36,9 @@
             max-width: 90%;
         }
 
-        /* --- VISSZASZÁMLÁLÓ STÍLUSOK (megnövelt méret) --- */
+        /* --- VISSZASZÁMLÁLÓ (felső) --- */
         .countdown-container {
-            margin: 20px 0 40px 0;
+            margin: 20px 0 30px 0;
             text-align: center;
             z-index: 1;
         }
@@ -57,8 +46,11 @@
         #countdown {
             display: flex;
             justify-content: center;
-            gap: 22px; /* kicsit nagyobb térköz */
-            font-size: 2.25em; /* 1.5x az eredeti 1.5em-hez képest */
+            gap: 22px;
+            font-size: 2.25em; /* nagyobb méret */
+            width: 80vw;
+            max-width: 450px;
+            margin: 0 auto;
         }
 
         .time-unit {
@@ -84,24 +76,17 @@
             color: #fff;
         }
 
-        /* --- DOMAIN CÍM --- */
-        .domain {
-            font-size: 2em;
-            font-weight: 300;
-            font-style: italic;
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
         /* --- VIDEÓ --- */
         .video-container {
             margin-bottom: 25px;
             z-index: 1;
-            width: 80vw;
+            width: 80vw; /* azonos a visszaszámlálóval */
             max-width: 450px;
             aspect-ratio: 16 / 9;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .video-container iframe {
@@ -119,36 +104,32 @@
             margin-bottom: 30px;
         }
 
+        /* --- JOBB ALSÓ SAROKBAN A DOMÉN --- */
+        .domain {
+            position: fixed;
+            right: 20px;
+            bottom: 15px;
+            font-size: 0.75em;
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 2;
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- IKONOK (ha lesznek) --- */
         .social-icons {
             display: flex;
             gap: 20px;
             margin-top: 0;
             z-index: 1;
         }
-
-        .icon-link {
-            text-decoration: none;
-            color: #fff;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-
-        .social-icon {
-            font-size: 3em;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-        }
-
-        .icon-link:hover {
-            text-shadow: 0 0 15px rgba(255, 255, 255, 1);
-        }
-
-        .icon-link.instagram:hover { color: #E1306C; }
-        .icon-link.facebook:hover { color: #4267B2; }
     </style>
 </head>
 <body>
-    <div class="content">
 
-        <!-- VISSZASZÁMLÁLÓ MOST LEGFELÜL -->
+    <div class="content">
+        <!-- VISSZASZÁMLÁLÓ -->
         <div class="countdown-container">
             <div id="countdown">
                 <div class="time-unit">
@@ -171,9 +152,6 @@
             <p id="message"></p>
         </div>
 
-        <!-- DOMAIN -->
-        <div class="domain">nyirigabor.hu</div>
-
         <!-- VIDEÓ -->
         <div class="video-container">
             <iframe 
@@ -187,7 +165,8 @@
         <p class="video-caption">Krasznahorkai László - A torinói ló</p>
     </div>
 
-    <div class="social-icons"></div>
+    <!-- JOBB ALSÓ SAROK -->
+    <div class="domain">nyirigabor.hu</div>
 
     <script>
         const targetDate = new Date("April 12, 2026 00:00:00").getTime();
@@ -212,5 +191,6 @@
             }
         }, 1000);
     </script>
+
 </body>
 </html>
