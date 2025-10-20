@@ -166,4 +166,91 @@
         .icon-link.instagram:hover {
             color: #E1306C;
         }
-        .icon-link.facebook:hover
+        .icon-link.facebook:hover {
+            color: #4267B2;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="content">
+        <div class="domain">
+            nyirigabor.hu
+        </div>
+
+        <div class="video-container">
+                        <iframe 
+                src="https://www.youtube.com/embed/videoseries?list=PLAYLIST_ID" 
+                title="A YouTube lejátszási lista címe" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+        <p class="video-caption">Krasznahorkai László - A torinói ló (LECSERÉLENDŐ, ha másik playlistet használsz)</p>
+        <div class="countdown-container">
+            <div id="countdown">
+                <div class="time-unit">
+                    <span id="days">00</span>
+                    <span class="label">NAP</span>
+                </div>
+                <div class="time-unit">
+                    <span id="hours">00</span>
+                    <span class="label">ÓRA</span>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes">00</span>
+                    <span class="label">PERC</span>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds">00</span>
+                    <span class="label">MÁSODPERC</span>
+                </div>
+            </div>
+            <p id="message"></p>
+        </div>
+        </div>
+    
+    <div class="social-icons">
+        </div>
+
+<script>
+    // A céldátum (2026. április 12. 00:00:00)
+    const targetDate = new Date("April 12, 2026 00:00:00").getTime();
+
+    // Frissíti a visszaszámlálót másodpercenként
+    const countdownFunction = setInterval(function() {
+
+        // Mai dátum és idő
+        const now = new Date().getTime();
+
+        // Két dátum közötti távolság (ezredmásodpercben)
+        const distance = targetDate - now;
+
+        // Időegységek számítása
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Eredmények megjelenítése a megfelelő elemekben
+        // Két számjeggyé alakítás (0x formátum)
+        const formatTime = (time) => time < 10 ? "0" + time : time;
+        
+        document.getElementById("days").innerHTML = formatTime(days);
+        document.getElementById("hours").innerHTML = formatTime(hours);
+        document.getElementById("minutes").innerHTML = formatTime(minutes);
+        document.getElementById("seconds").innerHTML = formatTime(seconds);
+
+        // Ha lejárt a visszaszámlálás
+        if (distance < 0) {
+            clearInterval(countdownFunction);
+            document.getElementById("countdown").innerHTML = "00:00:00:00";
+            document.getElementById("message").innerHTML = "A céldátum elérkezett! 🚀";
+        }
+    }, 1000); // 1000 ms = 1 másodperc
+</script>
+
+</body>
+</html>
