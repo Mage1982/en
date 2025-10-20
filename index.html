@@ -58,4 +58,159 @@
             display: flex;
             justify-content: center;
             gap: 22px; /* kicsit nagyobb térköz */
-            font-size: 2.25em; /* 1.5x az eredeti 1.5em-h*
+            font-size: 2.25em; /* 1.5x az eredeti 1.5em-hez képest */
+        }
+
+        .time-unit {
+            padding: 8px 15px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            min-width: 90px;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.45em;
+            font-weight: 300;
+            margin-top: 4px;
+            color: #ccc;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-style: italic;
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        /* --- DOMAIN CÍM --- */
+        .domain {
+            font-size: 2em;
+            font-weight: 300;
+            font-style: italic;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        /* --- VIDEÓ --- */
+        .video-container {
+            margin-bottom: 25px;
+            z-index: 1;
+            width: 80vw;
+            max-width: 450px;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-caption {
+            font-style: italic;
+            font-weight: 300;
+            font-size: 0.8em;
+            color: #ccc;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            margin-top: 0;
+            z-index: 1;
+        }
+
+        .icon-link {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .social-icon {
+            font-size: 3em;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .icon-link:hover {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+        }
+
+        .icon-link.instagram:hover { color: #E1306C; }
+        .icon-link.facebook:hover { color: #4267B2; }
+    </style>
+</head>
+<body>
+    <div class="content">
+
+        <!-- VISSZASZÁMLÁLÓ MOST LEGFELÜL -->
+        <div class="countdown-container">
+            <div id="countdown">
+                <div class="time-unit">
+                    <span id="days">00</span>
+                    <span class="label">NAP</span>
+                </div>
+                <div class="time-unit">
+                    <span id="hours">00</span>
+                    <span class="label">ÓRA</span>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes">00</span>
+                    <span class="label">PERC</span>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds">00</span>
+                    <span class="label">MÁSODPERC</span>
+                </div>
+            </div>
+            <p id="message"></p>
+        </div>
+
+        <!-- DOMAIN -->
+        <div class="domain">nyirigabor.hu</div>
+
+        <!-- VIDEÓ -->
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube.com/embed/2M9ry_RWjO8" 
+                title="A torinói ló – Monológ – Ide érkezett meg március 15-én Orbán" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <p class="video-caption">Krasznahorkai László - A torinói ló</p>
+    </div>
+
+    <div class="social-icons"></div>
+
+    <script>
+        const targetDate = new Date("April 12, 2026 00:00:00").getTime();
+        const countdownFunction = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const formatTime = (time) => time < 10 ? "0" + time : time;
+
+            document.getElementById("days").innerHTML = formatTime(days);
+            document.getElementById("hours").innerHTML = formatTime(hours);
+            document.getElementById("minutes").innerHTML = formatTime(minutes);
+            document.getElementById("seconds").innerHTML = formatTime(seconds);
+
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerHTML = "00:00:00:00";
+                document.getElementById("message").innerHTML = "A céldátum elérkezett! 🚀";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
