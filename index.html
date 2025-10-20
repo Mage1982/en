@@ -19,7 +19,7 @@
 
         body {
             background-color: var(--light-background);
-            color: var(--color-green); /* Alapértelmezett szövegszín zöld */
+            color: var(--color-green);
             font-family: 'Roboto', sans-serif;
             margin: 0;
             display: flex;
@@ -31,23 +31,22 @@
             overflow: hidden; 
         }
 
-        /* Dátum felirat stílusa (Piros, Növelt méret, Egy sorban) */
+        /* Dátum felirat stílusa (Piros, MOST KISEBB méret, egy sorban) */
         #title {
-            font-size: 10vw; 
+            font-size: 6vw; /* Visszavéve kisebb méretre */
             color: var(--color-red); 
             font-weight: 900; 
             font-style: normal; 
             margin-bottom: 2vh;
-            /* Jelentősen csökkentett betűköz az egy sorba rendezésért */
             letter-spacing: 0.05em; 
-            white-space: nowrap; /* Megakadályozza a törést */
+            white-space: nowrap; 
             /* Hangsúlyos árnyék/glow */
-            text-shadow: 0 0 7px rgba(214, 0, 0, 0.8), 0 0 20px rgba(214, 0, 0, 0.5); 
+            text-shadow: 0 0 5px rgba(214, 0, 0, 0.7), 0 0 10px rgba(214, 0, 0, 0.3); 
         }
 
-        /* Visszaszámláló konténer (Zöld) */
+        /* Visszaszámláló konténer (Zöld, MOST NAGYOBB méret) */
         #countdown {
-            font-size: 8vw; 
+            font-size: 10vw; /* Megnövelve, a domináns méret */
             line-height: 1; 
             padding: 10px;
             display: flex;
@@ -55,7 +54,7 @@
             align-items: baseline;
             color: var(--color-green); 
             /* Hangsúlyos árnyék/glow */
-            text-shadow: 0 0 5px rgba(0, 122, 0, 0.7), 0 0 15px rgba(0, 122, 0, 0.4);
+            text-shadow: 0 0 7px rgba(0, 122, 0, 0.8), 0 0 20px rgba(0, 122, 0, 0.5);
         }
 
         .segment {
@@ -93,11 +92,13 @@
             opacity: 0.7;
         }
         
-        /* Média lekérdezés: Kisebb képernyőkön még kompaktabb dátum */
+        /* Média lekérdezés: Kisebb képernyőn a méretek még hangsúlyosabbak */
         @media (max-width: 600px) {
             #title {
-                font-size: 12vw; /* Kis képernyőn még nagyobb méret a látványért */
-                letter-spacing: 0.02em; /* Még szűkebb betűköz */
+                font-size: 8vw; 
+            }
+            #countdown {
+                font-size: 14vw; /* Még nagyobb a mobil nézeten */
             }
         }
 
