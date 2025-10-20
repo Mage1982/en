@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RENDSZERVÁLTÁS! Visszaszámlálás</title>
     <style>
-        /* A neon stílushoz illő, erősebb, telítettebb trikolór színek */
+        /* Trikolór színek, kiemelve a kontraszt miatt */
         :root {
-            --neon-red: #E60000; /* Erősebb piros */
-            --neon-black: #000000; /* Fekete a kontraszthoz (fehér helyett) */
-            --neon-green: #008000; /* Erősebb zöld */
+            --color-red: #E60000;      /* Erős piros */
+            --color-green: #008000;    /* Erős zöld */
+            --color-contrast: #333333; /* Sötét szín a fehér helyett, a kontrasztért */
             --light-background: #FFFFFF; /* Fehér háttér */
         }
 
         body {
             background-color: var(--light-background);
-            color: var(--neon-black); /* Alapértelmezett szövegszín fekete */
+            color: var(--color-contrast); /* Alapértelmezett szövegszín sötétszürke */
             font-family: 'Consolas', 'Monospace', sans-serif;
             margin: 0;
             display: flex;
@@ -32,7 +32,6 @@
             font-weight: 900;
             margin-bottom: 5vh;
             letter-spacing: 0.1em;
-            /* Fontos: az átmenet időtartamát is növelni kell a simább váltásért */
             transition: color 3s ease, text-shadow 3s ease; 
         }
 
@@ -50,7 +49,6 @@
             flex-direction: column;
             align-items: center;
             margin: 0 1vw;
-            /* Fontos: az átmenet időtartamát is növelni kell a simább váltásért */
             transition: color 3s ease, text-shadow 3s ease; 
         }
 
@@ -68,25 +66,25 @@
             line-height: 1;
         }
 
-        /* Külön osztályok a színekhez és az izzáshoz. Az izzás gyengébb a fehér háttér miatt. */
+        /* Külön osztályok a színekhez és az izzáshoz */
         .color-red {
-            color: var(--neon-red);
-            text-shadow: 0 0 4px rgba(255, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.5); /* Enyhébb glow */
+            color: var(--color-red);
+            text-shadow: 0 0 4px rgba(255, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.5); 
         }
 
-        .color-black {
-            color: var(--neon-black);
-            text-shadow: 0 0 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
+        .color-contrast {
+            color: var(--color-contrast);
+            text-shadow: 0 0 4px rgba(51, 51, 51, 0.3); /* Halvány sötét "glow" */
         }
 
         .color-green {
-            color: var(--neon-green);
+            color: var(--color-green);
             text-shadow: 0 0 4px rgba(0, 128, 0, 0.8), 0 0 10px rgba(0, 128, 0, 0.5);
         }
 
-        /* Kötőjel/Elválasztó stílus - kontrasztosabb szürke */
+        /* Kötőjel/Elválasztó stílus */
         .separator {
-            color: #777;
+            color: #AAAAAA; /* Középszürke */
             display: block;
             font-size: 1em;
             line-height: 1.1;
@@ -127,8 +125,8 @@
         // Cél dátum: 2026. április 12. Éjfél
         const targetDate = new Date("2026-04-12T00:00:00").getTime();
         
-        // Színpaletta: Piros, Fekete (Fehér helyett a kontraszt miatt), Zöld
-        const colors = ['color-red', 'color-black', 'color-green'];
+        // Színpaletta: Piros, Kontrasztos sötét (a fehér sáv helyett), Zöld
+        const colors = ['color-red', 'color-contrast', 'color-green'];
         const segments = ['days-segment', 'hours-segment', 'minutes-segment'];
         const titleElement = document.getElementById('title');
         let colorIndex = 0; 
@@ -139,16 +137,16 @@
             const titleColorClass = colors[colorIndex];
             titleElement.className = titleColorClass; 
 
-            // Szegmensek színének beállítása (Piros - Fekete - Zöld)
+            // Szegmensek színének beállítása (Piros - Kontrasztos sötét - Zöld)
             for (let i = 0; i < segments.length; i++) {
                 const element = document.getElementById(segments[i]);
                 const colorClass = colors[(colorIndex + i) % 3]; 
                 element.className = 'segment ' + colorClass; 
             }
             
-            // Másodpercek: mindig fekete
+            // Másodpercek: Kontrasztos sötét (fekete helyett)
             const secondsSegment = document.getElementById('seconds-segment');
-            secondsSegment.className = 'segment color-black';
+            secondsSegment.className = 'segment color-contrast';
 
             // Index léptetése a következő színkiosztáshoz
             colorIndex = (colorIndex + 1) % colors.length;
@@ -167,7 +165,7 @@
 
             // Megjelenítés
             if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--neon-red);'>A VISSZASZÁMLÁLÁS LEJÁRT!</div>";
+                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A VISSZASZÁMLÁLÁS LEJÁRT!</div>";
                 titleElement.innerText = "RENDSZERVÁLTÁS!";
                 clearInterval(countdownInterval);
                 clearInterval(colorInterval);
