@@ -31,21 +31,23 @@
             overflow: hidden; 
         }
 
-        /* Dátum felirat stílusa (Piros, Növelt méret, Normál elrendezés) */
+        /* Dátum felirat stílusa (Piros, Növelt méret, Egy sorban) */
         #title {
-            font-size: 10vw; /* Jelentősen megnövelve */
+            font-size: 10vw; 
             color: var(--color-red); 
             font-weight: 900; 
             font-style: normal; 
             margin-bottom: 2vh;
-            letter-spacing: 0.1em; /* Kicsit kisebb betűköz a dátum olvashatóságáért */
+            /* Jelentősen csökkentett betűköz az egy sorba rendezésért */
+            letter-spacing: 0.05em; 
+            white-space: nowrap; /* Megakadályozza a törést */
             /* Hangsúlyos árnyék/glow */
             text-shadow: 0 0 7px rgba(214, 0, 0, 0.8), 0 0 20px rgba(214, 0, 0, 0.5); 
         }
 
         /* Visszaszámláló konténer (Zöld) */
         #countdown {
-            font-size: 8vw; /* Arányosan kisebb, mint a cím, de még nagy */
+            font-size: 8vw; 
             line-height: 1; 
             padding: 10px;
             display: flex;
@@ -89,6 +91,14 @@
             align-self: flex-start; 
             font-weight: 900;
             opacity: 0.7;
+        }
+        
+        /* Média lekérdezés: Kisebb képernyőkön még kompaktabb dátum */
+        @media (max-width: 600px) {
+            #title {
+                font-size: 12vw; /* Kis képernyőn még nagyobb méret a látványért */
+                letter-spacing: 0.02em; /* Még szűkebb betűköz */
+            }
         }
 
     </style>
