@@ -7,19 +7,19 @@
     <style>
         /* A neon stílushoz illő, erősebb, telítettebb trikolór színek */
         :root {
-            --neon-red: #FF3333; /* Izzó piros */
-            --neon-white: #FFFFFF; /* Fehér */
-            --neon-green: #33FF33; /* Izzó zöld */
-            --dark-background: #000000; /* Fekete háttér */
+            --neon-red: #FF3333; 
+            --neon-white: #FFFFFF; 
+            --neon-green: #33FF33; 
+            --dark-background: #000000; 
         }
 
         body {
             background-color: var(--dark-background);
             color: var(--neon-white);
-            font-family: 'Consolas', 'Monospace', sans-serif; /* Digitális/techno hatású betűtípus */
+            font-family: 'Consolas', 'Monospace', sans-serif;
             margin: 0;
             display: flex;
-            flex-direction: column; /* Felülre kerül a cím, alatta a számláló */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -28,70 +28,61 @@
         }
 
         #title {
-            font-size: 8vw; /* Nagy méret a címnek */
+            font-size: 8vw;
             font-weight: 900;
-            color: var(--neon-red); /* Piros trikolór szín */
-            text-shadow: 0 0 10px var(--neon-red), 0 0 30px var(--neon-red), 0 0 50px rgba(255, 0, 0, 0.7);
-            margin-bottom: 5vh; /* Távolság a számlálótól */
+            margin-bottom: 5vh;
             letter-spacing: 0.1em;
-            animation: pulse-title 2s infinite alternate; /* Külön pulzálás a címen */
+            /* A címen is dinamikus glow lesz, a JavaScript állítja a színt */
+            transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
         #countdown {
-            font-size: 8vw; /* Nagyméretű, az oldalhoz igazodó betűméret */
+            font-size: 8vw;
             line-height: 1.2;
             padding: 20px;
-            /* Psytrance/neon stílus: pulzáló glow - most már csak a glow marad a címen van a pulzálás */
-            animation: subtle-pulse 4s infinite alternate; 
-            display: flex; /* Egy sorba rendezés */
+            display: flex;
             justify-content: center;
-            align-items: flex-end; /* Hogy a szövegek is egy vonalban legyenek */
+            align-items: flex-end; 
         }
 
         .segment {
-            display: flex; /* Belső elrendezés: szám felül, felirat alul */
+            display: flex;
             flex-direction: column;
             align-items: center;
             margin: 0 1vw;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+            transition: color 0.5s ease, text-shadow 0.5s ease; /* Átmenet a színváltáshoz */
         }
 
         .value {
-            font-size: 1em; /* Maradjon nagy, de ne a szülő betűméretét növelje */
+            font-size: 1em; 
             font-weight: bold;
-            line-height: 1; /* Szűkíti a helyet */
+            line-height: 1; 
         }
 
         .label {
-            font-size: 0.25em; /* Kisebb címke */
+            font-size: 0.25em;
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            margin-top: -0.1em; /* Közelebb húzza a számhoz */
+            margin-top: -0.1em;
             line-height: 1;
         }
 
-        /* Trikolór színek és glow effektek */
-        /* A napok piros, órák fehér, percek zöld, másodpercek fehér (a ritmus kedvéért) */
-        .days {
+        /* Külön osztályok a színekhez és az izzáshoz */
+        .color-red {
             color: var(--neon-red);
             text-shadow: 0 0 5px var(--neon-red), 0 0 15px var(--neon-red), 0 0 25px var(--neon-red);
         }
 
-        .hours {
+        .color-white {
             color: var(--neon-white);
             text-shadow: 0 0 5px var(--neon-white), 0 0 15px var(--neon-white), 0 0 25px var(--neon-white);
         }
 
-        .minutes {
+        .color-green {
             color: var(--neon-green);
             text-shadow: 0 0 5px var(--neon-green), 0 0 15px var(--neon-green), 0 0 25px var(--neon-green);
         }
-        
-        .seconds {
-            color: var(--neon-white);
-            text-shadow: 0 0 5px var(--neon-white), 0 0 10px var(--neon-white);
-        }
-        
+
         /* Kötőjel/Elválasztó stílus */
         .separator {
             color: #444;
@@ -100,18 +91,9 @@
             line-height: 1.1;
             margin: 0 0.5vw;
             text-shadow: none;
-            align-self: flex-start; /* Hogy a számokkal legyen egy vonalban */
+            align-self: flex-start; 
         }
 
-        /* Pulzáló effekt a címen */
-        @keyframes pulse-title {
-            0% {
-                text-shadow: 0 0 10px var(--neon-red), 0 0 30px var(--neon-red), 0 0 60px rgba(255, 0, 0, 0.7);
-            }
-            100% {
-                text-shadow: 0 0 5px var(--neon-red), 0 0 20px var(--neon-red), 0 0 40px rgba(255, 0, 0, 0.5);
-            }
-        }
     </style>
 </head>
 <body>
@@ -119,22 +101,22 @@
     <div id="title">RENDSZERVÁLTÁS!</div>
 
     <div id="countdown">
-        <div class="segment days">
+        <div class="segment" id="days-segment">
             <span class="value" id="days">00</span>
             <span class="label">Nap</span>
         </div>
         <span class="separator">:</span>
-        <div class="segment hours">
+        <div class="segment" id="hours-segment">
             <span class="value" id="hours">00</span>
             <span class="label">Óra</span>
         </div>
         <span class="separator">:</span>
-        <div class="segment minutes">
+        <div class="segment" id="minutes-segment">
             <span class="value" id="minutes">00</span>
             <span class="label">Perc</span>
         </div>
         <span class="separator">:</span>
-        <div class="segment seconds">
+        <div class="segment" id="seconds-segment">
             <span class="value" id="seconds">00</span>
             <span class="label">Mp</span>
         </div>
@@ -143,7 +125,38 @@
     <script>
         // Cél dátum: 2026. április 12. Éjfél
         const targetDate = new Date("2026-04-12T00:00:00").getTime();
+        
+        // Színpaletta és a szegmensek ID-i
+        const colors = ['color-red', 'color-white', 'color-green'];
+        const segments = ['days-segment', 'hours-segment', 'minutes-segment'];
+        const titleElement = document.getElementById('title');
+        let colorIndex = 0; // Kezdő pozíció: Piros-Fehér-Zöld
 
+        // Színváltó funkció
+        const changeColors = () => {
+            // Cím színének beállítása (forog a színeken)
+            const titleColorClass = colors[colorIndex];
+            titleElement.className = titleColorClass; 
+
+            // Szegmensek színének beállítása
+            for (let i = 0; i < segments.length; i++) {
+                const element = document.getElementById(segments[i]);
+                // Színkiosztás: (index + i) % 3 a ciklikus váltáshoz
+                const colorClass = colors[(colorIndex + i) % 3]; 
+                
+                // Csak a szükséges osztályt tartja meg
+                element.className = 'segment ' + colorClass; 
+            }
+            
+            // Másodpercek: mindig fehér, de a fényreklám-hatás részeként a text-shadow is változik 
+            const secondsSegment = document.getElementById('seconds-segment');
+            secondsSegment.className = 'segment color-white';
+
+            // Index léptetése a következő színkiosztáshoz
+            colorIndex = (colorIndex + 1) % colors.length;
+        };
+
+        // Visszaszámláló logikája
         const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -157,7 +170,9 @@
             // Megjelenítés
             if (distance < 0) {
                 document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--neon-red);'>A VISSZASZÁMLÁLÁS LEJÁRT!</div>";
-                clearInterval(interval);
+                titleElement.innerText = "RENDSZERVÁLTÁS!";
+                clearInterval(countdownInterval);
+                clearInterval(colorInterval);
                 return;
             }
 
@@ -168,9 +183,13 @@
             document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
         }
 
-        // Visszaszámláló indítása
+        // Visszaszámláló indítása (másodpercenként)
         updateCountdown(); 
-        const interval = setInterval(updateCountdown, 1000); 
+        const countdownInterval = setInterval(updateCountdown, 1000); 
+
+        // Színváltó indítása (például 1 másodpercenként)
+        changeColors();
+        const colorInterval = setInterval(changeColors, 1000); 
     </script>
 
 </body>
