@@ -1,168 +1,173 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026. Április 12. | nyirigabor.hu | Visszaszámlálás</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
-    
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23E60000'/%3E%3Crect y='0.66' width='3' height='0.68' fill='%23FFFFFF'/%3E%3Crect y='1.33' width='3' height='0.67' fill='%23008000'/%3E%3C/svg%3E" type="image/svg+xml">
-    
-    <style>
-        /* Színek és alapbeállítások */
-        :root {
-            --color-red: #D60000;      /* Erős piros */
-            --color-green: #007A00;    /* Erős zöld */
-            --light-background: #FFFFFF; /* Fehér háttér */
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026. Április 12. | nyirigabor.hu | Visszaszámlálás</title>
+    
+        <meta property="og:title" content="Visszaszámláló - 2026. április 12.">
+    <meta property="og:description" content="Visszaszámlálás 2026. április 12-ig!">
+    <meta property="og:image" content="https://nyirigabor.hu/nyg.png">
+    <meta property="og:url" content="https://nyirigabor.hu/visszaszamlalo-oldal-cime">     <meta property="og:type" content="website">
+    <meta property="og:locale" content="hu_HU">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23E60000'/%3E%3Crect y='0.66' width='3' height='0.68' fill='%23FFFFFF'/%3E%3Crect y='1.33' width='3' height='0.67' fill='%23008000'/%3E%3C/svg%3E" type="image/svg+xml">
+    
+    <style>
+        /* Színek és alapbeállítások */
+        :root {
+            --color-red: #D60000;      /* Erős piros */
+            --color-green: #007A00;    /* Erős zöld */
+            --light-background: #FFFFFF; /* Fehér háttér */
+        }
 
-        body {
-            background-color: var(--light-background);
-            color: var(--color-green);
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            overflow: hidden; 
-        }
+        body {
+            background-color: var(--light-background);
+            color: var(--color-green);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden; 
+        }
 
-        /* Dátum felirat stílusa (Piros, KISEBB méret, árnyék NÉLKÜL) */
-        #title {
-            font-size: 6vw; /* Kisebb méret */
-            color: var(--color-red); 
-            font-weight: 900; 
-            font-style: normal; 
-            margin-bottom: 2vh;
-            letter-spacing: 0.05em; 
-            white-space: nowrap; 
-            text-shadow: none; /* Árnyék eltávolítva */
-        }
+        /* Dátum felirat stílusa (Piros, KISEBB méret, árnyék NÉLKÜL) */
+        #title {
+            font-size: 6vw; /* Kisebb méret */
+            color: var(--color-red); 
+            font-weight: 900; 
+            font-style: normal; 
+            margin-bottom: 2vh;
+            letter-spacing: 0.05em; 
+            white-space: nowrap; 
+            text-shadow: none; /* Árnyék eltávolítva */
+        }
 
-        /* Visszaszámláló konténer (Zöld, NAGYOBB méret, árnyék NÉLKÜL) */
-        #countdown {
-            font-size: 10vw; /* Domináns méret */
-            line-height: 1; 
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            color: var(--color-green); 
-            text-shadow: none; /* Árnyék eltávolítva */
-        }
+        /* Visszaszámláló konténer (Zöld, NAGYOBB méret, árnyék NÉLKÜL) */
+        #countdown {
+            font-size: 10vw; /* Domináns méret */
+            line-height: 1; 
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            color: var(--color-green); 
+            text-shadow: none; /* Árnyék eltávolítva */
+        }
 
-        .segment {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 0.5vw;
-            font-weight: 700;
-        }
+        .segment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 0.5vw;
+            font-weight: 700;
+        }
 
-        .value {
-            font-size: 1em; 
-            font-weight: 900;
-            line-height: 1; 
-        }
+        .value {
+            font-size: 1em; 
+            font-weight: 900;
+            line-height: 1; 
+        }
 
-        .label {
-            font-size: 0.25em; 
-            text-transform: uppercase;
-            letter-spacing: 0.25em; 
-            margin-top: 0.5vh; 
-            line-height: 1;
-        }
+        .label {
+            font-size: 0.25em; 
+            text-transform: uppercase;
+            letter-spacing: 0.25em; 
+            margin-top: 0.5vh; 
+            line-height: 1;
+        }
 
-        /* Kötőjel/Elválasztó stílus */
-        .separator {
-            color: var(--color-green); 
-            display: block;
-            font-size: 1em;
-            line-height: 1;
-            margin: 0 0.5vw;
-            text-shadow: none;
-            align-self: flex-start; 
-            font-weight: 900;
-            opacity: 0.7;
-        }
-        
-        /* Média lekérdezés: Kisebb képernyőn a méretek */
-        @media (max-width: 600px) {
-            #title {
-                font-size: 8vw; 
-            }
-            #countdown {
-                font-size: 14vw; 
-            }
-        }
+        /* Kötőjel/Elválasztó stílus */
+        .separator {
+            color: var(--color-green); 
+            display: block;
+            font-size: 1em;
+            line-height: 1;
+            margin: 0 0.5vw;
+            text-shadow: none;
+            align-self: flex-start; 
+            font-weight: 900;
+            opacity: 0.7;
+        }
+        
+        /* Média lekérdezés: Kisebb képernyőn a méretek */
+        @media (max-width: 600px) {
+            #title {
+                font-size: 8vw; 
+            }
+            #countdown {
+                font-size: 14vw; 
+            }
+        }
 
-    </style>
+    </style>
 </head>
 <body>
 
-    <div id="title">2026. ÁPRILIS 12.</div>
+    <div id="title">2026. ÁPRILIS 12.</div>
 
-    <div id="countdown">
-        <div class="segment">
-            <span class="value" id="days">00</span>
-            <span class="label">Nap</span>
-        </div>
-        <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="hours">00</span>
-            <span class="label">Óra</span>
-        </div>
-        <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="minutes">00</span>
-            <span class="label">Perc</span>
-        </div>
-        <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="seconds">00</span>
-            <span class="label">Mp</span>
-        </div>
-    </div>
+    <div id="countdown">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
+    </div>
 
-    <script>
-        // Cél dátum: 2026. április 12. Éjfél
-        const targetDate = new Date("2026-04-12T00:00:00").getTime();
-        const titleElement = document.getElementById('title');
+    <script>
+        // Cél dátum: 2026. április 12. Éjfél
+        const targetDate = new Date("2026-04-12T00:00:00").getTime();
+        const titleElement = document.getElementById('title');
 
-        // Visszaszámláló logikája
-        const updateCountdown = () => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+        // Visszaszámláló logikája
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-            // Kiszámítások
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Kiszámítások
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Megjelenítés
-            if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A CÉLDÁTUM ELÉRKEZETT!</div>";
-                titleElement.innerText = "2026. ÁPRILIS 12. ELÉRKEZETT!";
-                clearInterval(countdownInterval);
-                return;
-            }
+            // Megjelenítés
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A CÉLDÁTUM ELÉRKEZETT!</div>";
+                titleElement.innerText = "2026. ÁPRILIS 12. ELÉRKEZETT!";
+                clearInterval(countdownInterval);
+                return;
+            }
 
-            // Két számjegyű formátum
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-        }
+            // Két számjegyű formátum
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
 
-        // Visszaszámláló indítása (másodpercenként)
-        updateCountdown(); 
-        const countdownInterval = setInterval(updateCountdown, 1000); 
-    </script>
+        // Visszaszámláló indítása (másodpercenként)
+        updateCountdown(); 
+        const countdownInterval = setInterval(updateCountdown, 1000); 
+    </script>
 
 </body>
 </html>
