@@ -31,30 +31,28 @@
             overflow: hidden; 
         }
 
-        /* Dátum felirat stílusa (Piros, MOST KISEBB méret, egy sorban) */
+        /* Dátum felirat stílusa (Piros, KISEBB méret, árnyék NÉLKÜL) */
         #title {
-            font-size: 6vw; /* Visszavéve kisebb méretre */
+            font-size: 6vw; /* Kisebb méret */
             color: var(--color-red); 
             font-weight: 900; 
             font-style: normal; 
             margin-bottom: 2vh;
             letter-spacing: 0.05em; 
             white-space: nowrap; 
-            /* Hangsúlyos árnyék/glow */
-            text-shadow: 0 0 5px rgba(214, 0, 0, 0.7), 0 0 10px rgba(214, 0, 0, 0.3); 
+            text-shadow: none; /* Árnyék eltávolítva */
         }
 
-        /* Visszaszámláló konténer (Zöld, MOST NAGYOBB méret) */
+        /* Visszaszámláló konténer (Zöld, NAGYOBB méret, árnyék NÉLKÜL) */
         #countdown {
-            font-size: 10vw; /* Megnövelve, a domináns méret */
+            font-size: 10vw; /* Domináns méret */
             line-height: 1; 
             padding: 10px;
             display: flex;
             justify-content: center;
             align-items: baseline;
             color: var(--color-green); 
-            /* Hangsúlyos árnyék/glow */
-            text-shadow: 0 0 7px rgba(0, 122, 0, 0.8), 0 0 20px rgba(0, 122, 0, 0.5);
+            text-shadow: none; /* Árnyék eltávolítva */
         }
 
         .segment {
@@ -92,13 +90,13 @@
             opacity: 0.7;
         }
         
-        /* Média lekérdezés: Kisebb képernyőn a méretek még hangsúlyosabbak */
+        /* Média lekérdezés: Kisebb képernyőn a méretek */
         @media (max-width: 600px) {
             #title {
                 font-size: 8vw; 
             }
             #countdown {
-                font-size: 14vw; /* Még nagyobb a mobil nézeten */
+                font-size: 14vw; 
             }
         }
 
