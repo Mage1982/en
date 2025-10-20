@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visszaszámláló – 2026. április 12. | nyirigabor.hu</title>
 
-    <!-- Open Graph meta adatok -->
     <meta property="og:title" content="Visszaszámláló – 2026. április 12.">
     <meta property="og:description" content="Kövesd a visszaszámlálást 2026. április 12-ig!">
     <meta property="og:image" content="https://nyirigabor.hu/nyg.png">
@@ -13,10 +12,8 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="hu_HU">
 
-    <!-- Google betűtípus -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- Favicon (magyar trikolór) -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23E60000'/%3E%3Crect y='0.66' width='3' height='0.68' fill='%23FFFFFF'/%3E%3Crect y='1.33' width='3' height='0.67' fill='%23008000'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <style>
@@ -29,7 +26,7 @@
         body {
             background-color: var(--light-background);
             color: var(--color-green);
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Sansation', sans-serif; /* Itt módosítottam */
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -43,7 +40,7 @@
         #title {
             font-size: 6vw;
             color: var(--color-red);
-            font-weight: 900;
+            font-weight: 700; /* Sansation maximum súlya, ha 900-as nem elérhető */
             margin-bottom: 2vh;
             letter-spacing: 0.05em;
             white-space: nowrap;
@@ -66,12 +63,12 @@
             flex-direction: column;
             align-items: center;
             margin: 0 0.5vw;
-            font-weight: 700;
+            font-weight: 700; /* Sansation maximum súlya */
         }
 
         .value {
             font-size: 1em;
-            font-weight: 900;
+            font-weight: 700; /* Sansation maximum súlya */
             line-height: 1;
         }
 
@@ -91,7 +88,7 @@
             margin: 0 0.5vw;
             text-shadow: none;
             align-self: flex-start;
-            font-weight: 900;
+            font-weight: 700; /* Sansation maximum súlya */
             opacity: 0.7;
         }
 
