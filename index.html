@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026. Április 12. | nyirigabor.hu | RENDSZERVÁLTÁS! Visszaszámlálás</title>
+    <title>2026. Április 12. | nyirigabor.hu | Visszaszámlálás</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
     
@@ -31,14 +31,14 @@
             overflow: hidden; 
         }
 
-        /* RENDSZERVÁLTÁS! felirat stílusa (Piros, Növelt méret, Normál elrendezés) */
+        /* Dátum felirat stílusa (Piros, Növelt méret, Normál elrendezés) */
         #title {
             font-size: 10vw; /* Jelentősen megnövelve */
             color: var(--color-red); 
-            font-weight: 900; /* Félkövér marad, de dőlt nélkül (normál elrendezés) */
-            font-style: normal; /* Visszaállítva normálra */
+            font-weight: 900; 
+            font-style: normal; 
             margin-bottom: 2vh;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em; /* Kicsit kisebb betűköz a dátum olvashatóságáért */
             /* Hangsúlyos árnyék/glow */
             text-shadow: 0 0 7px rgba(214, 0, 0, 0.8), 0 0 20px rgba(214, 0, 0, 0.5); 
         }
@@ -71,7 +71,7 @@
         }
 
         .label {
-            font-size: 0.25em; /* Kicsit nagyobb címkék */
+            font-size: 0.25em; 
             text-transform: uppercase;
             letter-spacing: 0.25em; 
             margin-top: 0.5vh; 
@@ -95,7 +95,7 @@
 </head>
 <body>
 
-    <div id="title">RENDSZERVÁLTÁS!</div>
+    <div id="title">2026. ÁPRILIS 12.</div>
 
     <div id="countdown">
         <div class="segment">
@@ -121,7 +121,6 @@
 
     <script>
         // Cél dátum: 2026. április 12. Éjfél
-        // A dátumot október 20, 2025-höz viszonyítva kell számolni, de a kód automatikusan kezeli az aktuális időt.
         const targetDate = new Date("2026-04-12T00:00:00").getTime();
         const titleElement = document.getElementById('title');
 
@@ -138,8 +137,8 @@
 
             // Megjelenítés
             if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A VISSZASZÁMLÁLÁS LEJÁRT!</div>";
-                titleElement.innerText = "RENDSZERVÁLTÁS!";
+                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A CÉLDÁTUM ELÉRKEZETT!</div>";
+                titleElement.innerText = "2026. ÁPRILIS 12. ELÉRKEZETT!";
                 clearInterval(countdownInterval);
                 return;
             }
