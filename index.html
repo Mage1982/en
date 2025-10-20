@@ -95,4 +95,66 @@
 </head>
 <body>
 
-    <div
+    <div id="title">RENDSZERVÁLTÁS!</div>
+
+    <div id="countdown">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
+    </div>
+
+    <script>
+        // Cél dátum: 2026. április 12. Éjfél
+        // A dátumot október 20, 2025-höz viszonyítva kell számolni, de a kód automatikusan kezeli az aktuális időt.
+        const targetDate = new Date("2026-04-12T00:00:00").getTime();
+        const titleElement = document.getElementById('title');
+
+        // Visszaszámláló logikája
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Kiszámítások
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Megjelenítés
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A VISSZASZÁMLÁLÁS LEJÁRT!</div>";
+                titleElement.innerText = "RENDSZERVÁLTÁS!";
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            // Két számjegyű formátum
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        // Visszaszámláló indítása (másodpercenként)
+        updateCountdown(); 
+        const countdownInterval = setInterval(updateCountdown, 1000); 
+    </script>
+
+</body>
+</html>
