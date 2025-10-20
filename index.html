@@ -12,16 +12,15 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="hu_HU">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
 
     <link rel="icon" href="favicon nyg.png" type="image/png">
 
     <style>
         :root {
-            /* A színeket a kontraszt miatt használjuk */
-            --color-white: #FFFFFF;
-            --color-red: #E60000;
-            --color-black-transparent: rgba(0, 0, 0, 0.6); /* Sötét háttér a szövegnek */
+            /* A színeket átláthatóvá teszem, hogy érvényesüljön a videó */
+            --color-red: #D60000;
+            --color-green: #007A00;
         }
 
         /* ---------------------------------- */
@@ -33,13 +32,12 @@
             right: 0;
             bottom: 0;
             left: 0;
-            z-index: -1; 
+            z-index: -1; /* A tartalom alá helyezi */
             overflow: hidden;
-            /* A háttér elsötétítése a jobb olvashatóságért (overlay) */
-            background: rgba(0, 0, 0, 0.3);
         }
 
         #video-background iframe {
+            /* A videó mindig kitölti a képernyőt, de megőrzi az arányokat */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -48,184 +46,75 @@
             width: auto;
             height: auto;
             transform: translate(-50%, -50%);
-            pointer-events: none; 
+            pointer-events: none; /* Letiltja az egér interakciót a videón */
         }
         /* ---------------------------------- */
-        /* KÖZPONTI VISSZASZÁMLÁLÓ KONTÉNER (A FŐ MARKETING ELEM) */
+        /* ALAP STÍLUSOK */
         /* ---------------------------------- */
         body {
+            /* Fontos: A háttérszínt átlátszóra állítom */
             background-color: transparent; 
+            color: var(--color-green);
             font-family: 'Roboto', sans-serif;
             margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
             overflow: hidden;
-            position: relative; 
-            padding: 20px;
-        }
-        
-        #countdown-container {
-            /* Félig átlátszó sötét háttér a kiemeléshez */
-            background-color: var(--color-black-transparent);
-            padding: 40px 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px); /* Enyhe elmosás az elegáns megjelenéshez */
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Finom keret */
+            position: relative; /* Hogy a tartalom a videó felett legyen */
         }
 
         #title {
-            font-size: clamp(24px, 4vw, 48px); /* Reszponzív méret */
-            color: var(--color-white);
-            font-weight: 300; /* Vékonyabb font a modern megjelenéshez */
-            margin-bottom: 3vh;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-            line-height: 1.2;
+            font-size: 6vw;
+            color: var(--color-red);
+            font-weight: 900;
+            margin-bottom: 2vh;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            /* Szöveg árnyék a videó háttér feletti jobb olvashatóságért */
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 0 5px rgba(0, 0, 0, 0.7);
         }
 
         #countdown {
-            font-size: clamp(30px, 8vw, 90px); /* Reszponzív, nagy méret */
+            font-size: 10vw;
             line-height: 1;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: baseline;
-            color: var(--color-white);
+            color: var(--color-green);
+            /* Szöveg árnyék a videó háttér feletti jobb olvashatóságért */
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 0 5px rgba(0, 0, 0, 0.7);
         }
 
         .segment {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0 1vw;
-            font-weight: 900; /* A számok legyenek vastagok */
-            min-width: 15vw; /* Helybiztosítás (főleg mobilon) */
+            margin: 0 0.5vw;
+            font-weight: 700;
         }
 
         .value {
             font-size: 1em;
             font-weight: 900;
-            line-height: 1.1;
-            /* Piros szín a kiemeléshez a fehér alapon */
-            color: var(--color-red); 
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Fényhatás */
+            line-height: 1;
         }
 
         .label {
-            font-size: 0.2em; /* Kisebb címke */
-            font-weight: 300; /* Vékonyabb címke */
+            font-size: 0.25em;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 1vh;
+            letter-spacing: 0.25em;
+            margin-top: 0.5vh;
             line-height: 1;
-            color: var(--color-white);
-            opacity: 0.8;
         }
 
         .separator {
-            color: var(--color-white);
+            color: var(--color-green);
             display: block;
-            font-size: 0.5em; 
+            font-size: 1em;
             line-height: 1;
             margin: 0 0.5vw;
-            align-self: flex-start;
-            font-weight: 300;
-            opacity: 0.5;
-            padding-top: 10px; /* Hogy a kettőspont jól pozícionálva legyen */
-        }
-
-        /* Reszponzivitás finomítása mobilra */
-        @media (max-width: 768px) {
-            #countdown-container {
-                padding: 20px 10px;
-                width: 90%;
-            }
-            .segment {
-                margin: 0 0.5vw;
-                min-width: 18vw;
-            }
-            .label {
-                font-size: 0.25em;
-                letter-spacing: 0.05em;
-            }
-            .separator {
-                font-size: 0.4em;
-                padding-top: 5px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="video-background">
-        <iframe src="https://www.youtube.com/embed/CEqYVU9S-Wg?autoplay=1&mute=1&loop=1&playlist=CEqYVU9S-Wg&controls=0&modestbranding=1&disablekb=1&iv_load_policy=3"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-        </iframe>
-    </div>
-    <div id="countdown-container">
-        <div id="title">Visszaszámlálás eddig: 2026. április 12.</div>
-
-        <div id="countdown">
-            <div class="segment">
-                <span class="value" id="days">00</span>
-                <span class="label">Nap</span>
-            </div>
-            <span class="separator">:</span>
-            <div class="segment">
-                <span class="value" id="hours">00</span>
-                <span class="label">Óra</span>
-            </div>
-            <span class="separator">:</span>
-            <div class="segment">
-                <span class="value" id="minutes">00</span>
-                <span class="label">Perc</span>
-            </div>
-            <span class="separator">:</span>
-            <div class="segment">
-                <span class="value" id="seconds">00</span>
-                <span class="label">Mp</span>
-            </div>
-        </div>
-    </div>
-    <script>
-        const targetDate = new Date("2026-04-12T00:00:00").getTime();
-        const titleElement = document.getElementById('title');
-        const countdownContainer = document.getElementById('countdown-container');
-
-        const updateCountdown = () => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            if (distance < 0) {
-                // Esemény utáni üzenet
-                document.getElementById("countdown").innerHTML =
-                    "<div style='font-size: 0.5em; color: var(--color-red); font-weight: 900;'>A CÉLDÁTUM ELÉRKEZETT!</div>";
-                titleElement.innerText = "2026. ÁPRILIS 12. ELÉRKEZETT!";
-                clearInterval(countdownInterval);
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-        };
-
-        updateCountdown();
-        const countdownInterval = setInterval(updateCountdown, 1000);
-    </script>
-
-</body>
-</html>
