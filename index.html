@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RENDSZERVÁLTÁS! Visszaszámlálás</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    
     <style>
         /* Trikolór színek, kiemelve a kontraszt miatt */
         :root {
-            --color-red: #E60000;      /* Erős piros */
-            --color-green: #008000;    /* Erős zöld */
-            --color-contrast: #333333; /* Sötét szín a fehér helyett, a kontrasztért */
+            --color-red: #D60000;      /* Erős piros */
+            --color-green: #007A00;    /* Erős zöld */
+            --color-contrast: #222222; /* Sötét szín a fehér helyett, a kontrasztért */
             --light-background: #FFFFFF; /* Fehér háttér */
         }
 
         body {
             background-color: var(--light-background);
-            color: var(--color-contrast); /* Alapértelmezett szövegszín sötétszürke */
-            font-family: 'Consolas', 'Monospace', sans-serif;
+            color: var(--color-contrast);
+            font-family: 'Roboto', sans-serif; /* Roboto betűtípus */
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -28,69 +31,73 @@
         }
 
         #title {
-            font-size: 8vw;
+            font-size: 7vw;
             font-weight: 900;
-            margin-bottom: 5vh;
-            letter-spacing: 0.1em;
+            margin-bottom: 2vh; /* Kisebb távolság */
+            letter-spacing: 0.15em;
             transition: color 3s ease, text-shadow 3s ease; 
         }
 
         #countdown {
-            font-size: 8vw;
-            line-height: 1.2;
-            padding: 20px;
+            /* Kompakt méret, de hangsúlyos */
+            font-size: 10vw; 
+            line-height: 1; /* Szűkebb sorköz */
+            padding: 10px;
             display: flex;
             justify-content: center;
-            align-items: flex-end; 
+            align-items: baseline; /* Számok egy vonalon */
         }
 
         .segment {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0 1vw;
+            margin: 0 0.5vw; /* Kisebb margó a kompaktabb megjelenéshez */
             transition: color 3s ease, text-shadow 3s ease; 
+            font-weight: 700;
         }
 
         .value {
-            font-size: 1em; 
-            font-weight: bold;
+            font-size: 1em; /* Hangsúlyos számok */
+            font-weight: 900;
             line-height: 1; 
         }
 
         .label {
-            font-size: 0.25em;
+            font-size: 0.2em; /* Még kisebb címke */
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-top: -0.1em;
+            letter-spacing: 0.25em; /* Nagyobb betűköz a jobb olvashatóságért */
+            margin-top: 0.5vh; /* Távolság a számok alatt */
             line-height: 1;
         }
 
-        /* Külön osztályok a színekhez és az izzáshoz */
+        /* Színek és izzás - erős kontraszt a fehér háttéren */
         .color-red {
             color: var(--color-red);
-            text-shadow: 0 0 4px rgba(255, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.5); 
+            text-shadow: 0 0 5px rgba(214, 0, 0, 0.7), 0 0 15px rgba(214, 0, 0, 0.4); 
         }
 
         .color-contrast {
             color: var(--color-contrast);
-            text-shadow: 0 0 4px rgba(51, 51, 51, 0.3); /* Halvány sötét "glow" */
+            text-shadow: 0 0 5px rgba(34, 34, 34, 0.3); 
         }
 
         .color-green {
             color: var(--color-green);
-            text-shadow: 0 0 4px rgba(0, 128, 0, 0.8), 0 0 10px rgba(0, 128, 0, 0.5);
+            text-shadow: 0 0 5px rgba(0, 122, 0, 0.7), 0 0 15px rgba(0, 122, 0, 0.4);
         }
 
         /* Kötőjel/Elválasztó stílus */
         .separator {
-            color: #AAAAAA; /* Középszürke */
+            color: #AAAAAA;
             display: block;
             font-size: 1em;
-            line-height: 1.1;
+            line-height: 1;
             margin: 0 0.5vw;
             text-shadow: none;
             align-self: flex-start; 
+            font-weight: 900;
+            opacity: 0.7;
         }
 
     </style>
@@ -144,7 +151,7 @@
                 element.className = 'segment ' + colorClass; 
             }
             
-            // Másodpercek: Kontrasztos sötét (fekete helyett)
+            // Másodpercek: Kontrasztos sötét
             const secondsSegment = document.getElementById('seconds-segment');
             secondsSegment.className = 'segment color-contrast';
 
