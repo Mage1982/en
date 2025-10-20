@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RENDSZERVÁLTÁS! Visszaszámlálás</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap" rel="stylesheet">
     
     <style>
-        /* Trikolór színek, kiemelve a kontraszt miatt */
+        /* Színek és alapbeállítások */
         :root {
             --color-red: #D60000;      /* Erős piros */
             --color-green: #007A00;    /* Erős zöld */
-            --color-contrast: #222222; /* Sötét szín a fehér helyett, a kontrasztért */
             --light-background: #FFFFFF; /* Fehér háttér */
         }
 
         body {
             background-color: var(--light-background);
-            color: var(--color-contrast);
-            font-family: 'Roboto', sans-serif; /* Roboto betűtípus */
+            color: var(--color-green); /* Alapértelmezett szövegszín zöld */
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -30,66 +29,56 @@
             overflow: hidden; 
         }
 
+        /* RENDSZERVÁLTÁS! felirat stílusa */
         #title {
             font-size: 7vw;
-            font-weight: 900;
-            margin-bottom: 2vh; /* Kisebb távolság */
+            color: var(--color-red); /* Piros szín */
+            font-weight: 900; /* Félkövér */
+            font-style: italic; /* Dőlt */
+            margin-bottom: 2vh;
             letter-spacing: 0.15em;
-            transition: color 3s ease, text-shadow 3s ease; 
+            /* Hangsúlyos árnyék/glow */
+            text-shadow: 0 0 5px rgba(214, 0, 0, 0.7), 0 0 15px rgba(214, 0, 0, 0.4); 
         }
 
+        /* Visszaszámláló konténer */
         #countdown {
-            /* Kompakt méret, de hangsúlyos */
             font-size: 10vw; 
-            line-height: 1; /* Szűkebb sorköz */
+            line-height: 1; 
             padding: 10px;
             display: flex;
             justify-content: center;
-            align-items: baseline; /* Számok egy vonalon */
+            align-items: baseline;
+            color: var(--color-green); /* Zöld szín */
+            /* Hangsúlyos árnyék/glow */
+            text-shadow: 0 0 5px rgba(0, 122, 0, 0.7), 0 0 15px rgba(0, 122, 0, 0.4);
         }
 
         .segment {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0 0.5vw; /* Kisebb margó a kompaktabb megjelenéshez */
-            transition: color 3s ease, text-shadow 3s ease; 
+            margin: 0 0.5vw;
             font-weight: 700;
         }
 
         .value {
-            font-size: 1em; /* Hangsúlyos számok */
+            font-size: 1em; 
             font-weight: 900;
             line-height: 1; 
         }
 
         .label {
-            font-size: 0.2em; /* Még kisebb címke */
+            font-size: 0.2em; 
             text-transform: uppercase;
-            letter-spacing: 0.25em; /* Nagyobb betűköz a jobb olvashatóságért */
-            margin-top: 0.5vh; /* Távolság a számok alatt */
+            letter-spacing: 0.25em; 
+            margin-top: 0.5vh; 
             line-height: 1;
-        }
-
-        /* Színek és izzás - erős kontraszt a fehér háttéren */
-        .color-red {
-            color: var(--color-red);
-            text-shadow: 0 0 5px rgba(214, 0, 0, 0.7), 0 0 15px rgba(214, 0, 0, 0.4); 
-        }
-
-        .color-contrast {
-            color: var(--color-contrast);
-            text-shadow: 0 0 5px rgba(34, 34, 34, 0.3); 
-        }
-
-        .color-green {
-            color: var(--color-green);
-            text-shadow: 0 0 5px rgba(0, 122, 0, 0.7), 0 0 15px rgba(0, 122, 0, 0.4);
         }
 
         /* Kötőjel/Elválasztó stílus */
         .separator {
-            color: #AAAAAA;
+            color: var(--color-green); /* Zöld legyen az is */
             display: block;
             font-size: 1em;
             line-height: 1;
@@ -107,22 +96,22 @@
     <div id="title">RENDSZERVÁLTÁS!</div>
 
     <div id="countdown">
-        <div class="segment" id="days-segment">
+        <div class="segment">
             <span class="value" id="days">00</span>
             <span class="label">Nap</span>
         </div>
         <span class="separator">:</span>
-        <div class="segment" id="hours-segment">
+        <div class="segment">
             <span class="value" id="hours">00</span>
             <span class="label">Óra</span>
         </div>
         <span class="separator">:</span>
-        <div class="segment" id="minutes-segment">
+        <div class="segment">
             <span class="value" id="minutes">00</span>
             <span class="label">Perc</span>
         </div>
         <span class="separator">:</span>
-        <div class="segment" id="seconds-segment">
+        <div class="segment">
             <span class="value" id="seconds">00</span>
             <span class="label">Mp</span>
         </div>
@@ -131,33 +120,7 @@
     <script>
         // Cél dátum: 2026. április 12. Éjfél
         const targetDate = new Date("2026-04-12T00:00:00").getTime();
-        
-        // Színpaletta: Piros, Kontrasztos sötét (a fehér sáv helyett), Zöld
-        const colors = ['color-red', 'color-contrast', 'color-green'];
-        const segments = ['days-segment', 'hours-segment', 'minutes-segment'];
         const titleElement = document.getElementById('title');
-        let colorIndex = 0; 
-
-        // Színváltó funkció
-        const changeColors = () => {
-            // Cím színének beállítása
-            const titleColorClass = colors[colorIndex];
-            titleElement.className = titleColorClass; 
-
-            // Szegmensek színének beállítása (Piros - Kontrasztos sötét - Zöld)
-            for (let i = 0; i < segments.length; i++) {
-                const element = document.getElementById(segments[i]);
-                const colorClass = colors[(colorIndex + i) % 3]; 
-                element.className = 'segment ' + colorClass; 
-            }
-            
-            // Másodpercek: Kontrasztos sötét
-            const secondsSegment = document.getElementById('seconds-segment');
-            secondsSegment.className = 'segment color-contrast';
-
-            // Index léptetése a következő színkiosztáshoz
-            colorIndex = (colorIndex + 1) % colors.length;
-        };
 
         // Visszaszámláló logikája
         const updateCountdown = () => {
@@ -175,7 +138,6 @@
                 document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A VISSZASZÁMLÁLÁS LEJÁRT!</div>";
                 titleElement.innerText = "RENDSZERVÁLTÁS!";
                 clearInterval(countdownInterval);
-                clearInterval(colorInterval);
                 return;
             }
 
@@ -189,10 +151,6 @@
         // Visszaszámláló indítása (másodpercenként)
         updateCountdown(); 
         const countdownInterval = setInterval(updateCountdown, 1000); 
-
-        // Színváltó indítása: 3000 ms = 3 másodperc
-        changeColors();
-        const colorInterval = setInterval(changeColors, 3000); 
     </script>
 
 </body>
