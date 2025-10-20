@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nyirigabor.hu - Minimál</title>
+    <title>Visszaszámláló a Hősök Terénél</title>
     <meta name="description" content="Szükség van Rád!">
 
     <meta property="og:url" content="https://nyirigabor.hu/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="nyirigabor.hu - Minimál">
+    <meta property="og:title" content="Visszaszámláló a Hősök Terénél">
     <meta property="og:description" content="Szükség van Rád!">
 
     <link rel="icon" type="image/png" href="nyg.png">
@@ -16,9 +16,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        /* A HŐSÖK TERE ÉS TRIKOLOR HÁTTÉR */
         body {
-            background-color: #000;
-            color: #fff;
+            /* Alap: Fehér háttér */
+            background-color: #ffffff;
+            /* Hősök tere háttérkép + finom trikolor réteg */
+            background-image: 
+                /* 1. réteg: Finom trikolor átmenet a tetején és alján (nagyon átlátszó) */
+                linear-gradient(to top, rgba(67, 137, 31, 0.1) 0%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, rgba(205, 10, 30, 0.1) 100%),
+                /* 2. réteg: Hősök Tere kép. Fontos: Cseréld le a valós, jogtiszta képed URL-jére! */
+                url('https://images.unsplash.com/photo-1626017042858-a537f7c4b03a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0MDkxMDh8MHwxfHNlYXJjaHwxfHxIdGVyc3JvayUyMEJ1ZGFwZXN0fGVufDB8fHx8MTcwNDU3MjgwNHww&ixlib=rb-4.0.3&q=80&w=1080');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            
+            color: #333; /* Fekete szöveg a fehér háttéren */
             font-family: 'Roboto', sans-serif;
             display: flex;
             flex-direction: column;
@@ -30,106 +42,82 @@
             position: relative;
         }
 
+        /* Eltávolított elemek stílusainak törlése, a `content` centrázásra használva */
         .content {
             text-align: center;
-            z-index: 1;
+            z-index: 10; /* A visszaszámláló legyen a háttérkép felett */
             max-width: 90%;
+            /* A flex-box tulajdonságok biztosítják a középre igazítást */
         }
-
-        /* --- VISSZASZÁMLÁLÓ (felső) --- */
+        
+        /* A VISSZASZÁMLÁLÓ TELJES SZÉLESSÉGBEN */
         .countdown-container {
-            margin: 20px 0 30px 0;
+            margin: 0; /* Törölve a külső margók, hogy középre kerüljön */
             text-align: center;
-            z-index: 1;
+            z-index: 10;
+            /* Teljes szélesség és finom fehér háttér (a jobb olvashatóságért a Hősök Terén) */
+            width: 100vw; 
+            padding: 40px 0; /* Függőleges térköz */
+            background-color: rgba(255, 255, 255, 0.85); 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            /* A visszaszámlálót finoman keretező trikolor vonalak */
+            border-top: 5px solid #E42031; /* Piros */
+            border-bottom: 5px solid #438917; /* Zöld */
         }
 
         #countdown {
             display: flex;
             justify-content: center;
-            gap: 22px;
-            font-size: 2.25em; /* nagyobb méret */
-            width: 80vw;
-            max-width: 450px;
+            gap: 5vw; /* A nagyobb szélesség miatt arányos gap */
+            font-size: 4vw; /* nagyobb méret, reszponzív */
+            width: 90vw;
+            max-width: 800px;
             margin: 0 auto;
+            color: #333; /* Sötétebb szín a fehér alapon */
+        }
+        
+        @media (min-width: 768px) {
+            #countdown {
+                font-size: 3em; 
+                gap: 30px;
+            }
+            .countdown-container {
+                width: 100%; /* Nagyobb képernyőn már nem kell 100vw */
+                max-width: 800px;
+                padding: 40px;
+                border-radius: 8px; /* Lekerekítés a kiemeléshez */
+                border-left: 5px solid #E42031;
+                border-right: 5px solid #438917;
+            }
         }
 
         .time-unit {
-            padding: 8px 15px;
+            padding: 15px 25px;
             border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            min-width: 90px;
+            /* Enyhe szürke háttér a fehér alapon, trikolor nélkül */
+            background-color: rgba(0, 0, 0, 0.05); 
+            color: #000;
+            min-width: 100px;
+            transition: all 0.3s;
         }
 
         .label {
             display: block;
-            font-size: 0.45em;
+            font-size: 0.4em;
             font-weight: 300;
             margin-top: 4px;
-            color: #ccc;
+            color: #666; /* Halványabb címke */
         }
-
-        #message {
-            margin-top: 20px;
-            font-style: italic;
-            font-size: 1.2em;
-            color: #fff;
-        }
-
-        /* --- VIDEÓ --- */
-        .video-container {
-            margin-bottom: 25px;
-            z-index: 1;
-            width: 80vw; /* azonos a visszaszámlálóval */
-            max-width: 450px;
-            aspect-ratio: 16 / 9;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .video-caption {
-            font-style: italic;
-            font-weight: 300;
-            font-size: 0.8em;
-            color: #ccc;
-            margin-top: 10px;
-            margin-bottom: 30px;
-        }
-
-        /* --- JOBB ALSÓ SAROKBAN A DOMÉN --- */
-        .domain {
-            position: fixed;
-            right: 20px;
-            bottom: 15px;
-            font-size: 0.75em;
-            font-weight: 300;
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.7);
-            z-index: 2;
-            text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
-        }
-
-        /* --- IKONOK (ha lesznek) --- */
-        .social-icons {
-            display: flex;
-            gap: 20px;
-            margin-top: 0;
-            z-index: 1;
+        
+        /* A szöveg és a videó elrejtése */
+        #message, .video-container, .video-caption, .domain, .social-icons {
+            display: none !important;
         }
     </style>
 </head>
 <body>
 
     <div class="content">
-        <!-- VISSZASZÁMLÁLÓ -->
         <div class="countdown-container">
             <div id="countdown">
                 <div class="time-unit">
@@ -149,24 +137,10 @@
                     <span class="label">MÁSODPERC</span>
                 </div>
             </div>
-            <p id="message"></p>
+            <p id="message"></p> 
         </div>
 
-        <!-- VIDEÓ -->
-        <div class="video-container">
-            <iframe 
-                src="https://www.youtube.com/embed/2M9ry_RWjO8" 
-                title="A torinói ló – Monológ – Ide érkezett meg március 15-én Orbán" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowfullscreen>
-            </iframe>
         </div>
-
-        <p class="video-caption">Krasznahorkai László - A torinói ló</p>
-    </div>
-
-    <!-- JOBB ALSÓ SAROK -->
-    <div class="domain">nyirigabor.hu</div>
 
     <script>
         const targetDate = new Date("April 12, 2026 00:00:00").getTime();
@@ -187,7 +161,8 @@
             if (distance < 0) {
                 clearInterval(countdownFunction);
                 document.getElementById("countdown").innerHTML = "00:00:00:00";
-                document.getElementById("message").innerHTML = "A céldátum elérkezett! 🚀";
+                // Itt megjelenhetne egy üzenet, ha a message elemet nem rejtetted el:
+                // document.getElementById("message").innerHTML = "A céldátum elérkezett! 🚀";
             }
         }, 1000);
     </script>
