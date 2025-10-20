@@ -7,15 +7,15 @@
     <style>
         /* A neon stílushoz illő, erősebb, telítettebb trikolór színek */
         :root {
-            --neon-red: #FF3333; 
-            --neon-white: #FFFFFF; 
-            --neon-green: #33FF33; 
-            --dark-background: #000000; 
+            --neon-red: #E60000; /* Erősebb piros */
+            --neon-black: #000000; /* Fekete a kontraszthoz (fehér helyett) */
+            --neon-green: #008000; /* Erősebb zöld */
+            --light-background: #FFFFFF; /* Fehér háttér */
         }
 
         body {
-            background-color: var(--dark-background);
-            color: var(--neon-white);
+            background-color: var(--light-background);
+            color: var(--neon-black); /* Alapértelmezett szövegszín fekete */
             font-family: 'Consolas', 'Monospace', sans-serif;
             margin: 0;
             display: flex;
@@ -32,8 +32,8 @@
             font-weight: 900;
             margin-bottom: 5vh;
             letter-spacing: 0.1em;
-            /* A címen is dinamikus glow lesz, a JavaScript állítja a színt */
-            transition: color 0.5s ease, text-shadow 0.5s ease;
+            /* Fontos: az átmenet időtartamát is növelni kell a simább váltásért */
+            transition: color 3s ease, text-shadow 3s ease; 
         }
 
         #countdown {
@@ -50,7 +50,8 @@
             flex-direction: column;
             align-items: center;
             margin: 0 1vw;
-            transition: color 0.5s ease, text-shadow 0.5s ease; /* Átmenet a színváltáshoz */
+            /* Fontos: az átmenet időtartamát is növelni kell a simább váltásért */
+            transition: color 3s ease, text-shadow 3s ease; 
         }
 
         .value {
@@ -67,25 +68,25 @@
             line-height: 1;
         }
 
-        /* Külön osztályok a színekhez és az izzáshoz */
+        /* Külön osztályok a színekhez és az izzáshoz. Az izzás gyengébb a fehér háttér miatt. */
         .color-red {
             color: var(--neon-red);
-            text-shadow: 0 0 5px var(--neon-red), 0 0 15px var(--neon-red), 0 0 25px var(--neon-red);
+            text-shadow: 0 0 4px rgba(255, 0, 0, 0.8), 0 0 10px rgba(255, 0, 0, 0.5); /* Enyhébb glow */
         }
 
-        .color-white {
-            color: var(--neon-white);
-            text-shadow: 0 0 5px var(--neon-white), 0 0 15px var(--neon-white), 0 0 25px var(--neon-white);
+        .color-black {
+            color: var(--neon-black);
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         .color-green {
             color: var(--neon-green);
-            text-shadow: 0 0 5px var(--neon-green), 0 0 15px var(--neon-green), 0 0 25px var(--neon-green);
+            text-shadow: 0 0 4px rgba(0, 128, 0, 0.8), 0 0 10px rgba(0, 128, 0, 0.5);
         }
 
-        /* Kötőjel/Elválasztó stílus */
+        /* Kötőjel/Elválasztó stílus - kontrasztosabb szürke */
         .separator {
-            color: #444;
+            color: #777;
             display: block;
             font-size: 1em;
             line-height: 1.1;
@@ -126,31 +127,28 @@
         // Cél dátum: 2026. április 12. Éjfél
         const targetDate = new Date("2026-04-12T00:00:00").getTime();
         
-        // Színpaletta és a szegmensek ID-i
-        const colors = ['color-red', 'color-white', 'color-green'];
+        // Színpaletta: Piros, Fekete (Fehér helyett a kontraszt miatt), Zöld
+        const colors = ['color-red', 'color-black', 'color-green'];
         const segments = ['days-segment', 'hours-segment', 'minutes-segment'];
         const titleElement = document.getElementById('title');
-        let colorIndex = 0; // Kezdő pozíció: Piros-Fehér-Zöld
+        let colorIndex = 0; 
 
         // Színváltó funkció
         const changeColors = () => {
-            // Cím színének beállítása (forog a színeken)
+            // Cím színének beállítása
             const titleColorClass = colors[colorIndex];
             titleElement.className = titleColorClass; 
 
-            // Szegmensek színének beállítása
+            // Szegmensek színének beállítása (Piros - Fekete - Zöld)
             for (let i = 0; i < segments.length; i++) {
                 const element = document.getElementById(segments[i]);
-                // Színkiosztás: (index + i) % 3 a ciklikus váltáshoz
                 const colorClass = colors[(colorIndex + i) % 3]; 
-                
-                // Csak a szükséges osztályt tartja meg
                 element.className = 'segment ' + colorClass; 
             }
             
-            // Másodpercek: mindig fehér, de a fényreklám-hatás részeként a text-shadow is változik 
+            // Másodpercek: mindig fekete
             const secondsSegment = document.getElementById('seconds-segment');
-            secondsSegment.className = 'segment color-white';
+            secondsSegment.className = 'segment color-black';
 
             // Index léptetése a következő színkiosztáshoz
             colorIndex = (colorIndex + 1) % colors.length;
@@ -187,9 +185,9 @@
         updateCountdown(); 
         const countdownInterval = setInterval(updateCountdown, 1000); 
 
-        // Színváltó indítása (például 1 másodpercenként)
+        // Színváltó indítása: 3000 ms = 3 másodperc
         changeColors();
-        const colorInterval = setInterval(changeColors, 1000); 
+        const colorInterval = setInterval(changeColors, 3000); 
     </script>
 
 </body>
