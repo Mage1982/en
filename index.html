@@ -3,154 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visszaszámláló - Koncert Hangulat</title>
-    <meta name="description" content="Szükség van Rád!">
-
-    <meta property="og:url" content="https://nyirigabor.hu/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Visszaszámláló - Koncert Hangulat">
-    <meta property="og:description" content="Szükség van Rád!">
-
-    <link rel="icon" type="image/png" href="nyg.png">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    <title>Visszaszámlálás: 2026. Április 12.</title>
     <style>
-        /* A KONCERT HÁTTÉRKÉP ÉS STÍLUSOK */
+        /* A neon stílushoz illő, erősebb, telítettebb trikolór színek */
+        :root {
+            --neon-red: #FF3333; /* Izzó piros */
+            --neon-white: #FFFFFF; /* Fehér */
+            --neon-green: #33FF33; /* Izzó zöld */
+            --dark-background: #000000; /* Fekete háttér */
+        }
+
         body {
-            /* A borító méretű háttérkép */
-            background-image: url('https://i.imgur.com/2M9ry_RWjO8.jpeg'); /* Itt van a feltöltött kép URL-je */
-            background-size: cover; /* A kép kitölti a rendelkezésre álló területet */
-            background-repeat: no-repeat;
-            background-position: center center;
-            
-            color: #fff; /* Fehér szöveg a sötét háttéren */
-            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-background);
+            color: var(--neon-white);
+            font-family: 'Consolas', 'Monospace', sans-serif; /* Digitális/techno hatású betűtípus */
+            margin: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* A content div továbbra is segít a centrázásban */
-        .content {
+            min-height: 100vh;
             text-align: center;
-            z-index: 10;
-            max-width: 90%;
-        }
-        
-        /* A VISSZASZÁMLÁLÓ TELJES SZÉLESSÉGBEN */
-        .countdown-container {
-            margin: 0;
-            text-align: center;
-            z-index: 10;
-            /* Teljes szélesség és finom fehér/átlátszó háttér a jobb olvashatóságért */
-            width: 100vw; 
-            padding: 40px 0;
-            background-color: rgba(255, 255, 255, 0.85); /* Enyhén átlátszó fehér háttér */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Kiemeli a hátterből */
-            /* A trikolor színeket a háttérkép már tartalmazza, így itt nem kellenek plusz borderek */
+            overflow: hidden; /* Ne legyen görgetősáv */
         }
 
         #countdown {
-            display: flex;
-            justify-content: center;
-            gap: 5vw;
-            font-size: 4vw;
-            width: 90vw;
-            max-width: 800px;
-            margin: 0 auto;
-            color: #333; /* Sötétebb szín a fehér alapon */
-        }
-        
-        @media (min-width: 768px) {
-            #countdown {
-                font-size: 3em; 
-                gap: 30px;
-            }
-            .countdown-container {
-                width: 100%;
-                max-width: 800px;
-                padding: 40px;
-                border-radius: 8px; /* Lekerekítés a kiemeléshez */
-            }
+            font-size: 8vw; /* Nagyméretű, az oldalhoz igazodó betűméret */
+            line-height: 1.2;
+            padding: 20px;
+            /* Psytrance/neon stílus: pulzáló glow */
+            animation: pulse 4s infinite alternate; 
         }
 
-        .time-unit {
-            padding: 15px 25px;
-            border-radius: 8px;
-            background-color: rgba(0, 0, 0, 0.05); /* Enyhe szürke háttér a fehér alapon */
-            color: #000;
-            min-width: 100px;
-            transition: all 0.3s;
+        .segment {
+            display: inline-block;
+            margin: 0 1vw;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Enyhe alapfény */
+        }
+
+        .value {
+            display: block;
+            font-size: 1.5em; /* Kiemelt méret a számnak */
+            font-weight: bold;
         }
 
         .label {
             display: block;
-            font-size: 0.4em;
-            font-weight: 300;
-            margin-top: 4px;
-            color: #666;
+            font-size: 0.3em;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-top: -0.2em; /* Kicsit feljebb tolja a szám alá */
+        }
+
+        /* Trikolór színek és glow effektek */
+        .days .value, .days .label {
+            color: var(--neon-red);
+            text-shadow: 0 0 5px var(--neon-red), 0 0 15px var(--neon-red), 0 0 25px var(--neon-red);
+        }
+
+        .hours .value, .hours .label {
+            color: var(--neon-white);
+            text-shadow: 0 0 5px var(--neon-white), 0 0 15px var(--neon-white), 0 0 25px var(--neon-white);
+        }
+
+        .minutes .value, .minutes .label {
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green), 0 0 15px var(--neon-green), 0 0 25px var(--neon-green);
         }
         
-        /* A szöveg és a videó elrejtése */
-        #message, .video-container, .video-caption, .domain, .social-icons {
-            display: none !important;
+        /* A másodperceket a stílus kedvéért visszaállítjuk az alapszínre, hogy ne legyen túl sok szín */
+        .seconds .value, .seconds .label {
+            color: var(--neon-white);
+            text-shadow: 0 0 5px var(--neon-white);
+        }
+        
+        /* Kötőjel/Elválasztó stílus */
+        .separator {
+            color: #444;
+            display: inline-block;
+            font-size: 1em;
+            vertical-align: top;
+            margin-top: -0.25em; 
+            text-shadow: none;
+        }
+
+        /* Pulzáló effekt a teljes visszaszámláló konténeren */
+        @keyframes pulse {
+            0% {
+                filter: brightness(1);
+            }
+            100% {
+                filter: brightness(1.2);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="content">
-        <div class="countdown-container">
-            <div id="countdown">
-                <div class="time-unit">
-                    <span id="days">00</span>
-                    <span class="label">NAP</span>
-                </div>
-                <div class="time-unit">
-                    <span id="hours">00</span>
-                    <span class="label">ÓRA</span>
-                </div>
-                <div class="time-unit">
-                    <span id="minutes">00</span>
-                    <span class="label">PERC</span>
-                </div>
-                <div class="time-unit">
-                    <span id="seconds">00</span>
-                    <span class="label">MÁSODPERC</span>
-                </div>
-            </div>
-            <p id="message"></p> 
+    <div id="countdown">
+        <div class="segment days">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
         </div>
-
+        <span class="separator">:</span>
+        <div class="segment hours">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment minutes">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment seconds">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
     </div>
 
     <script>
-        const targetDate = new Date("April 12, 2026 00:00:00").getTime();
-        const countdownFunction = setInterval(function() {
+        // Cél dátum: 2026. április 12. Éjfél (UTC-ben a zónaidő problémák elkerülése végett)
+        const targetDate = new Date("2026-04-12T00:00:00").getTime();
+
+        const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
+
+            // Kiszámítások
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            const formatTime = (time) => time < 10 ? "0" + time : time;
 
-            document.getElementById("days").innerHTML = formatTime(days);
-            document.getElementById("hours").innerHTML = formatTime(hours);
-            document.getElementById("minutes").innerHTML = formatTime(minutes);
-            document.getElementById("seconds").innerHTML = formatTime(seconds);
-
+            // Megjelenítés
             if (distance < 0) {
-                clearInterval(countdownFunction);
-                document.getElementById("countdown").innerHTML = "00:00:00:00";
+                document.getElementById("countdown").innerHTML = "A VISSZASZÁMLÁLÁS LEJÁRT!";
+                clearInterval(interval);
+                return;
             }
-        }, 1000);
+
+            // Két számjegyű formátum (padding)
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        // Visszaszámláló indítása
+        updateCountdown(); // Azonnali frissítés
+        const interval = setInterval(updateCountdown, 1000); // Folyamatos frissítés másodpercenként
     </script>
 
 </body>
