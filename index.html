@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>nyirigabor.hu - Minimál</title>
-    <meta name="description" content="Szükség van Rád!">
+    <meta name="description" content="">
 
     <meta property="og:url" content="https://nyirigabor.hu/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="nyirigabor.hu - Minimál">
-    <meta property="og:description" content="Szükség van Rád!">
+    <meta property="og:description" content="">
     <meta property="og:image" content="">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="nyirigabor.hu">
     <meta property="twitter:url" content="https://nyirigabor.hu/">
     <meta name="twitter:title" content="nyirigabor.hu - Minimál">
-    <meta name="twitter:description" content="Szükség van Rád!">
+    <meta name="twitter:description" content="">
     <meta property="twitter:image" content="">
 
     <link rel="icon" type="image/png" sizes="32x32" href="nyg.png">
@@ -41,24 +41,9 @@
             margin: 0;
             overflow: hidden; 
             position: relative; 
-            /* Háttérkép stílusai eltávolítva */
         }
 
-        /* ÁTTETSZŐ FEKETE RÉTEG STÍLUSAI ELTÁVOLÍTVA */
-        /*
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4); 
-            z-index: 0; 
-        }
-        */
-
-        /* Szöveges tartalom konténer (a réteg fölé) */
+        /* Szöveges tartalom konténer */
         .content {
             text-align: center;
             z-index: 1; 
@@ -74,7 +59,7 @@
             margin-bottom: 20px; 
         }
 
-        /* --- YOUTUBE VIDEÓ/PLAYLIST STÍLUSAI --- */
+        /* --- YOUTUBE PLAYLIST STÍLUSAI --- */
         .video-container {
             margin-bottom: 25px;
             z-index: 1;
@@ -91,85 +76,7 @@
             height: 100%;
             border: none;
         }
-
-        /* --- CÍM ALATT SZÖVEG STÍLUSAI --- */
-        .video-caption {
-            font-style: italic;
-            font-weight: 300;
-            font-size: 0.8em;
-            color: #ccc;
-            margin-top: 10px;
-            margin-bottom: 30px;
-        }
-        
-        /* --- VISSZASZÁMLÁLÓ STÍLUSOK --- */
-        .countdown-container {
-            margin: 20px 0 40px 0; 
-            text-align: center;
-            z-index: 1;
-        }
-
-        #countdown {
-            display: flex;
-            justify-content: center;
-            gap: 15px; 
-            font-size: 1.5em; 
-        }
-
-        .time-unit {
-            padding: 5px 10px;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2); /* Maradhat, vagy lehet teljesen átlátszó: transparent */
-            color: #fff; 
-            min-width: 60px;
-        }
-
-        .label {
-            display: block;
-            font-size: 0.4em; 
-            font-weight: 300;
-            margin-top: 2px;
-            color: #ccc; 
-        }
-
-        #message {
-            margin-top: 15px;
-            font-style: italic;
-            font-size: 1em;
-            color: #fff;
-        }
-
-        /* --- KÖZÖSSÉGI IKONOK STÍLUSA --- */
-
-        .social-icons {
-            display: flex;
-            gap: 20px;
-            margin-top: 0;
-            z-index: 1;
-        }
-
-        .icon-link {
-            display: block;
-            text-decoration: none;
-            color: #fff;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-
-        .social-icon {
-            font-size: 3em;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-        }
-        
-        .icon-link:hover {
-            text-shadow: 0 0 15px rgba(255, 255, 255, 1);
-        }
-        .icon-link.instagram:hover {
-            color: #E1306C;
-        }
-        .icon-link.facebook:hover {
-            color: #4267B2;
-        }
-
+        /* A korábbi video-caption, countdown-container, social-icons stílusai eltávolítva/nem használtak */
     </style>
 </head>
 <body>
@@ -182,75 +89,12 @@
         <div class="video-container">
                         <iframe 
                 src="https://www.youtube.com/embed/videoseries?list=PLAYLIST_ID" 
-                title="A YouTube lejátszási lista címe" 
+                title="Beágyazott YouTube lejátszási lista" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowfullscreen>
             </iframe>
         </div>
-        
-        <p class="video-caption">Krasznahorkai László - A torinói ló (LECSERÉLENDŐ, ha másik playlistet használsz)</p>
-        <div class="countdown-container">
-            <div id="countdown">
-                <div class="time-unit">
-                    <span id="days">00</span>
-                    <span class="label">NAP</span>
-                </div>
-                <div class="time-unit">
-                    <span id="hours">00</span>
-                    <span class="label">ÓRA</span>
-                </div>
-                <div class="time-unit">
-                    <span id="minutes">00</span>
-                    <span class="label">PERC</span>
-                </div>
-                <div class="time-unit">
-                    <span id="seconds">00</span>
-                    <span class="label">MÁSODPERC</span>
-                </div>
-            </div>
-            <p id="message"></p>
-        </div>
-        </div>
+    </div>
     
-    <div class="social-icons">
-        </div>
-
-<script>
-    // A céldátum (2026. április 12. 00:00:00)
-    const targetDate = new Date("April 12, 2026 00:00:00").getTime();
-
-    // Frissíti a visszaszámlálót másodpercenként
-    const countdownFunction = setInterval(function() {
-
-        // Mai dátum és idő
-        const now = new Date().getTime();
-
-        // Két dátum közötti távolság (ezredmásodpercben)
-        const distance = targetDate - now;
-
-        // Időegységek számítása
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Eredmények megjelenítése a megfelelő elemekben
-        // Két számjeggyé alakítás (0x formátum)
-        const formatTime = (time) => time < 10 ? "0" + time : time;
-        
-        document.getElementById("days").innerHTML = formatTime(days);
-        document.getElementById("hours").innerHTML = formatTime(hours);
-        document.getElementById("minutes").innerHTML = formatTime(minutes);
-        document.getElementById("seconds").innerHTML = formatTime(seconds);
-
-        // Ha lejárt a visszaszámlálás
-        if (distance < 0) {
-            clearInterval(countdownFunction);
-            document.getElementById("countdown").innerHTML = "00:00:00:00";
-            document.getElementById("message").innerHTML = "A céldátum elérkezett! 🚀";
-        }
-    }, 1000); // 1000 ms = 1 másodperc
-</script>
-
 </body>
 </html>
