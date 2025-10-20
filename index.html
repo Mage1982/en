@@ -5,55 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visszaszámláló – 2026. április 12. | nyirigabor.hu</title>
 
+    <!-- Open Graph meta adatok -->
     <meta property="og:title" content="Visszaszámláló – 2026. április 12.">
     <meta property="og:description" content="Kövesd a visszaszámlálást 2026. április 12-ig!">
     <meta property="og:image" content="https://nyirigabor.hu/nyg.png">
-    <meta property="og:url" content="https://nyirigabor.hu">
+    <meta property="og:url" content="https://nyirigabor.hu/visszaszamlalo">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="hu_HU">
 
+    <!-- Google betűtípus -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
 
-    <link rel="icon" href="favicon nyg.png" type="image/png">
+    <!-- Favicon (magyar trikolór) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23E60000'/%3E%3Crect y='0.66' width='3' height='0.68' fill='%23FFFFFF'/%3E%3Crect y='1.33' width='3' height='0.67' fill='%23008000'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <style>
         :root {
-            /* A színeket átláthatóvá teszem, hogy érvényesüljön a videó */
             --color-red: #D60000;
             --color-green: #007A00;
+            --light-background: #FFFFFF;
         }
 
-        /* ---------------------------------- */
-        /* VIDEÓ HÁTTÉR STÍLUSOK */
-        /* ---------------------------------- */
-        #video-background {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: -1; /* A tartalom alá helyezi */
-            overflow: hidden;
-        }
-
-        #video-background iframe {
-            /* A videó mindig kitölti a képernyőt, de megőrzi az arányokat */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            pointer-events: none; /* Letiltja az egér interakciót a videón */
-        }
-        /* ---------------------------------- */
-        /* ALAP STÍLUSOK */
-        /* ---------------------------------- */
         body {
-            /* Fontos: A háttérszínt átlátszóra állítom */
-            background-color: transparent; 
+            background-color: var(--light-background);
             color: var(--color-green);
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -64,7 +38,6 @@
             min-height: 100vh;
             text-align: center;
             overflow: hidden;
-            position: relative; /* Hogy a tartalom a videó felett legyen */
         }
 
         #title {
@@ -74,8 +47,7 @@
             margin-bottom: 2vh;
             letter-spacing: 0.05em;
             white-space: nowrap;
-            /* Szöveg árnyék a videó háttér feletti jobb olvashatóságért */
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 0 5px rgba(0, 0, 0, 0.7);
+            text-shadow: none;
         }
 
         #countdown {
@@ -86,8 +58,7 @@
             justify-content: center;
             align-items: baseline;
             color: var(--color-green);
-            /* Szöveg árnyék a videó háttér feletti jobb olvashatóságért */
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 0 5px rgba(0, 0, 0, 0.7);
+            text-shadow: none;
         }
 
         .segment {
@@ -118,3 +89,74 @@
             font-size: 1em;
             line-height: 1;
             margin: 0 0.5vw;
+            text-shadow: none;
+            align-self: flex-start;
+            font-weight: 900;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            #title { font-size: 8vw; }
+            #countdown { font-size: 14vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="title">2026. ÁPRILIS 12.</div>
+
+    <div id="countdown">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
+    </div>
+
+    <script>
+        const targetDate = new Date("2026-04-12T00:00:00").getTime();
+        const titleElement = document.getElementById('title');
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML =
+                    "<div style='font-size: 0.5em; color: var(--color-red);'>A CÉLDÁTUM ELÉRKEZETT!</div>";
+                titleElement.innerText = "2026. ÁPRILIS 12. ELÉRKEZETT!";
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        };
+
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+
+</body>
+</html>
