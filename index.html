@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026. Április 12. | nyirigabor.hu | RENDSZERVÁLTÁS! Visszaszámlálás</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
     
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23E60000'/%3E%3Crect y='0.66' width='3' height='0.68' fill='%23FFFFFF'/%3E%3Crect y='1.33' width='3' height='0.67' fill='%23008000'/%3E%3C/svg%3E" type="image/svg+xml">
     
@@ -31,21 +31,21 @@
             overflow: hidden; 
         }
 
-        /* RENDSZERVÁLTÁS! felirat stílusa (Piros, Félkövér, Dőlt) */
+        /* RENDSZERVÁLTÁS! felirat stílusa (Piros, Növelt méret, Normál elrendezés) */
         #title {
-            font-size: 7vw;
+            font-size: 10vw; /* Jelentősen megnövelve */
             color: var(--color-red); 
-            font-weight: 900; 
-            font-style: italic; 
+            font-weight: 900; /* Félkövér marad, de dőlt nélkül (normál elrendezés) */
+            font-style: normal; /* Visszaállítva normálra */
             margin-bottom: 2vh;
             letter-spacing: 0.15em;
             /* Hangsúlyos árnyék/glow */
-            text-shadow: 0 0 5px rgba(214, 0, 0, 0.7), 0 0 15px rgba(214, 0, 0, 0.4); 
+            text-shadow: 0 0 7px rgba(214, 0, 0, 0.8), 0 0 20px rgba(214, 0, 0, 0.5); 
         }
 
         /* Visszaszámláló konténer (Zöld) */
         #countdown {
-            font-size: 10vw; 
+            font-size: 8vw; /* Arányosan kisebb, mint a cím, de még nagy */
             line-height: 1; 
             padding: 10px;
             display: flex;
@@ -71,7 +71,7 @@
         }
 
         .label {
-            font-size: 0.2em; 
+            font-size: 0.25em; /* Kicsit nagyobb címkék */
             text-transform: uppercase;
             letter-spacing: 0.25em; 
             margin-top: 0.5vh; 
@@ -95,65 +95,4 @@
 </head>
 <body>
 
-    <div id="title">RENDSZERVÁLTÁS!</div>
-
-    <div id="countdown">
-        <div class="segment">
-            <span class="value" id="days">00</span>
-            <span class="label">Nap</span>
-        </div>
-        <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="hours">00</span>
-            <span class="label">Óra</span>
-        </div>
-        <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="minutes">00</span>
-            <span class="label">Perc</span>
-        </div>
-        <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="seconds">00</span>
-            <span class="label">Mp</span>
-        </div>
-    </div>
-
-    <script>
-        // Cél dátum: 2026. április 12. Éjfél
-        const targetDate = new Date("2026-04-12T00:00:00").getTime();
-        const titleElement = document.getElementById('title');
-
-        // Visszaszámláló logikája
-        const updateCountdown = () => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            // Kiszámítások
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Megjelenítés
-            if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<div style='font-size: 0.5em; color: var(--color-red);'>A VISSZASZÁMLÁLÁS LEJÁRT!</div>";
-                titleElement.innerText = "RENDSZERVÁLTÁS!";
-                clearInterval(countdownInterval);
-                return;
-            }
-
-            // Két számjegyű formátum
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-        }
-
-        // Visszaszámláló indítása (másodpercenként)
-        updateCountdown(); 
-        const countdownInterval = setInterval(updateCountdown, 1000); 
-    </script>
-
-</body>
-</html>
+    <div
