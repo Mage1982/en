@@ -3,147 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026. április 12. | rendszer-valtas.hu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Visszaszámláló – 2026. április 12. | rendszer-valtas.hu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style>
-        :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; }
-        body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: var(--black); display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
-
-        /* HERO & COUNTDOWN WITH GLITCH-GLOW ANIMATION */
-        .hero { 
-            width: 100%; min-height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
-            background: linear-gradient(rgba(5, 15, 30, 0.75), rgba(5, 15, 30, 0.75)), 
-                        url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
-            background-size: cover; background-attachment: fixed;
+        :root {
+            --color-red: #D60000;
+            --color-green: #007A00;
+            --color-grey: #444444;
         }
 
-        #target-date { font-size: clamp(16px, 2.5vw, 22px); font-weight: 700; letter-spacing: 10px; color: var(--red); margin-bottom: 40px; text-transform: uppercase; }
-        
-        .timer { display: flex; align-items: center; gap: clamp(5px, 2vw, 15px); }
-        .unit { display: flex; flex-direction: column; align-items: center; }
-        
-        /* A CSZILLOGÓ ANIMÁCIÓ */
-        .val { 
-            font-size: clamp(45px, 12vw, 190px); 
-            font-weight: 900; 
-            line-height: 0.8; 
-            animation: trikolor-glow 8s infinite steps(1); /* Szaggatott váltás */
+        body {
+            background: linear-gradient(to bottom, rgba(214, 0, 0, 0.03), #ffffff 50%, rgba(0, 122, 0, 0.03));
+            color: var(--color-grey);
+            font-family: 'Sansation', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
         }
 
-        @keyframes trikolor-glow {
-            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-            10%, 12% { color: var(--red); text-shadow: 0 0 30px var(--red), 0 0 60px var(--red); }
-            13%, 40% { color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.8); }
-            41%, 43% { color: #fff; text-shadow: 0 0 40px #fff, 0 0 80px #fff; }
-            44%, 70% { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-            71%, 73% { color: var(--green); text-shadow: 0 0 30px var(--green), 0 0 60px var(--green); }
-            74% { color: #fff; }
+        .header-container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: right;
+            font-style: italic;
+            margin-bottom: 40px;
         }
 
-        .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.4; padding-bottom: 20px; }
-        .label { font-size: clamp(10px, 1.8vw, 16px); font-weight: 900; letter-spacing: 3px; margin-top: 15px; color: var(--green); }
-        
-        /* CONTENT */
-        .container { width: 100%; max-width: 1300px; padding: 60px 20px; box-sizing: border-box; }
-        .title { font-size: clamp(35px, 7vw, 85px); font-weight: 900; margin-bottom: 50px; text-transform: uppercase; border-bottom: 12px solid var(--dark-green); display: inline-block; line-height: 0.9; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; }
+        #target-date {
+            font-size: clamp(20px, 2.5vw, 32px);
+            color: var(--color-red);
+            font-weight: 700;
+        }
 
-        /* CARDS */
-        .card { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.3s ease; }
-        .img-box { width: 100%; overflow: hidden; background: #eee; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
-        .card:hover img { transform: scale(1.04); }
-        .tag { font-size: 12px; font-weight: 900; color: var(--dark-green); text-transform: uppercase; margin: 15px 0 5px; display: block; }
-        
-        .feat { grid-column: span 1.5; margin-bottom: 20px; }
-        .feat .img-box { height: 520px; }
-        .feat h2 { font-size: clamp(24px, 4vw, 38px); font-weight: 900; margin: 10px 0; line-height: 1.1; }
-        
-        .norm { border-top: 2px solid var(--black); padding-top: 20px; }
-        .norm .img-box { height: 240px; }
-        .norm h3 { font-size: 19px; font-weight: 700; margin: 0; line-height: 1.3; }
+        /* VISSZASZÁMLÁLÓ */
+        #countdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 60px;
+        }
 
-        @media (max-width: 1000px) { 
-            .grid { grid-template-columns: 1fr; } 
-            .feat { grid-column: span 1; } 
-            .feat .img-box { height: 320px; } 
-            .hero { background-attachment: scroll; min-height: 65vh; }
+        .segment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .value {
+            font-size: clamp(45px, 11vw, 140px);
+            font-weight: 700;
+            color: var(--color-green);
+            line-height: 1;
+            transition: all 0.3s ease-in-out;
+            display: inline-block;
+        }
+
+        .separator {
+            font-size: clamp(35px, 9vw, 110px);
+            font-weight: 700;
+            color: var(--color-green);
+            padding-bottom: clamp(15px, 3vw, 35px);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* POSZT RÁCS */
+        .fb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1400px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        iframe {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            justify-self: center;
+            /* Alapértelmezett rejtés a gombhoz */
+            display: none; 
+        }
+
+        /* Az első 3 poszt mindig látszik */
+        iframe:nth-child(-n+3) {
+            display: block;
+        }
+
+        /* BETÖLTÉS GOMB */
+        #load-more-btn {
+            background-color: var(--color-green);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-family: 'Sansation', sans-serif;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 122, 0, 0.3);
+            margin-bottom: 50px;
+        }
+
+        #load-more-btn:hover {
+            background-color: var(--color-red);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .header-container { text-align: center; }
+            #countdown { gap: 5px; }
+            .separator { padding-bottom: 20px; }
         }
     </style>
 </head>
 <body>
 
-<section class="hero">
-    <div id="target-date">2026. Április 12.</div>
-    <div class="timer">
-        <div class="unit"><span class="val" id="d">00</span><span class="label">NAP</span></div><span class="sep">:</span>
-        <div class="unit"><span class="val" id="h">00</span><span class="label">ÓRA</span></div><span class="sep">:</span>
-        <div class="unit"><span class="val" id="m">00</span><span class="label">PERC</span></div><span class="sep">:</span>
-        <div class="unit"><span class="val" id="sec">00</span><span class="label">MP</span></div>
+    <div class="header-container">
+        <div style="font-size: 18px;"><i>A változás napjáig hátralévő idő:</i></div>
+        <div id="target-date">2026. ÁPRILIS 12.</div>
     </div>
-</section>
 
-<div class="container">
-    <h1 class="title">A Rendszerváltás Hírei</h1>
-    <div id="feed" class="grid">
-        <div style="grid-column: 1/-1; text-align: center; padding: 50px; font-weight: 700;">Hírek szinkronizálása...</div>
+    <div id="countdown">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
     </div>
-</div>
 
-<script>
-    const target = new Date("April 12, 2026 00:00:00").getTime();
-    function update() {
-        const dist = target - new Date().getTime();
-        if (dist < 0) return;
-        document.getElementById('d').innerText = String(Math.floor(dist / 864e5)).padStart(2, '0');
-        document.getElementById('h').innerText = String(Math.floor((dist % 864e5) / 36e5)).padStart(2, '0');
-        document.getElementById('m').innerText = String(Math.floor((dist % 36e5) / 6e4)).padStart(2, '0');
-        document.getElementById('sec').innerText = String(Math.floor((dist % 6e4) / 1e3)).padStart(2, '0');
-    }
-    setInterval(update, 1000); update();
+    <div class="fb-grid" id="fb-container">
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid0VicHRiniwY3r36JE926ngVFSNHXTPLNmrn8umJ7PD9hkgW4UxQXsU2NbqZ2cF2u5l&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02xjLTfyKMuGzydybVTTiJ8KY9dd1r4v2BcMUApw4pwCEEbCpj2mxJgsSoggMnUNfEl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid037sSboioQCqefsHpXR87WTfdRqvAag43DS9zZqrQdVsBEQdju8XrJstLrzexxK38jl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02qdmtdwvU7cFz54JA98vhaJUarErjDUEALsDWMf5eYHTt5ygBRYS7jcDUGNN5abSl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid0C9tzdEd17Uji4MRsTTNL2J7Lf5h6Z2f8eiF37TuXfqmjkATvD756txYfjLxzfEj4l&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02QDw4w7aCXZ6NHFVB4RvWHDagiwTL1B6sdWkE7NLBbW1JGL317UqBb8MSmi8xyZKel&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02ENYdXzST8vLSmaRZU6wKNzz2L5xR2mpFgcPGq2DGK6xhR18WAo1KyDAVPtdqtrRGl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02d9zG336LZy7uiUCSH2TTwtwNKPDxDUWdRjLFdD7C9osPjkYuCnqv3UDxjz65ofBUl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02d64EFjvT9WzVWPvrg2YjTAn5L4RxpoMXXvB98vMC2t1yx4W34XUt6Ea5HbJzcwfwl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02apMCbKiFXusxQFByt9QvYFTGc52GobXccQ6uGmQ1vdJZVMuu1qFbRWCnBYx1dz5Xl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02jrLeixa1h3Quq4kdPyivc4mXcH4ae2ovTDuCxMTdNcbRjzeLY6GtRUEu9vjuEzSsl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
 
-    async function load() {
-        const src = [
-            { u: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', l: 'BalPest' },
-            { u: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', l: 'Kontroll' },
-            { u: 'https://rss.app/feeds/zbfBHxHr26BwH0c6.xml', l: 'Magyar Hang' },
-            { u: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', l: 'Juhász Péter' },
-            { u: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', l: 'Kontroll TV' }
-        ];
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=450" height="600" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=450" height="600" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ftelexhu%2Fposts%2Fpfbid0amwue61NYThNZHRQwEikoWWXRovUDSBTymZL8HQrE3GW6wTrJ8jMpYbuG55tTCH9l&show_text=true&width=450" height="600" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+    </div>
+
+    <button id="load-more-btn">TOVÁBBI BEJEGYZÉSEK</button>
+
+    <script>
+        // VISSZASZÁMLÁLÓ LOGIKA
+        const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         
-        const grid = document.getElementById('feed');
-        
-        try {
-            const results = await Promise.all(src.map(async (s) => {
-                try {
-                    const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.u)}`);
-                    const d = await r.json();
-                    return d.status === 'ok' ? d.items.map(it => ({
-                        link: it.link,
-                        title: it.title,
-                        label: s.l,
-                        ts: new Date(it.pubDate).getTime(),
-                        img: it.thumbnail || (it.enclosure && it.enclosure.link) || 'https://via.placeholder.com/600x400?text=Fotó'
-                    })) : [];
-                } catch (e) { return []; }
-            }));
+        function updateValue(id, newValue) {
+            const el = document.getElementById(id);
+            if (el.innerText !== newValue) {
+                el.innerText = newValue;
+                el.classList.remove('pop');
+                void el.offsetWidth; 
+                el.classList.add('pop');
+            }
+        }
 
-            let all = results.flat().sort((a, b) => b.ts - a.ts);
-            if (all.length > 15) all = all.slice(0, all.length - 15);
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-            grid.innerHTML = '';
-            all.forEach((n, i) => {
-                const isFeat = (i % 11 < 2);
-                grid.innerHTML += `
-                    <a href="${n.link}" target="_blank" class="card ${isFeat ? 'feat' : 'norm'}">
-                        <div class="img-box"><img src="${n.img}" loading="lazy"></div>
-                        <span class="tag">${n.label}</span>
-                        ${isFeat ? `<h2>${n.title}</h2>` : `<h3>${n.title}</h3>`}
-                    </a>`;
-            });
-        } catch (e) { grid.innerHTML = 'Hiba a betöltéskor.'; }
-    }
-    load();
-</script>
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 50px;'>ELÉRKEZETT A NAP!</div>";
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            updateValue("days", String(d).padStart(2, '0'));
+            updateValue("hours", String(h).padStart(2, '0'));
+            updateValue("minutes", String(m).padStart(2, '0'));
+            updateValue("seconds", String(s).padStart(2, '0'));
+        };
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // "LOAD MORE" LOGIKA
+        const btn = document.getElementById('load-more-btn');
+        const iframes = document.querySelectorAll('#fb-container iframe');
+        let currentVisible = 3;
+
+        btn.addEventListener('click', () => {
+            // Következő 3 poszt felfedése
+            for (let i = currentVisible; i < currentVisible + 3 && i < iframes.length; i++) {
+                iframes[i].style.display = 'block';
+            }
+            currentVisible += 3;
+
+            // Ha elfogyott a poszt, eltüntetjük a gombot
+            if (currentVisible >= iframes.length) {
+                btn.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
