@@ -11,105 +11,159 @@
         :root {
             --color-red: #D60000;
             --color-green: #007A00;
+            --color-grey: #444444;
             --light-background: #FFFFFF;
         }
 
         body {
             background-color: var(--light-background);
-            color: var(--color-green);
+            color: var(--color-grey);
             font-family: 'Sansation', sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-            /* Engedélyezzük a görgetést */
-            overflow-y: auto;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
 
-        #title {
-            font-size: 5vw;
+        /* Kisebb, elegánsabb dátum felirat */
+        #date-header {
+            font-size: clamp(18px, 2.5vw, 28px);
+            color: var(--color-grey);
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* A hangsúlyos dátum */
+        #target-date {
+            font-size: clamp(22px, 3vw, 36px);
             color: var(--color-red);
             font-weight: 700;
-            margin-bottom: 2vh;
-            letter-spacing: 0.05em;
+            margin-bottom: 40px;
         }
 
+        /* HATALMAS VISSZASZÁMLÁLÓ */
         #countdown {
-            font-size: 8vw;
             display: flex;
             justify-content: center;
-            align-items: baseline;
-            margin-bottom: 5vh;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 60px;
+            width: 100%;
         }
 
         .segment {
             display: flex;
             flex-direction: column;
-            margin: 0 1vw;
+            align-items: center;
+            min-width: 120px;
         }
 
-        .label { font-size: 0.25em; text-transform: uppercase; }
+        .value {
+            font-size: clamp(60px, 12vw, 150px); /* Brutál nagy számok */
+            font-weight: 700;
+            line-height: 0.9;
+            color: var(--color-green);
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
 
-        /* A posztok konténere */
-        .fb-wrapper {
-            display: flex;
-            flex-direction: row; /* Egymás mellé teszi őket */
-            flex-wrap: wrap;    /* Ha nem férnek el, új sorba rakja */
-            justify-content: center;
-            gap: 20px;         /* Távolság a posztok között */
+        .label {
+            font-size: clamp(12px, 1.5vw, 18px);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-grey);
+            margin-top: 10px;
+            font-weight: 400;
+        }
+
+        /* Facebook rács */
+        .fb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
             width: 100%;
-            max-width: 1600px;  /* Hogy ne nyúljon túl szélesre */
+            max-width: 1200px;
+            margin-top: 40px;
         }
 
         iframe {
             border: none;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Kis árnyék a jobb megjelenésért */
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: white;
+            transition: transform 0.3s ease;
+        }
+
+        iframe:hover {
+            transform: translateY(-5px);
         }
 
         @media (max-width: 600px) {
-            #title { font-size: 8vw; }
-            #countdown { font-size: 14vw; }
+            .segment { min-width: 80px; }
+            .value { font-size: 18vw; }
+            #countdown { gap: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="title">2026. ÁPRILIS 12.</div>
+    <div id="date-header">A változás napjáig hátralévő idő:</div>
+    <div id="target-date">2026. ÁPRILIS 12.</div>
 
     <div id="countdown">
-        <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
-        <span class="separator">:</span>
-        <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
-        <span class="separator">:</span>
-        <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
-        <span class="separator">:</span>
-        <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Másodperc</span>
+        </div>
     </div>
 
-    <div class="fb-wrapper">
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    <div class="fb-grid">
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=350" width="350" height="550" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=350" width="350" height="550" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-byte; web-share"></iframe>
 
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmagyartisztelet%2Fposts%2Fpfbid02Vf...&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmagyartisztelet%2Fposts%2Fpfbid02Vf&show_text=true&width=350" width="350" height="550" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
     </div>
 
     <script>
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime(); 
+
         const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) return;
 
-            document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "ELÉRKEZETT A NAP!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
         };
+
         setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
