@@ -82,13 +82,14 @@
             color: var(--color-red);
         }
 
+        /* ZÖLD FELIRATOK A SZÁMOK ALATT */
         .label {
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 4px;
-            margin-top: 20px;
-            color: #444;
+            margin-top: 25px;
+            color: var(--color-green); /* Zöld szín */
         }
 
         /* --- HÍREK SZEKCIÓ --- */
@@ -113,7 +114,7 @@
             gap: 50px;
         }
 
-        /* KIEMELT HÍR (2 db) */
+        /* KIEMELT HÍR */
         .card-featured {
             grid-column: span 1.5;
             text-decoration: none;
@@ -150,7 +151,7 @@
             letter-spacing: -2px;
         }
 
-        /* NORMÁL HÍR (9 db) */
+        /* NORMÁL HÍR */
         .card-normal {
             grid-column: span 1;
             text-decoration: none;
@@ -262,7 +263,12 @@
             });
 
             const allResults = await Promise.all(fetchPromises);
-            const sortedNews = allResults.flat().sort((a, b) => b.sortDate - a.sortDate);
+            let sortedNews = allResults.flat().sort((a, b) => b.sortDate - a.sortDate);
+
+            // TÖRLÉS: Az utolsó 5 sor (rácsban 3 oszlop van, tehát 15 hír) levágása
+            if (sortedNews.length > 15) {
+                sortedNews = sortedNews.slice(0, sortedNews.length - 15);
+            }
 
             container.innerHTML = '';
             let i = 0;
@@ -279,7 +285,7 @@
                             </div>
                         </a>`;
                 }
-                // 9 Normál
+                // 9 Normál (ez felel meg 3 sornak a rácsban)
                 for (let k = 0; k < 9 && i < sortedNews.length; k++) {
                     const news = sortedNews[i++];
                     container.innerHTML += `
