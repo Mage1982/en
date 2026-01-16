@@ -174,4 +174,36 @@
         
         function updateValue(id, newValue) {
             const el = document.getElementById(id);
-            if (el.
+            if (el.innerText !== newValue) {
+                el.innerText = newValue;
+                el.classList.remove('pop');
+                void el.offsetWidth; 
+                el.classList.add('pop');
+            }
+        }
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 50px;'>ELÉRKEZETT A NAP!</div>";
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            updateValue("days", String(d).padStart(2, '0'));
+            updateValue("hours", String(h).padStart(2, '0'));
+            updateValue("minutes", String(m).padStart(2, '0'));
+            updateValue("seconds", String(s).padStart(2, '0'));
+        };
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
