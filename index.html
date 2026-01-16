@@ -9,15 +9,16 @@
         :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; }
         body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: var(--black); overflow-x: hidden; width: 100%; }
 
-        /* --- HERO SECTION --- */
+        /* --- TELJES KÉPERNYŐS HERO + VHS GLITCH --- */
         .hero { 
             width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
             position: relative; overflow: hidden;
             background: linear-gradient(rgba(5, 15, 30, 0.85), rgba(5, 15, 30, 0.85)), 
-                        url('parlament.jpg') no-repeat center center;
+                        url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
             background-size: cover; background-attachment: fixed;
         }
 
+        /* VHS ZIZEGÉS RÉTEG */
         .hero::after {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 2px);
@@ -26,40 +27,38 @@
 
         @keyframes vhs-flicker { 0% { opacity: 0.3; } 50% { opacity: 0.5; } 100% { opacity: 0.3; } }
 
+        /* HIRTELEN VHS REMEGÉS ÉS VILLANÁS (GLITCH) */
         @keyframes vhs-glitch {
             0%, 90%, 100% { transform: translate(0); opacity: 0.9; text-shadow: none; }
             91% { transform: translate(-3px, 1px); opacity: 1; text-shadow: 2px 0 var(--red), -2px 0 var(--green); }
             95% { transform: translate(4px, -1px); opacity: 1; text-shadow: 3px 0 #fff; }
         }
 
-        /* --- JAVÍTOTT FŐCÍM: NINCS BETŰKÖZ, NAGYOBB MÉRET --- */
+        /* BRUTALISTA FŐCÍM: MAXIMÁLIS MÉRET, NINCS BETŰKÖZ */
         .main-title {
-            font-size: clamp(45px, 15vw, 180px); /* Jelentősen nagyobb méret */
-            font-weight: 900; 
-            letter-spacing: 0 !important; /* Betűköz eltávolítva */
-            line-height: 0.9;
-            margin: 0 0 10px 0; 
-            padding: 0 10px;
-            text-transform: uppercase; 
-            animation: vhs-glitch 3s infinite; 
-            position: relative; z-index: 10;
-            width: 100%; box-sizing: border-box;
+            font-size: clamp(45px, 15vw, 180px); font-weight: 900; 
+            letter-spacing: 0 !important; line-height: 0.85;
+            margin: 0 0 15px 0; text-transform: uppercase; 
+            animation: vhs-glitch 3s infinite; position: relative; z-index: 10;
+            width: 100%; padding: 0 20px; box-sizing: border-box;
         }
 
         #target-date { 
             font-size: clamp(12px, 2vw, 20px); font-weight: 700; letter-spacing: 8px; color: var(--red); 
-            margin-bottom: 30px; text-transform: uppercase; z-index: 10;
+            margin-bottom: 35px; text-transform: uppercase; z-index: 10;
         }
         
+        /* TIMER DESKTOP ÉS MOBIL OPTIMALIZÁLVA */
         .timer { 
             display: flex; align-items: flex-start; justify-content: center;
-            gap: clamp(10px, 3vw, 40px); z-index: 10;
+            gap: clamp(8px, 2.5vw, 40px); z-index: 10;
         }
-        .unit { display: flex; flex-direction: column; align-items: center; min-width: clamp(60px, 12vw, 180px); }
-        .val { font-size: clamp(40px, 13vw, 180px); font-weight: 900; line-height: 1; animation: vhs-glitch 4.5s infinite; }
-        .sep { font-size: clamp(30px, 10vw, 110px); font-weight: 900; opacity: 0.5; align-self: center; padding-bottom: 30px; }
+        .unit { display: flex; flex-direction: column; align-items: center; min-width: clamp(60px, 12vw, 170px); }
+        .val { font-size: clamp(40px, 12vw, 180px); font-weight: 900; line-height: 1; animation: vhs-glitch 4.5s infinite; }
+        .sep { font-size: clamp(25px, 9vw, 110px); font-weight: 900; opacity: 0.5; align-self: center; padding-bottom: 25px; }
         .label { font-size: clamp(9px, 1.5vw, 16px); font-weight: 900; letter-spacing: 3px; margin-top: 10px; color: var(--green); }
         
+        /* TARTALOM */
         .container { width: 100%; max-width: 1300px; padding: 80px 20px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
         .section-title { font-size: clamp(28px, 6vw, 75px); font-weight: 900; margin-bottom: 50px; text-transform: uppercase; border-bottom: 12px solid var(--dark-green); align-self: flex-start; line-height: 0.9; }
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; width: 100%; }
@@ -74,7 +73,7 @@
         .tag { font-size: 11px; font-weight: 900; color: var(--dark-green); text-transform: uppercase; margin: 15px 0 5px; display: block; }
         
         .feat { grid-column: span 1.5; margin-bottom: 20px; }
-        .feat .img-box { height: clamp(300px, 45vh, 550px); }
+        .feat .img-box { height: clamp(280px, 42vh, 550px); }
         .feat h2 { font-size: clamp(22px, 3.5vw, 38px); font-weight: 900; margin: 15px 0; line-height: 1.1; }
         
         .norm { border-top: 2px solid var(--black); padding-top: 25px; }
@@ -87,9 +86,10 @@
         }
 
         @media (max-width: 1000px) { 
-            .grid { grid-template-columns: 1fr; } .feat { grid-column: span 1; } 
+            .grid { grid-template-columns: 1fr; } 
+            .feat { grid-column: span 1; } 
             .hero { background-attachment: scroll; }
-            .timer { gap: 8px; } .unit { min-width: auto; }
+            .unit { min-width: auto; }
         }
     </style>
 </head>
@@ -125,59 +125,4 @@
         document.getElementById('d').innerText = String(Math.floor(dist / 864e5)).padStart(2, '0');
         document.getElementById('h').innerText = String(Math.floor((dist % 864e5) / 36e5)).padStart(2, '0');
         document.getElementById('m').innerText = String(Math.floor((dist % 36e5) / 6e4)).padStart(2, '0');
-        document.getElementById('sec').innerText = String(Math.floor((dist % 6e4) / 1e3)).padStart(2, '0');
-    }
-    setInterval(update, 1000); update();
-
-    let currentItems = 0;
-    const itemsPerPage = 8;
-
-    async function load() {
-        const src = [
-            { u: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', l: 'BalPest' },
-            { u: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', l: 'Kontroll' },
-            { u: 'https://rss.app/feeds/zbfBHxHr26BwH0c6.xml', l: 'Magyar Hang' },
-            { u: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', l: 'Juhász Péter' },
-            { u: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', l: 'Kontroll TV' }
-        ];
-        const grid = document.getElementById('feed');
-        const btn = document.getElementById('load-more');
-        try {
-            const results = await Promise.all(src.map(async (s) => {
-                try {
-                    const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.u)}`);
-                    const d = await r.json();
-                    return d.status === 'ok' ? d.items.map(it => ({
-                        link: it.link, title: it.title, label: s.l, ts: new Date(it.pubDate).getTime(),
-                        img: it.thumbnail || (it.enclosure && it.enclosure.link) || 'https://via.placeholder.com/800x600/000/fff?text=Hír'
-                    })) : [];
-                } catch (e) { return []; }
-            }));
-            let all = results.flat().sort((a, b) => b.ts - a.ts);
-            if (all.length > 15) all = all.slice(0, all.length - 15);
-            grid.innerHTML = '';
-            all.forEach((n, i) => {
-                const isFeat = (i % 11 < 2);
-                const card = document.createElement('a');
-                card.href = n.link; card.target = "_blank"; card.className = `card ${isFeat ? 'feat' : 'norm'}`;
-                card.innerHTML = `
-                    <div class="img-box"><img src="${n.img}" loading="lazy"></div>
-                    <span class="tag">${n.label}</span>
-                    ${isFeat ? `<h2>${n.title}</h2>` : `<h3>${n.title}</h3>`}
-                `;
-                grid.appendChild(card);
-            });
-            const cards = document.querySelectorAll('.card');
-            function showNext() {
-                const limit = currentItems + itemsPerPage;
-                cards.forEach((c, idx) => { if (idx < limit) c.classList.add('visible'); });
-                currentItems = limit;
-                btn.style.display = (currentItems >= cards.length) ? 'none' : 'block';
-            }
-            btn.onclick = showNext; showNext();
-        } catch (e) { grid.innerHTML = 'Hiba.'; }
-    }
-    load();
-</script>
-</body>
-</html>
+        document.getElementById('sec').innerText = String(Math.floor((
