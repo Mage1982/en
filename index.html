@@ -5,253 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026. április 12. | rendszer-valtas.hu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --color-black: #1a1a1a;
-            --color-red: #ff0000;
-            --color-green: #00ff73;
-            --color-news-green: #00843d;
-            --color-border: #e0e0e0;
-            --bg-light: #ffffff;
-            --font-main: 'Inter', sans-serif;
+        :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; --border: #e0e0e0; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: var(--black); display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
+
+        /* HERO & COUNTDOWN */
+        .hero { 
+            width: 100%; min-height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
+            background: linear-gradient(rgba(5, 15, 30, 0.7), rgba(5, 15, 30, 0.7)), url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
+            background-size: cover; background-attachment: fixed;
         }
+        #target-date { font-size: clamp(16px, 2.5vw, 22px); font-weight: 700; letter-spacing: 10px; color: var(--red); margin-bottom: 40px; text-transform: uppercase; }
+        .timer { display: flex; align-items: center; gap: clamp(5px, 2vw, 15px); }
+        .unit { display: flex; flex-direction: column; align-items: center; }
+        .val { font-size: clamp(45px, 12vw, 190px); font-weight: 900; line-height: 0.8; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.6; padding-bottom: 20px; }
+        .label { font-size: clamp(10px, 1.8vw, 16px); font-weight: 900; letter-spacing: 3px; margin-top: 15px; color: var(--green); }
+        #sec, #sep-sec { color: var(--red); }
 
-        body {
-            background-color: var(--bg-light);
-            color: var(--color-black);
-            font-family: var(--font-main);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
+        /* CONTENT */
+        .container { width: 100%; max-width: 1300px; padding: 60px 20px; box-sizing: border-box; }
+        .title { font-size: clamp(35px, 7vw, 85px); font-weight: 900; margin-bottom: 50px; text-transform: uppercase; border-bottom: 12px solid var(--dark-green); display: inline-block; line-height: 0.9; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 
-        /* --- MONUMENTÁLIS VISSZASZÁMLÁLÓ --- */
-        .countdown-hero {
-            width: 100%;
-            min-height: 85vh;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #fff;
-            /* Feltöltött éjszakai Parlament kép kékes-sötét filterrel */
-            background: linear-gradient(rgba(5, 15, 30, 0.7), rgba(5, 15, 30, 0.7)), 
-                        url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
-        }
+        /* CARDS */
+        .card { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.3s; }
+        .img-box { width: 100%; overflow: hidden; background: #eee; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover img { transform: scale(1.05); }
+        .tag { font-size: 12px; font-weight: 900; color: var(--dark-green); text-transform: uppercase; margin: 15px 0 5px; display: block; }
+        
+        .feat { grid-column: span 1.5; margin-bottom: 20px; }
+        .feat .img-box { height: 520px; }
+        .feat h2 { font-size: clamp(24px, 4vw, 38px); font-weight: 900; margin: 10px 0; line-height: 1.1; }
+        
+        .norm { border-top: 2px solid var(--black); padding-top: 20px; }
+        .norm .img-box { height: 240px; }
+        .norm h3 { font-size: 19px; font-weight: 700; margin: 0; line-height: 1.3; }
 
-        #target-date {
-            font-size: clamp(16px, 2.5vw, 22px);
-            font-weight: 700;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            color: var(--color-red);
-            margin-bottom: 40px;
-            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-        }
-
-        #countdown {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: clamp(5px, 2vw, 15px);
-            padding: 0 10px;
-        }
-
-        .segment {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .value {
-            font-size: clamp(45px, 12vw, 190px);
-            font-weight: 900;
-            line-height: 0.8;
-            letter-spacing: -2px;
-            text-shadow: 0 10px 40px rgba(0,0,0,0.9);
-        }
-
-        .separator {
-            font-size: clamp(30px, 10vw, 120px);
-            font-weight: 900;
-            color: #fff;
-            padding-bottom: clamp(15px, 3vw, 30px);
-            opacity: 0.6;
-        }
-
-        #seconds { color: var(--color-red); }
-
-        .label {
-            font-size: clamp(10px, 1.8vw, 16px);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: clamp(1px, 1vw, 5px);
-            margin-top: 15px;
-            color: var(--color-green);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        /* --- TARTALOM SZEKCIÓ --- */
-        .container {
-            width: 100%;
-            max-width: 1300px;
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            font-size: clamp(35px, 7vw, 85px);
-            font-weight: 900;
-            margin-bottom: 60px;
-            letter-spacing: -3px;
-            line-height: 0.9;
-            text-transform: uppercase;
-            border-bottom: 12px solid var(--color-news-green);
-            display: inline-block;
-        }
-
-        #news-feed-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 45px;
-        }
-
-        /* HÍRKÁRTYÁK */
-        .card-featured {
-            grid-column: span 1.5;
-            text-decoration: none;
-            color: inherit;
-            margin-bottom: 40px;
-        }
-
-        .featured-img-wrap { width: 100%; height: 520px; overflow: hidden; background: #eee; }
-        .card-featured img, .card-normal img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .card-featured:hover img, .card-normal:hover img { transform: scale(1.04); }
-
-        .featured-content h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; margin: 25px 0 10px 0; line-height: 1.05; letter-spacing: -1.5px; }
-
-        .card-normal {
-            grid-column: span 1;
-            text-decoration: none;
-            color: inherit;
-            border-top: 2px solid var(--color-black);
-            padding-top: 30px;
-        }
-
-        .normal-img-wrap { width: 100%; height: 240px; overflow: hidden; margin-bottom: 20px; }
-        .card-normal h3 { font-size: 19px; font-weight: 700; line-height: 1.3; margin: 0; }
-
-        .source-tag {
-            font-size: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: var(--color-news-green);
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        @media (max-width: 1000px) {
-            #news-feed-container { grid-template-columns: 1fr; }
-            .card-featured { grid-column: span 1; }
-            .countdown-hero { min-height: 65vh; }
-            .featured-img-wrap { height: 320px; }
+        @media (max-width: 1000px) { 
+            .grid { grid-template-columns: 1fr; } .feat { grid-column: span 1; } .feat .img-box { height: 320px; } .hero { background-attachment: scroll; }
         }
     </style>
 </head>
 <body>
 
-    <section class="countdown-hero">
-        <span id="target-date">2026. ÁPRILIS 12.</span>
-        <div id="countdown">
-            <div class="segment"><span class="value" id="days">00</span><span class="label">NAP</span></div>
-            <span class="separator">:</span>
-            <div class="segment"><span class="value" id="hours">00</span><span class="label">ÓRA</span></div>
-            <span class="separator">:</span>
-            <div class="segment"><span class="value" id="minutes">00</span><span class="label">PERC</span></div>
-            <span class="separator">:</span>
-            <div class="segment"><span class="value" id="seconds">00</span><span class="label">MP</span></div>
-        </div>
-    </section>
-
-    <div class="container">
-        <h1 class="section-title">A Rendszerváltás Hírei</h1>
-        <div id="news-feed-container">
-            <div style="grid-column: 1/-1; text-align: center; font-weight: 700; padding: 50px;">Hírek betöltése...</div>
-        </div>
+<section class="hero">
+    <div id="target-date">2026. Április 12.</div>
+    <div class="timer">
+        <div class="unit"><span class="val" id="d">00</span><span class="label">NAP</span></div><span class="sep">:</span>
+        <div class="unit"><span class="val" id="h">00</span><span class="label">ÓRA</span></div><span class="sep">:</span>
+        <div class="unit"><span class="val" id="m">00</span><span class="label">PERC</span></div><span class="sep" id="sep-sec">:</span>
+        <div class="unit"><span class="val" id="sec">00</span><span class="label">MP</span></div>
     </div>
+</section>
 
-    <script>
-        // --- JAVÍTOTT VISSZASZÁMLÁLÓ LOGIKA ---
-        const targetDate = new Date("April 12, 2026 00:00:00").getTime();
+<div class="container">
+    <h1 class="title">A Rendszerváltás Hírei</h1>
+    <div id="feed" class="grid"></div>
+</div>
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-            if (distance < 0) return;
+<script>
+    const target = new Date("April 12, 2026 00:00:00").getTime();
+    function update() {
+        const dist = target - new Date().getTime();
+        if (dist < 0) return;
+        document.getElementById('d').innerText = String(Math.floor(dist / 864e5)).padStart(2, '0');
+        document.getElementById('h').innerText = String(Math.floor((dist % 864e5) / 36e5)).padStart(2, '0');
+        document.getElementById('m').innerText = String(Math.floor((dist % 36e5) / 6e4)).padStart(2, '0');
+        document.getElementById('sec').innerText = String(Math.floor((dist % 6e4) / 1e3)).padStart(2, '0');
+    }
+    setInterval(update, 1000); update();
 
-            document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
-        }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // --- FEED LOGIKA ---
-        async function fetchFeeds() {
-            const sources = [
-                { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', label: 'Hírek' },
-                { url: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', label: 'Juhász Péter' },
-                { url: 'https://rss.app/feeds/zbfBHxHr26BwH0c6.xml', label: 'Magyar Hang' },
-                { url: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', label: 'Kontrollpont' },
-                { url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', label: 'Kontroll TV' }
-            ];
-
-            const container = document.getElementById('news-feed-container');
-            const fetchPromises = sources.map(async (source) => {
-                try {
-                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`);
-                    const data = await response.json();
-                    if (data.status === 'ok') {
-                        return data.items.map(item => ({
-                            title: item.title,
-                            link: item.link,
-                            sortDate: new Date(item.pubDate).getTime(),
-                            img: item.thumbnail || (item.enclosure && item.enclosure.link) || 'https://via.placeholder.com/800x600/eee/999?text=Fotó',
-                            source: source.label
-                        }));
-                    }
-                } catch (e) { console.error(e); }
-                return [];
+    async function load() {
+        const src = [
+            { u: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', l: 'Hírek' },
+            { u: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', l: 'Juhász Péter' },
+            { u: 'https://rss.app/feeds/zbfBHxHr26BwH0c6.xml', l: 'Magyar Hang' },
+            { u: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', l: 'Kontrollpont' },
+            { u: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', l: 'Kontroll TV' }
+        ];
+        const grid = document.getElementById('feed');
+        try {
+            const res = await Promise.all(src.map(s => fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.u)}`).then(r => r.json())));
+            let all = res.flatMap((d, i) => d.items.map(it => ({ ...it, label: src[i].l, ts: new Date(it.pubDate).getTime() }))).sort((a, b) => b.ts - a.ts);
+            
+            if (all.length > 15) all = all.slice(0, -15);
+            grid.innerHTML = '';
+            all.forEach((n, i) => {
+                const isFeat = (i % 11 < 2);
+                const img = n.thumbnail || (n.enclosure && n.enclosure.link) || 'https://via.placeholder.com/600x400?text=Rendszerváltás';
+                grid.innerHTML += `
+                    <a href="${n.link}" target="_blank" class="card ${isFeat ? 'feat' : 'norm'}">
+                        <div class="img-box"><img src="${img}" loading="lazy"></div>
+                        <span class="tag">${n.label}</span>
+                        ${isFeat ? `<h2>${n.title}</h2>` : `<h3>${n.title}</h3>`}
+                    </a>`;
             });
-
-            const allResults = await Promise.all(fetchPromises);
-            let sortedNews = allResults.flat().sort((a, b) => b.sortDate - a.sortDate);
-
-            // Utolsó hírek levágása
-            if (sortedNews.length > 15) sortedNews = sortedNews.slice(0, sortedNews.length - 15);
-
-            container.innerHTML = '';
-            let i = 0;
-            while (i < sortedNews.length) {
-                for (let j = 0; j < 2 && i < sortedNews.length; j++) {
-                    const news = sortedNews[i++];
-                    container.innerHTML += `<a href="${news.link}" target="_blank" class="card-featured"><div class="featured-img-wrap"><img src="${news.img}"></div><div class="featured-content"><span class="source-tag">${news.source}</span><h2>${news.title}</h2></div></a>`;
-                }
-                for (let k = 0; k < 9 && i < sortedNews.length; k++) {
-                    const news = sortedNews[i++];
-                    container.innerHTML += `<a href="${news.link}" target="_blank" class="card-normal"><div class="normal-img-wrap"><img src="${news.img}"></div><span class="source-tag">${news.source}</span><h3>${news.title}</h3></a>`;
-                }
-            }
-        }
-        fetchFeeds();
-    </script>
+        } catch (e) { grid.innerHTML = 'Hiba a betöltéskor.'; }
+    }
+    load();
+</script>
 </body>
 </html>
