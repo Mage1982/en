@@ -11,7 +11,6 @@
     <meta property="og:locale" content="hu_HU">
 
     <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&display=swap" rel="stylesheet">
-
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23E60000'/%3E%3Crect y='0.66' width='3' height='0.68' fill='%23FFFFFF'/%3E%3Crect y='1.33' width='3' height='0.67' fill='%23008000'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <style>
@@ -28,11 +27,11 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            overflow: hidden;
+            /* ELTÁVOLÍTVA: overflow: hidden (Így már lehet görgetni) */
+            padding: 20px 0;
         }
 
         #title {
@@ -41,7 +40,6 @@
             font-weight: 700;
             margin-bottom: 2vh;
             letter-spacing: 0.05em;
-            white-space: nowrap;
             text-shadow: none;
         }
 
@@ -53,69 +51,52 @@
             justify-content: center;
             align-items: baseline;
             color: var(--color-green);
-            text-shadow: none;
+            margin-bottom: 5vh;
         }
 
         .segment {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0 0.5vw;
+            margin: 0 1vw;
             font-weight: 700;
         }
 
-        .value {
-            font-size: 1em;
-            font-weight: 700;
-            line-height: 1;
-        }
+        .value { font-size: 1em; }
 
         .label {
             font-size: 0.25em;
             text-transform: uppercase;
             letter-spacing: 0.25em;
             margin-top: 0.5vh;
-            line-height: 1;
         }
 
         .separator {
-            color: var(--color-green);
-            display: block;
             font-size: 1em;
-            line-height: 1;
-            margin: 0 0.5vw;
-            align-self: flex-start;
-            font-weight: 700;
             opacity: 0.7;
         }
 
-        /* Új stílus a link szekcióhoz */
-        #extra-link {
-            margin-top: 5vh;
-            padding: 10px;
-            /* Betűméret a cím és visszaszámláló méretéhez viszonyítva */
-            font-size: 2vw; 
-            max-width: 90%; 
-            line-height: 1.2;
+        /* Konténer a Facebook posztoknak */
+        .fb-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
         }
 
-        #extra-link a {
-            color: var(--color-red);
-            font-weight: 700;
-            text-decoration: none;
-            border-bottom: 2px solid var(--color-red);
-            padding-bottom: 2px;
-            display: inline-block;
+        iframe {
+            max-width: 100%;
         }
 
         @media (max-width: 600px) {
             #title { font-size: 8vw; }
             #countdown { font-size: 14vw; }
-            #extra-link { font-size: 4vw; } /* Mobilon nagyobb betűméret */
         }
     </style>
 </head>
-    
 <body>
 
     <div id="title">2026. ÁPRILIS 12.</div>
@@ -142,12 +123,13 @@
         </div>
     </div>
 
-    <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=500" width="500" height="509" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-    <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=500" width="500" height="316" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    <div class="fb-container">
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=500" width="500" height="509" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=500" width="500" height="316" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    </div>
+
     <script>
-        // Célidőpont: 2026. április 12. 00:00 helyi idő szerint (nem UTC)
-        // Ez automatikusan figyelembe veszi a téli/nyári időszámítást
-        // Figyelem: A hónapok indexelése 0-tól indul, így az április a 3.
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime(); 
         const titleElement = document.getElementById('title');
 
@@ -176,25 +158,7 @@
 
         updateCountdown();
         const countdownInterval = setInterval(updateCountdown, 1000);
-       
     </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7095892821119297"
-     crossorigin="anonymous"></script>    
-    FB.ui({
-  method: 'share',
-  href: 'https://developers.facebook.com/docs/'
-}, function(response){});
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
