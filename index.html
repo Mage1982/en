@@ -27,7 +27,7 @@
             line-height: 1.6;
         }
 
-        /* --- VISSZASZÁMLÁLÓ (SZÁMOLJUK EGYÜTT STÍLUS) --- */
+        /* --- VISSZASZÁMLÁLÓ --- */
         .countdown-section {
             width: 100%;
             padding: 60px 20px;
@@ -54,27 +54,11 @@
         }
 
         .segment { display: flex; align-items: baseline; gap: 5px; }
+        .value { font-size: clamp(40px, 8vw, 80px); font-weight: 900; letter-spacing: -2px; }
+        .label { font-size: 14px; color: #666; text-transform: lowercase; }
 
-        .value {
-            font-size: clamp(40px, 8vw, 80px);
-            font-weight: 900;
-            color: var(--color-black);
-            letter-spacing: -2px;
-        }
-
-        .label {
-            font-size: 14px;
-            font-weight: 400;
-            color: #666;
-            text-transform: lowercase;
-        }
-
-        /* --- HÍREK SZEKCIÓ --- */
-        .container {
-            width: 100%;
-            max-width: 1240px;
-            padding: 40px 20px;
-        }
+        /* --- HÍREK --- */
+        .container { width: 100%; max-width: 1240px; padding: 40px 20px; }
 
         .section-title {
             font-size: clamp(32px, 6vw, 64px);
@@ -102,31 +86,12 @@
             margin-bottom: 20px;
         }
 
-        .featured-img-wrap {
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            background: #eee;
-        }
-
-        .card-featured img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
+        .featured-img-wrap { width: 100%; height: 450px; overflow: hidden; background: #eee; }
+        .card-featured img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
         .card-featured:hover img { transform: scale(1.03); }
+        .featured-content h2 { font-size: 32px; font-weight: 900; margin: 20px 0 10px 0; line-height: 1.1; letter-spacing: -1px; }
 
-        .featured-content h2 {
-            font-size: 32px;
-            font-weight: 900;
-            margin: 20px 0 10px 0;
-            line-height: 1.1;
-            letter-spacing: -1px;
-        }
-
-        /* NORMÁL HÍR (3 sornyi = 9 darab) */
+        /* NORMÁL HÍR (9 darab) */
         .card-normal {
             grid-column: span 1;
             text-decoration: none;
@@ -135,27 +100,10 @@
             padding-top: 20px;
         }
 
-        .normal-img-wrap {
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
+        .normal-img-wrap { width: 100%; height: 220px; overflow: hidden; margin-bottom: 15px; }
+        .card-normal img { width: 100%; height: 100%; object-fit: cover; }
+        .card-normal h3 { font-size: 18px; font-weight: 700; line-height: 1.3; margin: 0; }
 
-        .card-normal img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .card-normal h3 {
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin: 0;
-        }
-
-        /* FORRÁS JELZŐ */
         .source-tag {
             font-size: 12px;
             font-weight: 700;
@@ -186,13 +134,13 @@
 
     <div class="container">
         <h1 class="section-title">A Rendszerváltás Hírei</h1>
-
         <div id="news-feed-container">
-            </div>
+            <div style="grid-column: 1/-1; text-align: center;">Szinkronizálás folyamatban...</div>
+        </div>
     </div>
 
     <script>
-        // Visszaszámláló logika
+        // --- PONTOS VISSZASZÁMLÁLÓ ---
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -210,7 +158,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Feed logika 2-9 ritmussal
+        // --- ÖSSZEHANGOLT FEED KEZELŐ ---
         async function fetchFeeds() {
             const sources = [
                 { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', label: 'Hírek' },
@@ -221,52 +169,63 @@
             ];
 
             const container = document.getElementById('news-feed-container');
-            const promises = sources.map(async s => {
+            
+            // Minden forrást egyedileg töltünk be és azonnal felcímkézzük
+            const fetchPromises = sources.map(async (source) => {
                 try {
-                    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.url)}`);
-                    const data = await res.json();
-                    return data.items.map(item => ({
-                        ...item,
-                        sourceLabel: s.label,
-                        sortDate: new Date(item.pubDate).getTime(),
-                        img: item.thumbnail || item.enclosure.link || 'https://via.placeholder.com/800/eee/999?text=Nincs+kép'
-                    }));
-                } catch(e) { return []; }
+                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`);
+                    const data = await response.json();
+                    
+                    if (data.status === 'ok') {
+                        return data.items.map(item => ({
+                            title: item.title,
+                            link: item.link,
+                            pubDate: item.pubDate,
+                            sortDate: new Date(item.pubDate).getTime(),
+                            // Kép keresése: YouTube esetén thumbnail, FB esetén enclosure vagy description
+                            img: item.thumbnail || (item.enclosure && item.enclosure.link) || 'https://via.placeholder.com/800x600/eee/999?text=Rendszerváltás',
+                            source: source.label // Itt rögzítjük a forrást!
+                        }));
+                    }
+                } catch (e) {
+                    console.error("Hiba forrásnál: " + source.label, e);
+                }
+                return [];
             });
 
-            const all = (await Promise.all(promises)).flat().sort((a,b) => b.sortDate - a.sortDate);
-            container.innerHTML = '';
+            const allResults = await Promise.all(fetchPromises);
+            // Összefűzés és időrendbe rakás
+            const sortedNews = allResults.flat().sort((a, b) => b.sortDate - a.sortDate);
 
+            container.innerHTML = '';
+            
             let i = 0;
-            while (i < all.length) {
-                // 2 Kiemelt hír egymás mellett
-                for (let j = 0; j < 2 && i < all.length; j++) {
-                    const item = all[i++];
-                    const card = document.createElement('a');
-                    card.className = 'card-featured';
-                    card.href = item.link; card.target = '_blank';
-                    card.innerHTML = `
-                        <div class="featured-img-wrap"><img src="${item.img}"></div>
-                        <div class="featured-content">
-                            <span class="source-tag">${item.sourceLabel}</span>
-                            <h2>${item.title}</h2>
-                        </div>`;
-                    container.appendChild(card);
+            while (i < sortedNews.length) {
+                // 2 Kiemelt hír (Hangsúlyos blokk)
+                for (let j = 0; j < 2 && i < sortedNews.length; j++) {
+                    const news = sortedNews[i++];
+                    container.innerHTML += `
+                        <a href="${news.link}" target="_blank" class="card-featured">
+                            <div class="featured-img-wrap"><img src="${news.img}" alt=""></div>
+                            <div class="featured-content">
+                                <span class="source-tag">${news.source}</span>
+                                <h2>${news.title}</h2>
+                            </div>
+                        </a>`;
                 }
-                // 9 Normál hír rácsban
-                for (let k = 0; k < 9 && i < all.length; k++) {
-                    const item = all[i++];
-                    const card = document.createElement('a');
-                    card.className = 'card-normal';
-                    card.href = item.link; card.target = '_blank';
-                    card.innerHTML = `
-                        <div class="normal-img-wrap"><img src="${item.img}"></div>
-                        <span class="source-tag">${item.sourceLabel}</span>
-                        <h3>${item.title}</h3>`;
-                    container.appendChild(card);
+                // 9 Normál hír (Szöveges/Képes rács)
+                for (let k = 0; k < 9 && i < sortedNews.length; k++) {
+                    const news = sortedNews[i++];
+                    container.innerHTML += `
+                        <a href="${news.link}" target="_blank" class="card-normal">
+                            <div class="normal-img-wrap"><img src="${news.img}" alt=""></div>
+                            <span class="source-tag">${news.source}</span>
+                            <h3>${news.title}</h3>
+                        </a>`;
                 }
             }
         }
+
         fetchFeeds();
     </script>
 </body>
