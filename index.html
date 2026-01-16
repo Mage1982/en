@@ -12,6 +12,8 @@
             --color-green: #007A00;
             --color-grey: #444444;
             --color-light-grey: #f4f4f4;
+            --color-youtube: #FF0000;
+            --color-facebook: #1877F2;
         }
 
         body {
@@ -95,7 +97,7 @@
             margin-top: 8px;
         }
 
-        /* RSS HÍRFAL RÁCS */
+        /* HÍRFAL RÁCS */
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -136,9 +138,23 @@
             flex-direction: column;
         }
 
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .badge-fb { background-color: var(--color-facebook); }
+        .badge-yt { background-color: var(--color-youtube); }
+
         .news-content h3 {
             margin: 0 0 12px 0;
-            font-size: 18px;
+            font-size: 17px;
             color: var(--color-grey);
             line-height: 1.4;
             display: -webkit-box;
@@ -158,8 +174,7 @@
         .read-more {
             color: var(--color-green);
             font-weight: 700;
-            font-size: 14px;
-            text-transform: uppercase;
+            font-size: 13px;
         }
 
         #loader {
@@ -207,71 +222,109 @@
     </div>
 
     <div class="news-grid" id="news-container">
-        <div id="loader">Hírek frissítése...</div>
+        <div id="loader">Tartalmak betöltése a Facebookról és YouTube-ról...</div>
     </div>
 
-  /* --- RSS FEEDEK BETÖLTÉSE (Facebook & YouTube) --- */
-async function fetchAllNews() {
-    const sources = [
-        { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', type: 'facebook' },
-        { url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', type: 'youtube' }
-    ];
-
-    const container = document.getElementById('news-container');
-    let allItems = [];
-
-    for (const source of sources) {
-        try {
-            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            if (data.status === 'ok') {
-                // Megjelöljük a tételeket, hogy tudjuk, honnan jöttek
-                const itemsWithSource = data.items.map(item => ({ ...item, sourceType: source.type }));
-                allItems = allItems.concat(itemsWithSource);
+    <script>
+        /* 1. VISSZASZÁMLÁLÓ MODUL */
+        const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
+        
+        function updateValue(id, newValue) {
+            const el = document.getElementById(id);
+            if (el.innerText !== newValue) {
+                el.innerText = newValue;
+                el.classList.remove('pop');
+                void el.offsetWidth; 
+                el.classList.add('pop');
             }
-        } catch (error) {
-            console.error(`Hiba a forrás betöltésekor (${source.type}):`, error);
         }
-    }
 
-    // Időrendbe rakjuk őket (a legfrissebb legyen elöl)
-    allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-    if (allItems.length > 0) {
-        container.innerHTML = ''; // Loader eltávolítása
-        allItems.forEach(item => {
-            let img = item.thumbnail || item.enclosure.link || '';
-            
-            // YouTube esetén a thumbnail néha máshol van az API válaszban
-            if (item.sourceType === 'youtube' && !img) {
-                img = item.thumbnail; 
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 40px;'>ELÉRKEZETT A NAP!</div>";
+                return;
             }
 
-            const fallbackImg = 'https://via.placeholder.com/400x250/f4f4f4/666666?text=Rendszerváltás+2026';
-            const label = item.sourceType === 'youtube' ? '📺 VIDEÓ' : '📱 FACEBOOK';
-            const labelColor = item.sourceType === 'youtube' ? '#ff0000' : '#007A00';
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-            const card = document.createElement('a');
-            card.className = 'news-card';
-            card.href = item.link;
-            card.target = '_blank';
+            updateValue("days", String(d).padStart(2, '0'));
+            updateValue("hours", String(h).padStart(2, '0'));
+            updateValue("minutes", String(m).padStart(2, '0'));
+            updateValue("seconds", String(s).padStart(2, '0'));
+        };
 
-            card.innerHTML = `
-                <div class="news-image" style="background-image: url('${img || fallbackImg}')"></div>
-                <div class="news-content">
-                    <span style="color: ${labelColor}; font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block;">${label}</span>
-                    <h3>${item.title}</h3>
-                    <p>${item.description.replace(/<[^>]*>/g, '').substring(0, 120)}...</p>
-                    <span class="read-more">Megtekintés →</span>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    } else {
-        container.innerHTML = "Jelenleg nincsenek elérhető hírek.";
-    }
-}
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-fetchAllNews();
+        /* 2. RSS FEED MODUL (FACEBOOK + YOUTUBE) */
+        async function fetchAllFeeds() {
+            const sources = [
+                { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', type: 'fb', label: 'Facebook' },
+                { url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', type: 'yt', label: 'Kontroll TV' }
+            ];
+
+            const container = document.getElementById('news-container');
+            let combinedItems = [];
+
+            for (const source of sources) {
+                try {
+                    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+
+                    if (data.status === 'ok') {
+                        const items = data.items.map(item => ({
+                            ...item,
+                            sourceType: source.type,
+                            sourceLabel: source.label
+                        }));
+                        combinedItems = combinedItems.concat(items);
+                    }
+                } catch (e) { console.error("Hiba:", source.type); }
+            }
+
+            // Időrendi sorrend (friss előre)
+            combinedItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+            if (combinedItems.length > 0) {
+                container.innerHTML = '';
+                combinedItems.forEach(item => {
+                    const card = document.createElement('a');
+                    card.className = 'news-card';
+                    card.href = item.link;
+                    card.target = '_blank';
+
+                    // Képkezelés
+                    let img = item.thumbnail || item.enclosure.link || '';
+                    if(!img && item.description.includes('<img')) {
+                        const m = item.description.match(/src="([^"]+)"/);
+                        if(m) img = m[1];
+                    }
+                    const fallback = 'https://via.placeholder.com/400x250/f4f4f4/666666?text=Rendszerváltás+2026';
+
+                    card.innerHTML = `
+                        <div class="news-image" style="background-image: url('${img || fallback}')"></div>
+                        <div class="news-content">
+                            <span class="badge ${item.sourceType === 'fb' ? 'badge-fb' : 'badge-yt'}">${item.sourceLabel}</span>
+                            <h3>${item.title}</h3>
+                            <p>${item.description.replace(/<[^>]*>/g, '').substring(0, 130)}...</p>
+                            <span class="read-more">Megtekintés →</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } else {
+                container.innerHTML = "Jelenleg nem sikerült betölteni a hírfolyamot.";
+            }
+        }
+
+        fetchAllFeeds();
+    </script>
+</body>
+</html>
