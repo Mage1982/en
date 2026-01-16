@@ -217,11 +217,12 @@
     </div>
 
     <div class="news-grid" id="news-container">
-        <div id="loader">Hírek és videók betöltése...</div>
+        <div id="loader">Tartalmak betöltése a hiteles forrásokból...</div>
     </div>
 
     <script>
-        /* 1. VISSZASZÁMLÁLÓ MODUL */
+        /* 1. JAVÍTOTT VISSZASZÁMLÁLÓ */
+        // Figyelem: A hónapok indexelése 0-val kezdődik (0=Jan, 3=Ápr)
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         
         function updateValue(id, newValue) {
@@ -237,10 +238,12 @@
         const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
+
             if (distance < 0) {
                 document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 40px;'>ELÉRKEZETT A NAP!</div>";
                 return;
             }
+
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -255,7 +258,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        /* 2. RSS FEED MODUL - ÖSSZES FORRÁS */
+        /* 2. JAVÍTOTT ÉS TISZTÍTOTT RSS MODUL */
         async function fetchAllFeeds() {
             const sources = [
                 { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', type: 'fb', label: 'Hírek' },
@@ -275,18 +278,41 @@
                     const data = await response.json();
 
                     if (data.status === 'ok') {
-                        const items = data.items.map(item => ({
-                            ...item,
-                            sourceType: source.type,
-                            sourceLabel: source.label,
-                            sortDate: new Date(item.pubDate).getTime()
-                        }));
+                        const items = data.items.map(item => {
+                            // Kép keresése több helyen
+                            let thumbnail = "";
+                            if (source.type === 'yt') {
+                                thumbnail = item.thumbnail;
+                            } else {
+                                thumbnail = item.enclosure.link || item.thumbnail || "";
+                                // Ha nincs kép, megpróbáljuk a description-ből kikaparni az <img> taget
+                                if (!thumbnail && item.description.includes("<img")) {
+                                    const match = item.description.match(/src="([^"]+)"/);
+                                    if (match) thumbnail = match[1];
+                                }
+                            }
+
+                            // Szöveg tisztítása a HTML tagektől és felesleges linkektől
+                            let cleanDesc = item.description.replace(/<[^>]*>/g, '');
+                            cleanDesc = cleanDesc.replace(/http[s]?:\/\/\S+/g, ''); // Linkek eltávolítása a szövegből
+
+                            return {
+                                title: item.title,
+                                link: item.link,
+                                description: cleanDesc,
+                                pubDate: item.pubDate,
+                                thumbnail: thumbnail,
+                                sourceType: source.type,
+                                sourceLabel: source.label,
+                                sortDate: new Date(item.pubDate).getTime()
+                            };
+                        });
                         combinedItems = combinedItems.concat(items);
                     }
                 } catch (e) { console.error("Hiba:", source.label); }
             }
 
-            // Összesített hírek rendezése idő szerint (csökkenő)
+            // Frissesség szerinti sorrend
             combinedItems.sort((a, b) => b.sortDate - a.sortDate);
 
             if (combinedItems.length > 0) {
@@ -297,26 +323,21 @@
                     card.href = item.link;
                     card.target = '_blank';
 
-                    let img = (item.sourceType === 'yt') ? item.thumbnail : (item.thumbnail || item.enclosure.link || '');
-                    if(!img && item.description.includes('<img')) {
-                        const m = item.description.match(/src="([^"]+)"/);
-                        if(m) img = m[1];
-                    }
                     const fallback = 'https://via.placeholder.com/400x250/f4f4f4/666666?text=Rendszerváltás+2026';
 
                     card.innerHTML = `
-                        <div class="news-image" style="background-image: url('${img || fallback}')"></div>
+                        <div class="news-image" style="background-image: url('${item.thumbnail || fallback}')"></div>
                         <div class="news-content">
                             <span class="badge ${item.sourceType === 'fb' ? 'badge-fb' : 'badge-yt'}">${item.sourceLabel}</span>
                             <h3>${item.title}</h3>
-                            <p>${item.description.replace(/<[^>]*>/g, '').substring(0, 130)}...</p>
+                            <p>${item.description.substring(0, 140)}...</p>
                             <span class="read-more">Megtekintés →</span>
                         </div>
                     `;
                     container.appendChild(card);
                 });
             } else {
-                container.innerHTML = "<div id='loader'>Nem sikerült betölteni a híreket.</div>";
+                container.innerHTML = "<div id='loader'>Jelenleg nincsenek elérhető hírek. Frissítse az oldalt később!</div>";
             }
         }
 
