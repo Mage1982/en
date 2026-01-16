@@ -42,7 +42,6 @@
             font-weight: 700;
         }
 
-        /* VISSZASZÁMLÁLÓ */
         #countdown {
             display: flex;
             justify-content: center;
@@ -74,18 +73,9 @@
             animation: blink 1.5s infinite;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         .pop { animation: pulse 0.5s ease-out; }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); color: var(--color-red); }
-            100% { transform: scale(1); }
-        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); color: var(--color-red); } 100% { transform: scale(1); } }
 
         .label {
             font-size: clamp(10px, 1.3vw, 15px);
@@ -94,7 +84,6 @@
             margin-top: 8px;
         }
 
-        /* HÍRFAL RÁCS */
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -217,12 +206,11 @@
     </div>
 
     <div class="news-grid" id="news-container">
-        <div id="loader">Tartalmak betöltése a hiteles forrásokból...</div>
+        <div id="loader">Hírek és videók szinkronizálása...</div>
     </div>
 
     <script>
-        /* 1. JAVÍTOTT VISSZASZÁMLÁLÓ */
-        // Figyelem: A hónapok indexelése 0-val kezdődik (0=Jan, 3=Ápr)
+        /* 1. VISSZASZÁMLÁLÓ */
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         
         function updateValue(id, newValue) {
@@ -238,12 +226,10 @@
         const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
-
             if (distance < 0) {
                 document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 40px;'>ELÉRKEZETT A NAP!</div>";
                 return;
             }
-
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -258,7 +244,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        /* 2. JAVÍTOTT ÉS TISZTÍTOTT RSS MODUL */
+        /* 2. JAVÍTOTT ÉS FORRÁS-BIZTOS FEED MODUL */
         async function fetchAllFeeds() {
             const sources = [
                 { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', type: 'fb', label: 'Hírek' },
@@ -271,48 +257,42 @@
             const container = document.getElementById('news-container');
             let combinedItems = [];
 
-            for (const source of sources) {
+            // Egyenként hívjuk meg és rögtön címkézzük, hogy ne keveredjenek el
+            const fetchPromises = sources.map(async (source) => {
                 try {
                     const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
                     const response = await fetch(apiUrl);
                     const data = await response.json();
 
                     if (data.status === 'ok') {
-                        const items = data.items.map(item => {
-                            // Kép keresése több helyen
-                            let thumbnail = "";
-                            if (source.type === 'yt') {
-                                thumbnail = item.thumbnail;
-                            } else {
-                                thumbnail = item.enclosure.link || item.thumbnail || "";
-                                // Ha nincs kép, megpróbáljuk a description-ből kikaparni az <img> taget
-                                if (!thumbnail && item.description.includes("<img")) {
-                                    const match = item.description.match(/src="([^"]+)"/);
-                                    if (match) thumbnail = match[1];
-                                }
+                        return data.items.map(item => {
+                            let thumbnail = (source.type === 'yt') ? item.thumbnail : (item.enclosure.link || item.thumbnail || "");
+                            if (!thumbnail && item.description.includes("<img")) {
+                                const match = item.description.match(/src="([^"]+)"/);
+                                if (match) thumbnail = match[1];
                             }
 
-                            // Szöveg tisztítása a HTML tagektől és felesleges linkektől
-                            let cleanDesc = item.description.replace(/<[^>]*>/g, '');
-                            cleanDesc = cleanDesc.replace(/http[s]?:\/\/\S+/g, ''); // Linkek eltávolítása a szövegből
+                            let cleanDesc = item.description.replace(/<[^>]*>/g, '').replace(/http[s]?:\/\/\S+/g, '');
 
                             return {
-                                title: item.title,
-                                link: item.link,
+                                ...item,
                                 description: cleanDesc,
-                                pubDate: item.pubDate,
                                 thumbnail: thumbnail,
                                 sourceType: source.type,
-                                sourceLabel: source.label,
+                                sourceLabel: source.label, // Fixált címke hozzárendelés
                                 sortDate: new Date(item.pubDate).getTime()
                             };
                         });
-                        combinedItems = combinedItems.concat(items);
                     }
-                } catch (e) { console.error("Hiba:", source.label); }
-            }
+                } catch (e) {
+                    console.error("Hiba forrásnál: " + source.label, e);
+                }
+                return [];
+            });
 
-            // Frissesség szerinti sorrend
+            const results = await Promise.all(fetchPromises);
+            combinedItems = results.flat();
+
             combinedItems.sort((a, b) => b.sortDate - a.sortDate);
 
             if (combinedItems.length > 0) {
@@ -337,7 +317,7 @@
                     container.appendChild(card);
                 });
             } else {
-                container.innerHTML = "<div id='loader'>Jelenleg nincsenek elérhető hírek. Frissítse az oldalt később!</div>";
+                container.innerHTML = "<div id='loader'>Szerver hiba. Kérjük frissítse az oldalt!</div>";
             }
         }
 
