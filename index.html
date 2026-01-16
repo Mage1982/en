@@ -85,20 +85,19 @@
     }
     setInterval(update, 1000); update();
 
-    // --- HÍRFAL LOGIKA ---
+    // --- HÍRFAL LOGIKA (ÚJ FORRÁSOKKAL) ---
     async function load() {
         const src = [
-            { u: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', l: 'Hírek' },
-            { u: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', l: 'Juhász Péter' },
+            { u: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', l: 'BalPest' },
+            { u: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', l: 'Kontroll' },
             { u: 'https://rss.app/feeds/zbfBHxHr26BwH0c6.xml', l: 'Magyar Hang' },
-            { u: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', l: 'Kontrollpont' },
+            { u: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', l: 'Juhász Péter' },
             { u: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', l: 'Kontroll TV' }
         ];
         
         const grid = document.getElementById('feed');
         
         try {
-            // Hibatűrő adatletöltés
             const results = await Promise.all(src.map(async (s) => {
                 try {
                     const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.u)}`);
@@ -115,12 +114,12 @@
 
             let all = results.flat().sort((a, b) => b.ts - a.ts);
             
-            // Az utolsó 5 sor (rácsos nézetben 15 hír) eltávolítása a kérésed szerint
+            // Az utolsó 5 sor eltávolítása
             if (all.length > 15) all = all.slice(0, all.length - 15);
 
             grid.innerHTML = '';
             all.forEach((n, i) => {
-                const isFeat = (i % 11 < 2); // 2 kiemelt, majd 9 normál ismétlődő ritmus
+                const isFeat = (i % 11 < 2);
                 grid.innerHTML += `
                     <a href="${n.link}" target="_blank" class="card ${isFeat ? 'feat' : 'norm'}">
                         <div class="img-box"><img src="${n.img}" loading="lazy"></div>
@@ -128,7 +127,7 @@
                         ${isFeat ? `<h2>${n.title}</h2>` : `<h3>${n.title}</h3>`}
                     </a>`;
             });
-        } catch (e) { grid.innerHTML = 'Nem sikerült betölteni a híreket.'; }
+        } catch (e) { grid.innerHTML = 'Hiba a betöltéskor.'; }
     }
     load();
 </script>
