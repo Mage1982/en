@@ -9,7 +9,7 @@
         :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; }
         body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: var(--black); display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
 
-        /* HERO & COUNTDOWN */
+        /* HERO SECTION */
         .hero { 
             width: 100%; min-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
             background: linear-gradient(rgba(5, 15, 30, 0.8), rgba(5, 15, 30, 0.8)), 
@@ -17,7 +17,12 @@
             background-size: cover; background-attachment: fixed;
         }
 
-        /* KOMÓTOSAN PULZÁLÓ FŐCÍM */
+        /* KÖZÖS PULZÁLÓ ANIMÁCIÓ */
+        @keyframes slow-pulse {
+            0%, 100% { opacity: 0.4; text-shadow: 0 0 10px rgba(255,255,255,0); }
+            50% { opacity: 1; text-shadow: 0 0 30px rgba(255,255,255,0.6); }
+        }
+
         .main-title {
             font-size: clamp(40px, 10vw, 120px);
             font-weight: 900;
@@ -27,43 +32,35 @@
             animation: slow-pulse 8s infinite ease-in-out;
         }
 
-        @keyframes slow-pulse {
-            0%, 100% { opacity: 0.4; text-shadow: none; }
-            50% { opacity: 1; text-shadow: 0 0 30px rgba(255,255,255,0.5); }
+        #target-date { 
+            font-size: clamp(14px, 2vw, 20px); 
+            font-weight: 700; 
+            letter-spacing: 8px; 
+            color: var(--red); 
+            margin-bottom: 40px; 
+            text-transform: uppercase;
+            opacity: 0.9;
         }
-
-        #target-date { font-size: clamp(14px, 2vw, 20px); font-weight: 700; letter-spacing: 8px; color: var(--red); margin-bottom: 40px; text-transform: uppercase; }
         
         .timer { display: flex; align-items: center; gap: clamp(5px, 2vw, 15px); }
         .unit { display: flex; flex-direction: column; align-items: center; }
         
-        /* SZAGGATOTT TRIKOLÓR CSILLOGÁS */
+        /* A SZÁMOK IS UGYANAZT AZ EFFEKTET HASZNÁLJÁK */
         .val { 
             font-size: clamp(45px, 12vw, 190px); 
             font-weight: 900; 
             line-height: 0.8; 
-            animation: trikolor-glow 8s infinite steps(1); 
-        }
-
-        @keyframes trikolor-glow {
-            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-            10%, 12% { color: var(--red); text-shadow: 0 0 40px var(--red); }
-            13%, 40% { color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.8); }
-            41%, 43% { color: #fff; text-shadow: 0 0 50px #fff; }
-            44%, 70% { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-            71%, 73% { color: var(--green); text-shadow: 0 0 40px var(--green); }
-            74% { color: #fff; }
+            animation: slow-pulse 8s infinite ease-in-out; /* Összehangolva a főcímmel */
         }
 
         .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.4; padding-bottom: 20px; }
         .label { font-size: clamp(10px, 1.8vw, 16px); font-weight: 900; letter-spacing: 3px; margin-top: 15px; color: var(--green); }
         
-        /* CONTENT SECTION */
+        /* HÍREK SZEKCIÓ */
         .container { width: 100%; max-width: 1300px; padding: 80px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
         .section-title { font-size: clamp(30px, 6vw, 70px); font-weight: 900; margin-bottom: 50px; text-transform: uppercase; border-bottom: 12px solid var(--dark-green); display: inline-block; line-height: 0.9; align-self: flex-start; }
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; width: 100%; }
 
-        /* CARDS */
         .card { text-decoration: none; color: inherit; display: none; flex-direction: column; transition: 0.3s ease; }
         .card.visible { display: flex; animation: fadeIn 0.6s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -91,7 +88,6 @@
         @media (max-width: 1000px) { 
             .grid { grid-template-columns: 1fr; } 
             .feat { grid-column: span 1; } 
-            .feat .img-box { height: 300px; } 
             .hero { background-attachment: scroll; min-height: 70vh; }
             .main-title { letter-spacing: 5px; margin-top: 40px; }
         }
@@ -113,13 +109,13 @@
 <div class="container">
     <h2 class="section-title">A Rendszerváltás Hírei</h2>
     <div id="feed" class="grid">
-        <div style="grid-column: 1/-1; text-align: center; padding: 50px; font-weight: 700;">Hírek betöltése...</div>
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px; font-weight: 700;">Hírek szinkronizálása...</div>
     </div>
     <button id="load-more">További hírek betöltése</button>
 </div>
 
 <script>
-    // --- VISSZASZÁMLÁLÓ ---
+    // VISSZASZÁMLÁLÓ LOGIKA
     const target = new Date("April 12, 2026 00:00:00").getTime();
     function update() {
         const dist = target - new Date().getTime();
@@ -131,7 +127,7 @@
     }
     setInterval(update, 1000); update();
 
-    // --- HÍRFAL ÉS BETÖLTÉS ---
+    // HÍRFAL BETÖLTÉS
     let currentItems = 0;
     const itemsPerPage = 8;
 
@@ -166,7 +162,6 @@
             if (all.length > 15) all = all.slice(0, all.length - 15);
 
             grid.innerHTML = '';
-            
             all.forEach((n, i) => {
                 const isFeat = (i % 11 < 2);
                 const card = document.createElement('a');
@@ -190,7 +185,6 @@
                 currentItems = nextLimit;
                 btn.style.display = (currentItems >= cards.length) ? 'none' : 'block';
             }
-
             btn.onclick = showNextItems;
             showNextItems();
 
