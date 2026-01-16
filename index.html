@@ -11,6 +11,7 @@
             --color-red: #D60000;
             --color-green: #007A00;
             --color-grey: #444444;
+            --color-light-grey: #f4f4f4;
         }
 
         body {
@@ -91,28 +92,82 @@
             font-size: clamp(10px, 1.3vw, 15px);
             text-transform: uppercase;
             color: var(--color-grey);
-            font-style: normal;
             margin-top: 8px;
         }
 
-        /* RÁCS ELRENDEZÉS */
-        .fb-grid {
+        /* RSS HÍRFAL RÁCS */
+        .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
             width: 100%;
-            max-width: 1400px;
-            justify-content: center;
+            max-width: 1200px;
+            margin-top: 20px;
         }
 
-        iframe {
-            border: none;
+        .news-card {
+            background: white;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            background: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
             width: 100%;
-            max-width: 450px;
-            justify-self: center;
+            height: 200px;
+            background-color: var(--color-light-grey);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .news-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-content h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            color: var(--color-grey);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .read-more {
+            color: var(--color-green);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        #loader {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: var(--color-green);
         }
 
         @media (max-width: 600px) {
@@ -151,25 +206,12 @@
         </div>
     </div>
 
-    <div class="fb-grid">
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid0VicHRiniwY3r36JE926ngVFSNHXTPLNmrn8umJ7PD9hkgW4UxQXsU2NbqZ2cF2u5l&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02xjLTfyKMuGzydybVTTiJ8KY9dd1r4v2BcMUApw4pwCEEbCpj2mxJgsSoggMnUNfEl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid037sSboioQCqefsHpXR87WTfdRqvAag43DS9zZqrQdVsBEQdju8XrJstLrzexxK38jl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02qdmtdwvU7cFz54JA98vhaJUarErjDUEALsDWMf5eYHTt5ygBRYS7jcDUGNN5abSl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid0C9tzdEd17Uji4MRsTTNL2J7Lf5h6Z2f8eiF37TuXfqmjkATvD756txYfjLxzfEj4l&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02QDw4w7aCXZ6NHFVB4RvWHDagiwTL1B6sdWkE7NLBbW1JGL317UqBb8MSmi8xyZKel&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02ENYdXzST8vLSmaRZU6wKNzz2L5xR2mpFgcPGq2DGK6xhR18WAo1KyDAVPtdqtrRGl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02d9zG336LZy7uiUCSH2TTwtwNKPDxDUWdRjLFdD7C9osPjkYuCnqv3UDxjz65ofBUl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02d64EFjvT9WzVWPvrg2YjTAn5L4RxpoMXXvB98vMC2t1yx4W34XUt6Ea5HbJzcwfwl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02apMCbKiFXusxQFByt9QvYFTGc52GobXccQ6uGmQ1vdJZVMuu1qFbRWCnBYx1dz5Xl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fbalpestblog%2Fposts%2Fpfbid02jrLeixa1h3Quq4kdPyivc4mXcH4ae2ovTDuCxMTdNcbRjzeLY6GtRUEu9vjuEzSsl&show_text=true&width=450" height="700" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=450" height="600" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=450" height="600" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ftelexhu%2Fposts%2Fpfbid0amwue61NYThNZHRQwEikoWWXRovUDSBTymZL8HQrE3GW6wTrJ8jMpYbuG55tTCH9l&show_text=true&width=450" height="600" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+    <div class="news-grid" id="news-container">
+        <div id="loader">Hírek frissítése...</div>
     </div>
 
     <script>
+        /* --- VISSZASZÁMLÁLÓ LOGIKA --- */
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         
         function updateValue(id, newValue) {
@@ -204,6 +246,53 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        /* --- RSS FEED BETÖLTÉSE --- */
+        async function fetchNews() {
+            const rssUrl = 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml';
+            // Ingyenes konverter API (RSS -> JSON)
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.status === 'ok') {
+                    const container = document.getElementById('news-container');
+                    container.innerHTML = ''; // Loader eltávolítása
+
+                    data.items.forEach(item => {
+                        // Kép kinyerése
+                        let img = item.thumbnail || item.enclosure.link || '';
+                        if(!img && item.description.includes('<img')) {
+                           const m = item.description.match(/src="([^"]+)"/);
+                           if(m) img = m[1];
+                        }
+                        const fallbackImg = 'https://via.placeholder.com/400x250/f4f4f4/666666?text=Rendszerváltás+2026';
+
+                        const card = document.createElement('a');
+                        card.className = 'news-card';
+                        card.href = item.link;
+                        card.target = '_blank';
+
+                        card.innerHTML = `
+                            <div class="news-image" style="background-image: url('${img || fallbackImg}')"></div>
+                            <div class="news-content">
+                                <h3>${item.title}</h3>
+                                <p>${item.description.replace(/<[^>]*>/g, '').substring(0, 150)}...</p>
+                                <span class="read-more">Megtekintés Facebookon →</span>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error("Hiba történt:", error);
+                document.getElementById('news-container').innerHTML = "Sajnos nem sikerült betölteni a híreket.";
+            }
+        }
+
+        fetchNews();
     </script>
 </body>
 </html>
