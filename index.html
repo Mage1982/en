@@ -27,18 +27,22 @@
             overflow-x: hidden;
         }
 
-        /* --- MONUMENTÁLIS VISSZASZÁMLÁLÓ --- */
+        /* --- MONUMENTÁLIS VISSZASZÁMLÁLÓ FOTÓS HÁTTÉRREL --- */
         .countdown-hero {
             width: 100%;
-            padding: 100px 20px;
-            background: #000;
-            color: #fff;
-            text-align: center;
+            min-height: 70vh;
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 60vh;
+            text-align: center;
+            color: #fff;
+            /* Parlament fotó kékes tónussal */
+            background: linear-gradient(rgba(10, 30, 60, 0.7), rgba(10, 30, 60, 0.7)), 
+                        url('https://images.unsplash.com/photo-1565451730902-699767674665?q=80&w=2000&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
         }
 
         #target-date {
@@ -48,13 +52,7 @@
             text-transform: uppercase;
             color: var(--color-red);
             margin-bottom: 40px;
-            animation: pulse-red 2s infinite;
-        }
-
-        @keyframes pulse-red {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         #countdown {
@@ -72,24 +70,26 @@
         }
 
         .value {
-            font-size: clamp(80px, 18vw, 220px);
+            font-size: clamp(80px, 18vw, 200px);
             font-weight: 900;
             line-height: 0.8;
             letter-spacing: -6px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         #seconds {
             color: var(--color-red);
         }
 
-        /* ZÖLD FELIRATOK A SZÁMOK ALATT */
+        /* ZÖLD FELIRATOK */
         .label {
             font-size: 16px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 4px;
             margin-top: 25px;
-            color: var(--color-green); /* Zöld szín */
+            color: #00ff73; /* Világosabb zöld a sötét háttéren az olvashatóságért */
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
         /* --- HÍREK SZEKCIÓ --- */
@@ -127,19 +127,16 @@
             height: 550px;
             overflow: hidden;
             background: #f0f0f0;
-            border: 1px solid #eee;
         }
 
         .card-featured img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(20%);
             transition: all 0.5s ease;
         }
 
         .card-featured:hover img {
-            filter: grayscale(0%);
             transform: scale(1.02);
         }
 
@@ -193,7 +190,6 @@
         @media (max-width: 1000px) {
             #news-feed-container { grid-template-columns: 1fr; }
             .card-featured { grid-column: span 1; }
-            .featured-img-wrap { height: 350px; }
             .value { font-size: 100px; }
             #countdown { gap: 20px; }
         }
@@ -219,13 +215,11 @@
     </div>
 
     <script>
-        // --- PONTOS VISSZASZÁMLÁLÓ ---
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
             if (distance < 0) return;
-            
             document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
             document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
             document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
@@ -234,70 +228,8 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // --- ÖSSZEHANGOLT FEED KEZELŐ ---
         async function fetchFeeds() {
             const sources = [
                 { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', label: 'Hírek' },
                 { url: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', label: 'Juhász Péter' },
-                { url: 'https://rss.app/feeds/zbfBHxHr26BwH0c6.xml', label: 'Magyar Hang' },
-                { url: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', label: 'Kontrollpont' },
-                { url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', label: 'Kontroll TV' }
-            ];
-
-            const container = document.getElementById('news-feed-container');
-            const fetchPromises = sources.map(async (source) => {
-                try {
-                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`);
-                    const data = await response.json();
-                    if (data.status === 'ok') {
-                        return data.items.map(item => ({
-                            title: item.title,
-                            link: item.link,
-                            sortDate: new Date(item.pubDate).getTime(),
-                            img: item.thumbnail || (item.enclosure && item.enclosure.link) || 'https://via.placeholder.com/800x600/eee/999?text=Rendszerváltás',
-                            source: source.label
-                        }));
-                    }
-                } catch (e) { console.error(e); }
-                return [];
-            });
-
-            const allResults = await Promise.all(fetchPromises);
-            let sortedNews = allResults.flat().sort((a, b) => b.sortDate - a.sortDate);
-
-            // TÖRLÉS: Az utolsó 5 sor (rácsban 3 oszlop van, tehát 15 hír) levágása
-            if (sortedNews.length > 15) {
-                sortedNews = sortedNews.slice(0, sortedNews.length - 15);
-            }
-
-            container.innerHTML = '';
-            let i = 0;
-            while (i < sortedNews.length) {
-                // 2 Kiemelt
-                for (let j = 0; j < 2 && i < sortedNews.length; j++) {
-                    const news = sortedNews[i++];
-                    container.innerHTML += `
-                        <a href="${news.link}" target="_blank" class="card-featured">
-                            <div class="featured-img-wrap"><img src="${news.img}" alt=""></div>
-                            <div class="featured-content">
-                                <span class="source-tag">${news.source}</span>
-                                <h2>${news.title}</h2>
-                            </div>
-                        </a>`;
-                }
-                // 9 Normál (ez felel meg 3 sornak a rácsban)
-                for (let k = 0; k < 9 && i < sortedNews.length; k++) {
-                    const news = sortedNews[i++];
-                    container.innerHTML += `
-                        <a href="${news.link}" target="_blank" class="card-normal">
-                            <div class="normal-img-wrap"><img src="${news.img}" alt=""></div>
-                            <span class="source-tag">${news.source}</span>
-                            <h3>${news.title}</h3>
-                        </a>`;
-                }
-            }
-        }
-        fetchFeeds();
-    </script>
-</body>
-</html>
+                { url
