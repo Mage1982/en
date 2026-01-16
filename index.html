@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visszaszámláló – 2026. április 12. | rendszer-valtas.hu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>2026. április 12. | rendszer-valtas.hu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --color-black: #1a1a1a;
-            --color-red: #e60000;
+            --color-black: #000000;
+            --color-red: #ff0000;
             --color-green: #00843d;
-            --color-border: #e0e0e0;
+            --color-border: #1a1a1a;
             --bg-light: #ffffff;
             --font-main: 'Inter', sans-serif;
         }
@@ -24,118 +24,196 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- VISSZASZÁMLÁLÓ --- */
-        .countdown-section {
+        /* --- MONUMENTÁLIS VISSZASZÁMLÁLÓ --- */
+        .countdown-hero {
             width: 100%;
-            padding: 60px 20px;
-            background: #f9f9f9;
-            border-bottom: 1px solid var(--color-border);
+            padding: 100px 20px;
+            background: #000;
+            color: #fff;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
         }
 
         #target-date {
-            font-size: 14px;
+            font-size: clamp(18px, 3vw, 24px);
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 8px;
             text-transform: uppercase;
             color: var(--color-red);
-            margin-bottom: 20px;
-            display: block;
+            margin-bottom: 40px;
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
         }
 
         #countdown {
             display: flex;
             justify-content: center;
-            align-items: baseline;
-            gap: 15px;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
         }
 
-        .segment { display: flex; align-items: baseline; gap: 5px; }
-        .value { font-size: clamp(40px, 8vw, 80px); font-weight: 900; letter-spacing: -2px; }
-        .label { font-size: 14px; color: #666; text-transform: lowercase; }
+        .segment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* --- HÍREK --- */
-        .container { width: 100%; max-width: 1240px; padding: 40px 20px; }
+        .value {
+            font-size: clamp(80px, 18vw, 220px);
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -6px;
+        }
+
+        #seconds {
+            color: var(--color-red);
+        }
+
+        .label {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 20px;
+            color: #444;
+        }
+
+        /* --- HÍREK SZEKCIÓ --- */
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            padding: 80px 20px;
+        }
 
         .section-title {
-            font-size: clamp(32px, 6vw, 64px);
+            font-size: clamp(40px, 8vw, 90px);
             font-weight: 900;
-            margin-bottom: 50px;
-            letter-spacing: -2px;
-            border-bottom: 8px solid var(--color-green);
-            display: inline-block;
-            line-height: 0.9;
+            margin-bottom: 60px;
+            letter-spacing: -4px;
+            line-height: 0.85;
+            text-transform: uppercase;
         }
 
         #news-feed-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+            gap: 50px;
         }
 
-        /* KIEMELT HÍR (2 darab egymás mellett) */
+        /* KIEMELT HÍR (2 db) */
         .card-featured {
             grid-column: span 1.5;
-            display: flex;
-            flex-direction: column;
             text-decoration: none;
             color: inherit;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
 
-        .featured-img-wrap { width: 100%; height: 450px; overflow: hidden; background: #eee; }
-        .card-featured img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .card-featured:hover img { transform: scale(1.03); }
-        .featured-content h2 { font-size: 32px; font-weight: 900; margin: 20px 0 10px 0; line-height: 1.1; letter-spacing: -1px; }
+        .featured-img-wrap {
+            width: 100%;
+            height: 550px;
+            overflow: hidden;
+            background: #f0f0f0;
+            border: 1px solid #eee;
+        }
 
-        /* NORMÁL HÍR (9 darab) */
+        .card-featured img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: all 0.5s ease;
+        }
+
+        .card-featured:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        .featured-content h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 900;
+            margin: 25px 0 10px 0;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        /* NORMÁL HÍR (9 db) */
         .card-normal {
             grid-column: span 1;
             text-decoration: none;
             color: inherit;
-            border-top: 1px solid var(--color-border);
-            padding-top: 20px;
+            border-top: 2px solid var(--color-black);
+            padding-top: 30px;
         }
 
-        .normal-img-wrap { width: 100%; height: 220px; overflow: hidden; margin-bottom: 15px; }
-        .card-normal img { width: 100%; height: 100%; object-fit: cover; }
-        .card-normal h3 { font-size: 18px; font-weight: 700; line-height: 1.3; margin: 0; }
+        .normal-img-wrap {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .card-normal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-normal h3 {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
 
         .source-tag {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 900;
             text-transform: uppercase;
             color: var(--color-green);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             display: block;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             #news-feed-container { grid-template-columns: 1fr; }
             .card-featured { grid-column: span 1; }
-            .featured-img-wrap { height: 300px; }
+            .featured-img-wrap { height: 350px; }
+            .value { font-size: 100px; }
+            #countdown { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <section class="countdown-section">
-        <span id="target-date">2026. április 12.</span>
+    <section class="countdown-hero">
+        <span id="target-date">2026. ÁPRILIS 12.</span>
         <div id="countdown">
-            <div class="segment"><span class="value" id="days">00</span><span class="label">nap</span></div>
-            <div class="segment"><span class="value" id="hours">00</span><span class="label">óra</span></div>
-            <div class="segment"><span class="value" id="minutes">00</span><span class="label">perc</span></div>
-            <div class="segment"><span class="value" id="seconds">00</span><span class="label">mp</span></div>
+            <div class="segment"><span class="value" id="days">00</span><span class="label">NAP</span></div>
+            <div class="segment"><span class="value" id="hours">00</span><span class="label">ÓRA</span></div>
+            <div class="segment"><span class="value" id="minutes">00</span><span class="label">PERC</span></div>
+            <div class="segment"><span class="value" id="seconds">00</span><span class="label">MP</span></div>
         </div>
     </section>
 
     <div class="container">
-        <h1 class="section-title">A Rendszerváltás Hírei</h1>
+        <h1 class="section-title">A Rendszerváltás<br>Hírei</h1>
         <div id="news-feed-container">
-            <div style="grid-column: 1/-1; text-align: center;">Szinkronizálás folyamatban...</div>
+            <div style="grid-column: 1/-1; text-align: center; font-weight: 700;">HÍREK SZINKRONIZÁLÁSA...</div>
         </div>
     </div>
 
@@ -145,15 +223,12 @@
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((distance % (1000 * 60)) / 1000);
+            if (distance < 0) return;
             
-            document.getElementById("days").innerText = String(d).padStart(2, '0');
-            document.getElementById("hours").innerText = String(h).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(m).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+            document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
@@ -169,39 +244,30 @@
             ];
 
             const container = document.getElementById('news-feed-container');
-            
-            // Minden forrást egyedileg töltünk be és azonnal felcímkézzük
             const fetchPromises = sources.map(async (source) => {
                 try {
                     const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`);
                     const data = await response.json();
-                    
                     if (data.status === 'ok') {
                         return data.items.map(item => ({
                             title: item.title,
                             link: item.link,
-                            pubDate: item.pubDate,
                             sortDate: new Date(item.pubDate).getTime(),
-                            // Kép keresése: YouTube esetén thumbnail, FB esetén enclosure vagy description
                             img: item.thumbnail || (item.enclosure && item.enclosure.link) || 'https://via.placeholder.com/800x600/eee/999?text=Rendszerváltás',
-                            source: source.label // Itt rögzítjük a forrást!
+                            source: source.label
                         }));
                     }
-                } catch (e) {
-                    console.error("Hiba forrásnál: " + source.label, e);
-                }
+                } catch (e) { console.error(e); }
                 return [];
             });
 
             const allResults = await Promise.all(fetchPromises);
-            // Összefűzés és időrendbe rakás
             const sortedNews = allResults.flat().sort((a, b) => b.sortDate - a.sortDate);
 
             container.innerHTML = '';
-            
             let i = 0;
             while (i < sortedNews.length) {
-                // 2 Kiemelt hír (Hangsúlyos blokk)
+                // 2 Kiemelt
                 for (let j = 0; j < 2 && i < sortedNews.length; j++) {
                     const news = sortedNews[i++];
                     container.innerHTML += `
@@ -213,7 +279,7 @@
                             </div>
                         </a>`;
                 }
-                // 9 Normál hír (Szöveges/Képes rács)
+                // 9 Normál
                 for (let k = 0; k < 9 && i < sortedNews.length; k++) {
                     const news = sortedNews[i++];
                     container.innerHTML += `
@@ -225,7 +291,6 @@
                 }
             }
         }
-
         fetchFeeds();
     </script>
 </body>
