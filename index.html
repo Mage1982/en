@@ -100,4 +100,100 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 25px;
-            width:
+            width: 100%;
+            max-width: 1400px;
+            justify-content: center;
+        }
+
+        iframe {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            justify-self: center;
+        }
+
+        @media (max-width: 600px) {
+            .header-container { text-align: center; }
+            #countdown { gap: 5px; }
+            .separator { padding-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div style="font-size: 18px;"><i>A változás napjáig hátralévő idő:</i></div>
+        <div id="target-date">2026. ÁPRILIS 12.</div>
+    </div>
+
+    <div id="countdown">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
+    </div>
+
+    <div class="fb-grid">
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=450" height="550" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=450" height="550" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ftelexhu%2Fposts%2Fpfbid0amwue61NYThNZHRQwEikoWWXRovUDSBTymZL8HQrE3GW6wTrJ8jMpYbuG55tTCH9l&show_text=true&width=450" height="550" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+    </div>
+
+    <script>
+        const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
+        
+        function updateValue(id, newValue) {
+            const el = document.getElementById(id);
+            if (el.innerText !== newValue) {
+                el.innerText = newValue;
+                el.classList.remove('pop');
+                void el.offsetWidth; 
+                el.classList.add('pop');
+            }
+        }
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 50px;'>ELÉRKEZETT A NAP!</div>";
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            updateValue("days", String(d).padStart(2, '0'));
+            updateValue("hours", String(h).padStart(2, '0'));
+            updateValue("minutes", String(m).padStart(2, '0'));
+            updateValue("seconds", String(s).padStart(2, '0'));
+        };
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
