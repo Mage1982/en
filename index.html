@@ -9,21 +9,40 @@
         :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; }
         body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: var(--black); display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
 
-        /* HERO & COUNTDOWN */
+        /* HERO & COUNTDOWN WITH GLITCH-GLOW ANIMATION */
         .hero { 
             width: 100%; min-height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
             background: linear-gradient(rgba(5, 15, 30, 0.75), rgba(5, 15, 30, 0.75)), 
                         url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
             background-size: cover; background-attachment: fixed;
         }
+
         #target-date { font-size: clamp(16px, 2.5vw, 22px); font-weight: 700; letter-spacing: 10px; color: var(--red); margin-bottom: 40px; text-transform: uppercase; }
+        
         .timer { display: flex; align-items: center; gap: clamp(5px, 2vw, 15px); }
         .unit { display: flex; flex-direction: column; align-items: center; }
-        .val { font-size: clamp(45px, 12vw, 190px); font-weight: 900; line-height: 0.8; text-shadow: 0 10px 30px rgba(0,0,0,0.6); }
-        .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.6; padding-bottom: 20px; }
-        .label { font-size: clamp(10px, 1.8vw, 16px); font-weight: 900; letter-spacing: 3px; margin-top: 15px; color: var(--green); }
-        #sec, #sep-sec { color: var(--red); }
+        
+        /* A CSZILLOGÓ ANIMÁCIÓ */
+        .val { 
+            font-size: clamp(45px, 12vw, 190px); 
+            font-weight: 900; 
+            line-height: 0.8; 
+            animation: trikolor-glow 8s infinite steps(1); /* Szaggatott váltás */
+        }
 
+        @keyframes trikolor-glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+            10%, 12% { color: var(--red); text-shadow: 0 0 30px var(--red), 0 0 60px var(--red); }
+            13%, 40% { color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.8); }
+            41%, 43% { color: #fff; text-shadow: 0 0 40px #fff, 0 0 80px #fff; }
+            44%, 70% { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+            71%, 73% { color: var(--green); text-shadow: 0 0 30px var(--green), 0 0 60px var(--green); }
+            74% { color: #fff; }
+        }
+
+        .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.4; padding-bottom: 20px; }
+        .label { font-size: clamp(10px, 1.8vw, 16px); font-weight: 900; letter-spacing: 3px; margin-top: 15px; color: var(--green); }
+        
         /* CONTENT */
         .container { width: 100%; max-width: 1300px; padding: 60px 20px; box-sizing: border-box; }
         .title { font-size: clamp(35px, 7vw, 85px); font-weight: 900; margin-bottom: 50px; text-transform: uppercase; border-bottom: 12px solid var(--dark-green); display: inline-block; line-height: 0.9; }
@@ -49,7 +68,6 @@
             .feat { grid-column: span 1; } 
             .feat .img-box { height: 320px; } 
             .hero { background-attachment: scroll; min-height: 65vh; }
-            .sep { padding-bottom: 10px; }
         }
     </style>
 </head>
@@ -60,7 +78,7 @@
     <div class="timer">
         <div class="unit"><span class="val" id="d">00</span><span class="label">NAP</span></div><span class="sep">:</span>
         <div class="unit"><span class="val" id="h">00</span><span class="label">ÓRA</span></div><span class="sep">:</span>
-        <div class="unit"><span class="val" id="m">00</span><span class="label">PERC</span></div><span class="sep" id="sep-sec">:</span>
+        <div class="unit"><span class="val" id="m">00</span><span class="label">PERC</span></div><span class="sep">:</span>
         <div class="unit"><span class="val" id="sec">00</span><span class="label">MP</span></div>
     </div>
 </section>
@@ -73,7 +91,6 @@
 </div>
 
 <script>
-    // --- VISSZASZÁMLÁLÓ ---
     const target = new Date("April 12, 2026 00:00:00").getTime();
     function update() {
         const dist = target - new Date().getTime();
@@ -85,7 +102,6 @@
     }
     setInterval(update, 1000); update();
 
-    // --- HÍRFAL LOGIKA (ÚJ FORRÁSOKKAL) ---
     async function load() {
         const src = [
             { u: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', l: 'BalPest' },
@@ -113,8 +129,6 @@
             }));
 
             let all = results.flat().sort((a, b) => b.ts - a.ts);
-            
-            // Az utolsó 5 sor eltávolítása
             if (all.length > 15) all = all.slice(0, all.length - 15);
 
             grid.innerHTML = '';
