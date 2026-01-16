@@ -5,13 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visszaszámláló – 2026. április 12. | rendszer-valtas.hu</title>
 
-    <meta property="og:title" content="Visszaszámláló – 2026. április 12.">
-    <meta property="og:description" content="Kövesd a visszaszámlálást 2026. április 12-ig!">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="hu_HU">
-
     <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='2' fill='%23E60000'/%3E%3Crect y='0.66' width='3' height='0.68' fill='%23FFFFFF'/%3E%3Crect y='1.33' width='3' height='0.67' fill='%23008000'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <style>
         :root {
@@ -30,65 +24,50 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            /* ELTÁVOLÍTVA: overflow: hidden (Így már lehet görgetni) */
-            padding: 20px 0;
+            padding: 20px;
+            /* Engedélyezzük a görgetést */
+            overflow-y: auto;
         }
 
         #title {
-            font-size: 6vw;
+            font-size: 5vw;
             color: var(--color-red);
             font-weight: 700;
             margin-bottom: 2vh;
             letter-spacing: 0.05em;
-            text-shadow: none;
         }
 
         #countdown {
-            font-size: 10vw;
-            line-height: 1;
-            padding: 10px;
+            font-size: 8vw;
             display: flex;
             justify-content: center;
             align-items: baseline;
-            color: var(--color-green);
             margin-bottom: 5vh;
         }
 
         .segment {
             display: flex;
             flex-direction: column;
-            align-items: center;
             margin: 0 1vw;
-            font-weight: 700;
         }
 
-        .value { font-size: 1em; }
+        .label { font-size: 0.25em; text-transform: uppercase; }
 
-        .label {
-            font-size: 0.25em;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            margin-top: 0.5vh;
-        }
-
-        .separator {
-            font-size: 1em;
-            opacity: 0.7;
-        }
-
-        /* Konténer a Facebook posztoknak */
-        .fb-container {
+        /* A posztok konténere */
+        .fb-wrapper {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            flex-direction: row; /* Egymás mellé teszi őket */
+            flex-wrap: wrap;    /* Ha nem férnek el, új sorba rakja */
+            justify-content: center;
+            gap: 20px;         /* Távolság a posztok között */
             width: 100%;
-            max-width: 500px;
-            margin-top: 20px;
+            max-width: 1600px;  /* Hogy ne nyúljon túl szélesre */
         }
 
         iframe {
-            max-width: 100%;
+            border: none;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Kis árnyék a jobb megjelenésért */
         }
 
         @media (max-width: 600px) {
@@ -102,63 +81,37 @@
     <div id="title">2026. ÁPRILIS 12.</div>
 
     <div id="countdown">
-        <div class="segment">
-            <span class="value" id="days">00</span>
-            <span class="label">Nap</span>
-        </div>
+        <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
         <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="hours">00</span>
-            <span class="label">Óra</span>
-        </div>
+        <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
         <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="minutes">00</span>
-            <span class="label">Perc</span>
-        </div>
+        <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
         <span class="separator">:</span>
-        <div class="segment">
-            <span class="value" id="seconds">00</span>
-            <span class="label">Mp</span>
-        </div>
+        <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
-    <div class="fb-container">
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=500" width="500" height="509" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    <div class="fb-wrapper">
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=500" width="500" height="316" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmagyartisztelet%2Fposts%2Fpfbid02Vf...&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
     </div>
 
     <script>
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime(); 
-        const titleElement = document.getElementById('title');
-
         const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
+            if (distance < 0) return;
 
-            if (distance < 0) {
-                document.getElementById("countdown").innerHTML =
-                    "<div style='font-size: 0.5em; color: var(--color-red);'>A CÉLDÁTUM ELÉRKEZETT!</div>";
-                titleElement.innerText = "2026. ÁPRILIS 12. ELÉRKEZETT!";
-                clearInterval(countdownInterval);
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+            document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
         };
-
+        setInterval(updateCountdown, 1000);
         updateCountdown();
-        const countdownInterval = setInterval(updateCountdown, 1000);
     </script>
-
 </body>
 </html>
