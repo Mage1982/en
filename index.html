@@ -14,7 +14,7 @@
             width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
             position: relative; overflow: hidden;
             background: linear-gradient(rgba(5, 15, 30, 0.85), rgba(5, 15, 30, 0.85)), 
-                        url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
+                        url('parlament.jpg') no-repeat center center;
             background-size: cover; background-attachment: fixed;
         }
 
@@ -47,7 +47,6 @@
             margin-bottom: 40px; text-transform: uppercase; z-index: 10;
         }
         
-        /* FIXÁLT DESKTOP ELRENDEZÉS (ÁTFEDÉS ELLEN) */
         .timer { 
             display: flex; align-items: flex-start; justify-content: center;
             gap: clamp(10px, 3vw, 40px); z-index: 10; width: auto;
@@ -118,7 +117,6 @@
 </div>
 
 <script>
-    // VISSZASZÁMLÁLÓ
     const target = new Date("April 12, 2026 00:00:00").getTime();
     function update() {
         const dist = target - new Date().getTime();
@@ -130,7 +128,6 @@
     }
     setInterval(update, 1000); update();
 
-    // HÍREK KEZELÉSE
     let currentItems = 0;
     const itemsPerPage = 8;
 
