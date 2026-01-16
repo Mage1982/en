@@ -23,95 +23,81 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            text-align: center;
             padding: 20px;
-            /* Engedélyezzük a görgetést */
-            overflow-y: auto;
+            overflow-x: hidden; /* Megakadályozza az oldalra csúszást */
         }
 
         #title {
-            font-size: 5vw;
+            font-size: clamp(24px, 5vw, 60px);
             color: var(--color-red);
             font-weight: 700;
-            margin-bottom: 2vh;
-            letter-spacing: 0.05em;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         #countdown {
-            font-size: 8vw;
+            font-size: clamp(30px, 8vw, 100px);
             display: flex;
             justify-content: center;
-            align-items: baseline;
-            margin-bottom: 5vh;
+            gap: 10px;
+            margin-bottom: 40px;
         }
 
-        .segment {
-            display: flex;
-            flex-direction: column;
-            margin: 0 1vw;
-        }
+        .segment { display: flex; flex-direction: column; align-items: center; }
+        .label { font-size: 0.25em; text-transform: uppercase; margin-top: 5px; }
 
-        .label { font-size: 0.25em; text-transform: uppercase; }
-
-        /* A posztok konténere */
-        .fb-wrapper {
-            display: flex;
-            flex-direction: row; /* Egymás mellé teszi őket */
-            flex-wrap: wrap;    /* Ha nem férnek el, új sorba rakja */
-            justify-content: center;
-            gap: 20px;         /* Távolság a posztok között */
+        /* RUGALMAS KONTÉNER A POSZTOKNAK */
+        .fb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Automatikusan 1, 2 vagy 3 oszlop */
+            gap: 20px;
             width: 100%;
-            max-width: 1600px;  /* Hogy ne nyúljon túl szélesre */
+            max-width: 1400px;
+            justify-items: center;
         }
 
         iframe {
             border: none;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Kis árnyék a jobb megjelenésért */
-        }
-
-        @media (max-width: 600px) {
-            #title { font-size: 8vw; }
-            #countdown { font-size: 14vw; }
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 100%; /* Mobilbarát megjelenés */
         }
     </style>
 </head>
 <body>
 
-    <div id="title">2026. ÁPRILIS 12.</div>
+    <h1 id="title">2026. ÁPRILIS 12.</h1>
 
     <div id="countdown">
-        <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
-        <span class="separator">:</span>
-        <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
-        <span class="separator">:</span>
-        <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
-        <span class="separator">:</span>
-        <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
+        <div class="segment"><span id="days">00</span><span class="label">Nap</span></div>
+        <span>:</span>
+        <div class="segment"><span id="hours">00</span><span class="label">Óra</span></div>
+        <span>:</span>
+        <div class="segment"><span id="minutes">00</span><span class="label">Perc</span></div>
+        <span>:</span>
+        <div class="segment"><span id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
-    <div class="fb-wrapper">
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    <div class="fb-grid">
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true&width=350" width="350" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=350" width="350" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmagyartisztelet%2Fposts%2Fpfbid02Vf...&show_text=true&width=500" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmagyartisztelet%2Fposts%2Fpfbid02Vf&show_text=true&width=350" width="350" height="500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
     </div>
 
     <script>
-        const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime(); 
-        const updateCountdown = () => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-            if (distance < 0) return;
-
-            document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
-        };
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        const target = new Date(2026, 3, 12, 0, 0, 0).getTime();
+        function update() {
+            const diff = target - new Date().getTime();
+            if (diff <= 0) return;
+            document.getElementById("days").innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+        }
+        setInterval(update, 1000);
+        update();
     </script>
 </body>
 </html>
