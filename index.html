@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
@@ -9,47 +9,57 @@
         :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; }
         body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: var(--black); overflow-x: hidden; }
 
-        /* --- TELJES KÉPERNYŐS HERO + VHS EFFEKT --- */
+        /* --- HERO SECTION --- */
         .hero { 
             width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
             position: relative; overflow: hidden;
-            background: linear-gradient(rgba(5, 15, 30, 0.8), rgba(5, 15, 30, 0.8)), 
+            background: linear-gradient(rgba(5, 15, 30, 0.85), rgba(5, 15, 30, 0.85)), 
                         url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
             background-size: cover; background-attachment: fixed;
         }
 
-        /* VHS ZIZEGÉS ÉS CSÍKOZÓDÁS */
+        /* VHS ZIZEGÉS RÉTEG */
         .hero::after {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 2px);
-            pointer-events: none; animation: vhs-flicker 0.15s infinite;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; animation: vhs-flicker 0.1s infinite;
+            z-index: 5;
         }
 
         @keyframes vhs-flicker {
-            0% { opacity: 0.5; } 50% { opacity: 0.6; } 100% { opacity: 0.5; }
+            0% { opacity: 0.3; } 50% { opacity: 0.5; } 100% { opacity: 0.3; }
         }
 
-        /* PULZÁLÓ ANIMÁCIÓ */
-        @keyframes slow-pulse {
-            0%, 100% { opacity: 0.3; text-shadow: 0 0 10px rgba(255,255,255,0); }
-            50% { opacity: 1; text-shadow: 0 0 40px rgba(255,255,255,0.7); }
+        /* HIRTELEN VHS REMEGÉS ÉS VILLANÁS (GLITCH) */
+        @keyframes vhs-glitch {
+            0%, 90%, 100% { transform: translate(0); opacity: 0.9; text-shadow: none; }
+            91% { transform: translate(-2px, 1px); opacity: 1; text-shadow: 2px 0 var(--red), -2px 0 var(--green); }
+            93% { transform: translate(3px, -1px); opacity: 0.8; }
+            95% { transform: translate(-5px, 0); opacity: 1; text-shadow: 3px 0 #fff; }
+            97% { transform: translate(2px, 2px); opacity: 0.7; }
         }
 
         .main-title {
             font-size: clamp(40px, 11vw, 130px); font-weight: 900; letter-spacing: clamp(10px, 2vw, 35px);
-            margin-bottom: 20px; text-transform: uppercase; animation: slow-pulse 8s infinite ease-in-out;
-            position: relative; z-index: 2;
+            margin-bottom: 20px; text-transform: uppercase; 
+            animation: vhs-glitch 3s infinite; /* Gyorsabb, hirtelen remegés */
+            position: relative; z-index: 10;
         }
 
         #target-date { 
             font-size: clamp(14px, 2vw, 20px); font-weight: 700; letter-spacing: 10px; color: var(--red); 
-            margin-bottom: 50px; text-transform: uppercase; z-index: 2;
+            margin-bottom: 50px; text-transform: uppercase; z-index: 10;
         }
         
-        .timer { display: flex; align-items: center; gap: clamp(5px, 2vw, 15px); z-index: 2; }
+        .timer { display: flex; align-items: center; gap: clamp(5px, 2vw, 15px); z-index: 10; }
         .unit { display: flex; flex-direction: column; align-items: center; }
-        .val { font-size: clamp(45px, 12vw, 190px); font-weight: 900; line-height: 0.8; animation: slow-pulse 8s infinite ease-in-out; }
-        .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.4; padding-bottom: 20px; }
+        
+        .val { 
+            font-size: clamp(45px, 12vw, 190px); font-weight: 900; line-height: 0.8; 
+            animation: vhs-glitch 4.5s infinite; /* Eltérő ütemezés a dinamizmusért */
+        }
+
+        .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.5; padding-bottom: 20px; }
         .label { font-size: clamp(10px, 1.8vw, 16px); font-weight: 900; letter-spacing: 4px; margin-top: 20px; color: var(--green); }
         
         /* HÍREK SZAKASZ */
@@ -80,7 +90,7 @@
             letter-spacing: 4px; background: var(--black); color: #fff; border: none; cursor: pointer;
             transition: 0.3s; display: none;
         }
-        #load-more:hover { background: var(--dark-green); transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        #load-more:hover { background: var(--dark-green); transform: scale(1.05); }
 
         @media (max-width: 1000px) { 
             .grid { grid-template-columns: 1fr; } 
@@ -106,7 +116,7 @@
 <div class="container">
     <h2 class="section-title">A Hírek</h2>
     <div id="feed" class="grid">
-        <div style="grid-column: 1/-1; text-align: center; padding: 50px; font-weight: 700;">BETÖLTÉS...</div>
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px; font-weight: 700;">SZINKRONIZÁLÁS...</div>
     </div>
     <button id="load-more">További hírek betöltése</button>
 </div>
@@ -145,7 +155,7 @@
                     const d = await r.json();
                     return d.status === 'ok' ? d.items.map(it => ({
                         link: it.link, title: it.title, label: s.l, ts: new Date(it.pubDate).getTime(),
-                        img: it.thumbnail || (it.enclosure && it.enclosure.link) || 'https://via.placeholder.com/800x600/000/fff?text=Rendszerváltás'
+                        img: it.thumbnail || (it.enclosure && it.enclosure.link) || 'https://via.placeholder.com/800x600/000/fff?text=Fotó'
                     })) : [];
                 } catch (e) { return []; }
             }));
@@ -176,7 +186,7 @@
             btn.onclick = showNextItems;
             showNextItems();
 
-        } catch (e) { grid.innerHTML = 'Hiba a hírek szinkronizálásakor.'; }
+        } catch (e) { grid.innerHTML = 'Hiba a betöltéskor.'; }
     }
     load();
 </script>
