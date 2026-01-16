@@ -6,19 +6,20 @@
     <title>2026. április 12. | rendszer-valtas.hu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; --border: #e0e0e0; }
+        :root { --red: #ff0000; --green: #00ff73; --dark-green: #00843d; --black: #1a1a1a; }
         body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: var(--black); display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
 
         /* HERO & COUNTDOWN */
         .hero { 
             width: 100%; min-height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
-            background: linear-gradient(rgba(5, 15, 30, 0.7), rgba(5, 15, 30, 0.7)), url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
+            background: linear-gradient(rgba(5, 15, 30, 0.75), rgba(5, 15, 30, 0.75)), 
+                        url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
             background-size: cover; background-attachment: fixed;
         }
         #target-date { font-size: clamp(16px, 2.5vw, 22px); font-weight: 700; letter-spacing: 10px; color: var(--red); margin-bottom: 40px; text-transform: uppercase; }
         .timer { display: flex; align-items: center; gap: clamp(5px, 2vw, 15px); }
         .unit { display: flex; flex-direction: column; align-items: center; }
-        .val { font-size: clamp(45px, 12vw, 190px); font-weight: 900; line-height: 0.8; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .val { font-size: clamp(45px, 12vw, 190px); font-weight: 900; line-height: 0.8; text-shadow: 0 10px 30px rgba(0,0,0,0.6); }
         .sep { font-size: clamp(30px, 10vw, 120px); font-weight: 900; opacity: 0.6; padding-bottom: 20px; }
         .label { font-size: clamp(10px, 1.8vw, 16px); font-weight: 900; letter-spacing: 3px; margin-top: 15px; color: var(--green); }
         #sec, #sep-sec { color: var(--red); }
@@ -26,13 +27,13 @@
         /* CONTENT */
         .container { width: 100%; max-width: 1300px; padding: 60px 20px; box-sizing: border-box; }
         .title { font-size: clamp(35px, 7vw, 85px); font-weight: 900; margin-bottom: 50px; text-transform: uppercase; border-bottom: 12px solid var(--dark-green); display: inline-block; line-height: 0.9; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; }
 
         /* CARDS */
-        .card { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.3s; }
+        .card { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.3s ease; }
         .img-box { width: 100%; overflow: hidden; background: #eee; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card:hover img { transform: scale(1.05); }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+        .card:hover img { transform: scale(1.04); }
         .tag { font-size: 12px; font-weight: 900; color: var(--dark-green); text-transform: uppercase; margin: 15px 0 5px; display: block; }
         
         .feat { grid-column: span 1.5; margin-bottom: 20px; }
@@ -44,7 +45,11 @@
         .norm h3 { font-size: 19px; font-weight: 700; margin: 0; line-height: 1.3; }
 
         @media (max-width: 1000px) { 
-            .grid { grid-template-columns: 1fr; } .feat { grid-column: span 1; } .feat .img-box { height: 320px; } .hero { background-attachment: scroll; }
+            .grid { grid-template-columns: 1fr; } 
+            .feat { grid-column: span 1; } 
+            .feat .img-box { height: 320px; } 
+            .hero { background-attachment: scroll; min-height: 65vh; }
+            .sep { padding-bottom: 10px; }
         }
     </style>
 </head>
@@ -62,10 +67,13 @@
 
 <div class="container">
     <h1 class="title">A Rendszerváltás Hírei</h1>
-    <div id="feed" class="grid"></div>
+    <div id="feed" class="grid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px; font-weight: 700;">Hírek szinkronizálása...</div>
+    </div>
 </div>
 
 <script>
+    // --- VISSZASZÁMLÁLÓ ---
     const target = new Date("April 12, 2026 00:00:00").getTime();
     function update() {
         const dist = target - new Date().getTime();
@@ -77,6 +85,7 @@
     }
     setInterval(update, 1000); update();
 
+    // --- HÍRFAL LOGIKA ---
     async function load() {
         const src = [
             { u: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', l: 'Hírek' },
@@ -85,24 +94,41 @@
             { u: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', l: 'Kontrollpont' },
             { u: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', l: 'Kontroll TV' }
         ];
+        
         const grid = document.getElementById('feed');
+        
         try {
-            const res = await Promise.all(src.map(s => fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.u)}`).then(r => r.json())));
-            let all = res.flatMap((d, i) => d.items.map(it => ({ ...it, label: src[i].l, ts: new Date(it.pubDate).getTime() }))).sort((a, b) => b.ts - a.ts);
+            // Hibatűrő adatletöltés
+            const results = await Promise.all(src.map(async (s) => {
+                try {
+                    const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.u)}`);
+                    const d = await r.json();
+                    return d.status === 'ok' ? d.items.map(it => ({
+                        link: it.link,
+                        title: it.title,
+                        label: s.l,
+                        ts: new Date(it.pubDate).getTime(),
+                        img: it.thumbnail || (it.enclosure && it.enclosure.link) || 'https://via.placeholder.com/600x400?text=Fotó'
+                    })) : [];
+                } catch (e) { return []; }
+            }));
+
+            let all = results.flat().sort((a, b) => b.ts - a.ts);
             
-            if (all.length > 15) all = all.slice(0, -15);
+            // Az utolsó 5 sor (rácsos nézetben 15 hír) eltávolítása a kérésed szerint
+            if (all.length > 15) all = all.slice(0, all.length - 15);
+
             grid.innerHTML = '';
             all.forEach((n, i) => {
-                const isFeat = (i % 11 < 2);
-                const img = n.thumbnail || (n.enclosure && n.enclosure.link) || 'https://via.placeholder.com/600x400?text=Rendszerváltás';
+                const isFeat = (i % 11 < 2); // 2 kiemelt, majd 9 normál ismétlődő ritmus
                 grid.innerHTML += `
                     <a href="${n.link}" target="_blank" class="card ${isFeat ? 'feat' : 'norm'}">
-                        <div class="img-box"><img src="${img}" loading="lazy"></div>
+                        <div class="img-box"><img src="${n.img}" loading="lazy"></div>
                         <span class="tag">${n.label}</span>
                         ${isFeat ? `<h2>${n.title}</h2>` : `<h3>${n.title}</h3>`}
                     </a>`;
             });
-        } catch (e) { grid.innerHTML = 'Hiba a betöltéskor.'; }
+        } catch (e) { grid.innerHTML = 'Nem sikerült betölteni a híreket.'; }
     }
     load();
 </script>
