@@ -35,8 +35,9 @@
             color: #fff;
             position: relative; 
             overflow: hidden;
-            background: linear-gradient(rgba(5, 15, 30, 0.85), rgba(5, 15, 30, 0.85)), 
-                        url('https://images.unsplash.com/photo-1552083974-186346391083?q=80&w=2070') no-repeat center center;
+            /* A kép a gyökérkönyvtárból töltődik be */
+            background: linear-gradient(rgba(5, 15, 30, 0.7), rgba(5, 15, 30, 0.7)), 
+                        url('este-parlament-budapest-naplemente-latnivalo-orszaghaz-korona-budapest-duna-csodalatosmagyarorszag.jpg') no-repeat center center;
             background-size: cover; 
             background-attachment: fixed;
         }
@@ -95,7 +96,7 @@
             z-index: 10;
         }
         .unit { display: flex; flex-direction: column; align-items: center; min-width: clamp(50px, 10vw, 150px); }
-        .val { font-size: clamp(35px, 10vw, 140px); font-weight: 900; line-height: 1; }
+        .val { font-size: clamp(35px, 10vw, 140px); font-weight: 900; line-height: 1; animation: vhs-glitch 4.5s infinite; }
         .sep { font-size: clamp(25px, 7vw, 100px); font-weight: 900; opacity: 0.5; padding-bottom: 20px; }
         .label { font-size: clamp(8px, 1.2vw, 14px); font-weight: 700; letter-spacing: 2px; margin-top: 10px; color: var(--green); }
 
@@ -112,91 +113,4 @@
             font-size: clamp(24px, 5vw, 60px); 
             font-weight: 900; 
             margin-bottom: 50px; 
-            text-transform: uppercase; 
-            border-bottom: 8px solid var(--dark-green); 
-            display: inline-block;
-            line-height: 1; 
-        }
-
-        .fb-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            justify-content: center;
-        }
-
-        iframe {
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 450px;
-            height: 600px;
-            justify-self: center;
-        }
-
-        @media (max-width: 768px) {
-            .hero { background-attachment: scroll; }
-            .timer { gap: 5px; }
-            .fb-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-
-<section class="hero">
-    <h1 class="main-title">RENDSZERVÁLTÁS</h1>
-    <div id="target-label">2026. ÁPRILIS 12.</div>
-    
-    <div class="timer">
-        <div class="unit"><span class="val" id="d">00</span><span class="label">NAP</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="val" id="h">00</span><span class="label">ÓRA</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="val" id="m">00</span><span class="label">PERC</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="val" id="sec">00</span><span class="label">MP</span></div>
-    </div>
-</section>
-
-<div class="container">
-    <h2 class="section-title">Friss hírek</h2>
-    
-    <div class="fb-grid">
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNagyErvinoldala%2Fposts%2Fpfbid0UVJ329JnsstjGC9P6mRDCWbmwTuWTuVWhPTTidawCE2VFWu8eWDhxg9hh8i4r9Rul&show_text=true" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-        
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-        
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ftelexhu%2Fposts%2Fpfbid0amwue61NYThNZHRQwEikoWWXRovUDSBTymZL8HQrE3GW6wTrJ8jMpYbuG55tTCH9l&show_text=true" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-    </div>
-</div>
-
-<script>
-    const targetDate = new Date("April 12, 2026 00:00:00").getTime();
-
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-            document.querySelector(".timer").innerHTML = "<div class='val' style='font-size: clamp(30px, 5vw, 60px)'>ELÉRKEZETT AZ IDŐ!</div>";
-            return;
-        }
-
-        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById('d').innerText = String(d).padStart(2, '0');
-        document.getElementById('h').innerText = String(h).padStart(2, '0');
-        document.getElementById('m').innerText = String(m).padStart(2, '0');
-        document.getElementById('sec').innerText = String(s).padStart(2, '0');
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-</script>
-
-</body>
-</html>
+            text-transform: uppercase;
