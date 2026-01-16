@@ -60,8 +60,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            padding: 0 20px;
+            gap: clamp(5px, 2vw, 15px);
+            padding: 0 10px;
         }
 
         .segment {
@@ -71,29 +71,29 @@
         }
 
         .value {
-            font-size: clamp(65px, 15vw, 190px);
+            font-size: clamp(45px, 12vw, 190px);
             font-weight: 900;
             line-height: 0.8;
-            letter-spacing: -4px;
+            letter-spacing: -2px;
             text-shadow: 0 10px 40px rgba(0,0,0,0.9);
         }
 
         .separator {
-            font-size: clamp(40px, 10vw, 120px);
+            font-size: clamp(30px, 10vw, 120px);
             font-weight: 900;
             color: #fff;
-            padding-bottom: 30px;
+            padding-bottom: clamp(15px, 3vw, 30px);
             opacity: 0.6;
         }
 
         #seconds { color: var(--color-red); }
 
         .label {
-            font-size: clamp(12px, 1.8vw, 16px);
+            font-size: clamp(10px, 1.8vw, 16px);
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-top: 30px;
+            letter-spacing: clamp(1px, 1vw, 5px);
+            margin-top: 15px;
             color: var(--color-green);
             text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
@@ -159,8 +159,8 @@
         @media (max-width: 1000px) {
             #news-feed-container { grid-template-columns: 1fr; }
             .card-featured { grid-column: span 1; }
-            .separator { display: none; }
-            .countdown-hero { min-height: 70vh; }
+            .countdown-hero { min-height: 65vh; }
+            .featured-img-wrap { height: 320px; }
         }
     </style>
 </head>
@@ -187,6 +187,7 @@
     </div>
 
     <script>
+        // --- JAVÍTOTT VISSZASZÁMLÁLÓ LOGIKA ---
         const targetDate = new Date("April 12, 2026 00:00:00").getTime();
 
         function updateCountdown() {
@@ -203,6 +204,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // --- FEED LOGIKA ---
         async function fetchFeeds() {
             const sources = [
                 { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', label: 'Hírek' },
@@ -233,6 +235,7 @@
             const allResults = await Promise.all(fetchPromises);
             let sortedNews = allResults.flat().sort((a, b) => b.sortDate - a.sortDate);
 
+            // Utolsó hírek levágása
             if (sortedNews.length > 15) sortedNews = sortedNews.slice(0, sortedNews.length - 15);
 
             container.innerHTML = '';
