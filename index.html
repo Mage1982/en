@@ -80,10 +80,7 @@
             100% { opacity: 1; }
         }
 
-        .pop {
-            animation: pulse 0.5s ease-out;
-        }
-
+        .pop { animation: pulse 0.5s ease-out; }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.08); color: var(--color-red); }
@@ -119,9 +116,7 @@
             color: inherit;
         }
 
-        .news-card:hover {
-            transform: translateY(-5px);
-        }
+        .news-card:hover { transform: translateY(-5px); }
 
         .news-image {
             width: 100%;
@@ -242,12 +237,10 @@
         const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
-
             if (distance < 0) {
                 document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 40px;'>ELÉRKEZETT A NAP!</div>";
                 return;
             }
-
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -262,10 +255,13 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        /* 2. JAVÍTOTT RSS FEED MODUL (FACEBOOK + YOUTUBE) */
+        /* 2. RSS FEED MODUL - ÖSSZES FORRÁS */
         async function fetchAllFeeds() {
             const sources = [
-                { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', type: 'fb', label: 'Facebook' },
+                { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', type: 'fb', label: 'Hírek' },
+                { url: 'https://rss.app/feeds/Y48g2xHrC3dcbp1S.xml', type: 'fb', label: 'Juhász Péter' },
+                { url: 'https://rss.app/feeds/zbfBHxHr26BwH0c6.xml', type: 'fb', label: 'Magyar Hang' },
+                { url: 'https://rss.app/feeds/EEzq7Mv3ciHDZWz6.xml', type: 'fb', label: 'Kontrollpont' },
                 { url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', type: 'yt', label: 'Kontroll TV' }
             ];
 
@@ -274,7 +270,6 @@
 
             for (const source of sources) {
                 try {
-                    // Mindkét forrást átküldjük a konverteren a CORS hiba elkerülése végett
                     const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
                     const response = await fetch(apiUrl);
                     const data = await response.json();
@@ -288,12 +283,10 @@
                         }));
                         combinedItems = combinedItems.concat(items);
                     }
-                } catch (e) { 
-                    console.error("Hiba a forrásnál:", source.label, e); 
-                }
+                } catch (e) { console.error("Hiba:", source.label); }
             }
 
-            // Időrendbe rakjuk az összeset vegyesen
+            // Összesített hírek rendezése idő szerint (csökkenő)
             combinedItems.sort((a, b) => b.sortDate - a.sortDate);
 
             if (combinedItems.length > 0) {
@@ -304,19 +297,11 @@
                     card.href = item.link;
                     card.target = '_blank';
 
-                    // Képkezelés (YouTube vs Facebook)
-                    let img = '';
-                    if (item.sourceType === 'yt') {
-                        img = item.thumbnail; 
-                    } else {
-                        img = item.thumbnail || item.enclosure.link || '';
-                    }
-                    
+                    let img = (item.sourceType === 'yt') ? item.thumbnail : (item.thumbnail || item.enclosure.link || '');
                     if(!img && item.description.includes('<img')) {
                         const m = item.description.match(/src="([^"]+)"/);
                         if(m) img = m[1];
                     }
-                    
                     const fallback = 'https://via.placeholder.com/400x250/f4f4f4/666666?text=Rendszerváltás+2026';
 
                     card.innerHTML = `
@@ -331,7 +316,7 @@
                     container.appendChild(card);
                 });
             } else {
-                container.innerHTML = "<div id='loader'>Nem sikerült betölteni a hírfolyamot.</div>";
+                container.innerHTML = "<div id='loader'>Nem sikerült betölteni a híreket.</div>";
             }
         }
 
