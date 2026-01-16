@@ -1,88 +1,341 @@
-/* 2. RSS FEED MODUL (JAVÍTOTT YOUTUBE ÉS FACEBOOK) */
-async function fetchAllFeeds() {
-    const sources = [
-        { 
-            // Facebook feed az rss.app-on keresztül
-            url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', 
-            type: 'fb', 
-            label: 'Facebook' 
-        },
-        { 
-            // YouTube feed a hivatalos XML forrásból
-            url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', 
-            type: 'yt', 
-            label: 'Kontroll TV' 
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visszaszámláló – 2026. április 12. | rendszer-valtas.hu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-red: #D60000;
+            --color-green: #007A00;
+            --color-grey: #444444;
+            --color-light-grey: #f4f4f4;
+            --color-youtube: #FF0000;
+            --color-facebook: #1877F2;
         }
-    ];
 
-    const container = document.getElementById('news-container');
-    let combinedItems = [];
+        body {
+            background: linear-gradient(to bottom, rgba(214, 0, 0, 0.03), #ffffff 50%, rgba(0, 122, 0, 0.03));
+            color: var(--color-grey);
+            font-family: 'Sansation', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
 
-    // Megpróbáljuk mindkét forrást betölteni
-    for (const source of sources) {
-        try {
-            // Mindkét forrást átküldjük a konverteren a CORS hiba elkerülése végett
-            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&api_key=00000000000000000000000000000000`; // Az alap API kulcs néha segít
-            
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+        .header-container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: right;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
 
-            if (data.status === 'ok') {
-                const items = data.items.map(item => ({
-                    ...item,
-                    sourceType: source.type,
-                    sourceLabel: source.label,
-                    // Időbélyeg normalizálása az összehasonlításhoz
-                    sortDate: new Date(item.pubDate).getTime()
-                }));
-                combinedItems = combinedItems.concat(items);
+        #target-date {
+            font-size: clamp(20px, 2.5vw, 32px);
+            color: var(--color-red);
+            font-weight: 700;
+        }
+
+        /* VISSZASZÁMLÁLÓ */
+        #countdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 60px;
+        }
+
+        .segment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .value {
+            font-size: clamp(45px, 11vw, 140px);
+            font-weight: 700;
+            color: var(--color-green);
+            line-height: 1;
+            transition: all 0.3s ease-in-out;
+            display: inline-block;
+        }
+
+        .separator {
+            font-size: clamp(35px, 9vw, 110px);
+            font-weight: 700;
+            color: var(--color-green);
+            padding-bottom: clamp(15px, 3vw, 35px);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .pop {
+            animation: pulse 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); color: var(--color-red); }
+            100% { transform: scale(1); }
+        }
+
+        .label {
+            font-size: clamp(10px, 1.3vw, 15px);
+            text-transform: uppercase;
+            color: var(--color-grey);
+            margin-top: 8px;
+        }
+
+        /* HÍRFAL RÁCS */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--color-light-grey);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .news-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .badge-fb { background-color: var(--color-facebook); }
+        .badge-yt { background-color: var(--color-youtube); }
+
+        .news-content h3 {
+            margin: 0 0 12px 0;
+            font-size: 17px;
+            color: var(--color-grey);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .read-more {
+            color: var(--color-green);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        #loader {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: var(--color-green);
+        }
+
+        @media (max-width: 600px) {
+            .header-container { text-align: center; }
+            #countdown { gap: 5px; }
+            .separator { padding-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div style="font-size: 18px;"><i>A változás napjáig hátralévő idő:</i></div>
+        <div id="target-date">2026. ÁPRILIS 12.</div>
+    </div>
+
+    <div id="countdown">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
+    </div>
+
+    <div class="news-grid" id="news-container">
+        <div id="loader">Hírek és videók betöltése...</div>
+    </div>
+
+    <script>
+        /* 1. VISSZASZÁMLÁLÓ MODUL */
+        const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
+        
+        function updateValue(id, newValue) {
+            const el = document.getElementById(id);
+            if (el && el.innerText !== newValue) {
+                el.innerText = newValue;
+                el.classList.remove('pop');
+                void el.offsetWidth; 
+                el.classList.add('pop');
             }
-        } catch (e) { 
-            console.error("Hiba a betöltés során:", source.label, e); 
         }
-    }
 
-    // Időrendi sorrendbe rakás (legfrissebb legfelül)
-    combinedItems.sort((a, b) => b.sortDate - a.sortDate);
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-    if (combinedItems.length > 0) {
-        container.innerHTML = '';
-        combinedItems.forEach(item => {
-            const card = document.createElement('a');
-            card.className = 'news-card';
-            card.href = item.link;
-            card.target = '_blank';
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='value' style='font-size: 40px;'>ELÉRKEZETT A NAP!</div>";
+                return;
+            }
 
-            // Képkezelés finomítása
-            let img = '';
-            if (item.sourceType === 'yt') {
-                img = item.thumbnail; // YouTube API-nál ez fix helyen van
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            updateValue("days", String(d).padStart(2, '0'));
+            updateValue("hours", String(h).padStart(2, '0'));
+            updateValue("minutes", String(m).padStart(2, '0'));
+            updateValue("seconds", String(s).padStart(2, '0'));
+        };
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* 2. JAVÍTOTT RSS FEED MODUL (FACEBOOK + YOUTUBE) */
+        async function fetchAllFeeds() {
+            const sources = [
+                { url: 'https://rss.app/feeds/hv8SSk6d10Wxx8Ow.xml', type: 'fb', label: 'Facebook' },
+                { url: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC0Zp9e3y-Wz7S3N_n8t06sA', type: 'yt', label: 'Kontroll TV' }
+            ];
+
+            const container = document.getElementById('news-container');
+            let combinedItems = [];
+
+            for (const source of sources) {
+                try {
+                    // Mindkét forrást átküldjük a konverteren a CORS hiba elkerülése végett
+                    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+
+                    if (data.status === 'ok') {
+                        const items = data.items.map(item => ({
+                            ...item,
+                            sourceType: source.type,
+                            sourceLabel: source.label,
+                            sortDate: new Date(item.pubDate).getTime()
+                        }));
+                        combinedItems = combinedItems.concat(items);
+                    }
+                } catch (e) { 
+                    console.error("Hiba a forrásnál:", source.label, e); 
+                }
+            }
+
+            // Időrendbe rakjuk az összeset vegyesen
+            combinedItems.sort((a, b) => b.sortDate - a.sortDate);
+
+            if (combinedItems.length > 0) {
+                container.innerHTML = '';
+                combinedItems.forEach(item => {
+                    const card = document.createElement('a');
+                    card.className = 'news-card';
+                    card.href = item.link;
+                    card.target = '_blank';
+
+                    // Képkezelés (YouTube vs Facebook)
+                    let img = '';
+                    if (item.sourceType === 'yt') {
+                        img = item.thumbnail; 
+                    } else {
+                        img = item.thumbnail || item.enclosure.link || '';
+                    }
+                    
+                    if(!img && item.description.includes('<img')) {
+                        const m = item.description.match(/src="([^"]+)"/);
+                        if(m) img = m[1];
+                    }
+                    
+                    const fallback = 'https://via.placeholder.com/400x250/f4f4f4/666666?text=Rendszerváltás+2026';
+
+                    card.innerHTML = `
+                        <div class="news-image" style="background-image: url('${img || fallback}')"></div>
+                        <div class="news-content">
+                            <span class="badge ${item.sourceType === 'fb' ? 'badge-fb' : 'badge-yt'}">${item.sourceLabel}</span>
+                            <h3>${item.title}</h3>
+                            <p>${item.description.replace(/<[^>]*>/g, '').substring(0, 130)}...</p>
+                            <span class="read-more">Megtekintés →</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
             } else {
-                img = item.thumbnail || item.enclosure.link || '';
+                container.innerHTML = "<div id='loader'>Nem sikerült betölteni a hírfolyamot.</div>";
             }
-            
-            // Ha még mindig nincs kép, megpróbáljuk kikaparni a leírásból
-            if(!img && item.description.includes('<img')) {
-                const m = item.description.match(/src="([^"]+)"/);
-                if(m) img = m[1];
-            }
-            
-            const fallback = 'https://via.placeholder.com/400x250/f4f4f4/666666?text=Rendszerváltás+2026';
+        }
 
-            card.innerHTML = `
-                <div class="news-image" style="background-image: url('${img || fallback}')"></div>
-                <div class="news-content">
-                    <span class="badge ${item.sourceType === 'fb' ? 'badge-fb' : 'badge-yt'}">${item.sourceLabel}</span>
-                    <h3>${item.title}</h3>
-                    <p>${item.description.replace(/<[^>]*>/g, '').substring(0, 130)}...</p>
-                    <span class="read-more">Megtekintés →</span>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    } else {
-        container.innerHTML = "<div id='loader'>Jelenleg nem sikerült betölteni a hírfolyamot. Kérjük, frissítsd az oldalt!</div>";
-    }
-}
-
-fetchAllFeeds();
+        fetchAllFeeds();
+    </script>
+</body>
+</html>
