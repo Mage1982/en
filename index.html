@@ -11,10 +11,10 @@
 
     <style>
         :root {
-            --bg-blue: #020b16; /* Mélyebb, prémium sötétkék */
+            --bg-blue: #12173a; /* A kért egyedi kék szín */
             --quartz-white: #ffffff;
-            --quartz-dim: rgba(255, 255, 255, 0.05);
             --flash-red: #ff3333;
+            --label-color: rgba(255, 255, 255, 0.4);
         }
 
         body {
@@ -28,69 +28,63 @@
             justify-content: flex-start;
             min-height: 100vh;
             padding: 60px 20px;
-            overflow-x: hidden;
         }
 
         /* FEJLÉC */
         .header-container {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .header-container i {
             font-style: normal;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            color: #556677;
+            letter-spacing: 4px;
+            color: var(--label-color);
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         #target-date {
             font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 500;
             color: var(--quartz-white);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
-        /* HANGSÚLYOS KVARCÓRA VISSZASZÁMLÁLÓ */
+        /* LETISZTULT KVARCÓRA VISSZASZÁMLÁLÓ */
         #countdown {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            margin: 60px 0;
-            padding: 40px 60px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            box-shadow: 0 0 100px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 15px;
+            margin: 50px 0;
+            padding: 20px;
         }
 
         .segment {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 120px;
+            min-width: 110px;
         }
 
         .value {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(50px, 15vw, 130px);
+            font-size: clamp(40px, 14vw, 110px);
             font-weight: 700;
             color: var(--quartz-white);
             line-height: 1;
-            letter-spacing: 4px;
-            transition: color 0.1s ease;
+            letter-spacing: 2px;
         }
 
         .separator {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(30px, 10vw, 80px);
-            color: rgba(255, 255, 255, 0.2);
-            padding-bottom: 40px;
+            font-size: clamp(25px, 8vw, 60px);
+            color: rgba(255, 255, 255, 0.15);
+            padding-bottom: 35px;
         }
 
         /* PIROS VILLANÁS EFFEKT */
@@ -99,43 +93,42 @@
         }
 
         @keyframes red-flash {
-            0% { color: var(--flash-red); text-shadow: 0 0 20px var(--flash-red); }
+            0% { color: var(--flash-red); text-shadow: 0 0 15px var(--flash-red); }
             100% { color: var(--quartz-white); text-shadow: none; }
         }
 
         .label {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            margin-top: 15px;
-            letter-spacing: 3px;
-            color: #556677;
-            font-weight: bold;
+            margin-top: 12px;
+            letter-spacing: 2px;
+            color: var(--label-color);
         }
 
         /* VIDEÓ SZEKCIÓ */
         .video-section {
             width: 100%;
-            max-width: 900px;
+            max-width: 800px;
             margin-top: 20px;
         }
 
         .video-tabs {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .tab-btn {
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #8899aa;
-            padding: 12px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 10px 24px;
             cursor: pointer;
-            margin: 0 10px;
-            border-radius: 50px;
+            margin: 0 8px;
+            border-radius: 4px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 2px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .tab-btn:hover {
@@ -147,17 +140,15 @@
             background: white;
             color: var(--bg-blue);
             border-color: white;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .video-wrapper {
             display: none;
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             background: #000;
-            border-radius: 4px;
         }
 
         .video-wrapper.active {
@@ -174,25 +165,26 @@
         }
 
         footer {
-            margin-top: 80px;
+            margin-top: auto;
+            padding: 40px;
             font-size: 10px;
             letter-spacing: 2px;
-            color: #334455;
+            color: rgba(255, 255, 255, 0.2);
             text-transform: uppercase;
         }
 
-        @media (max-width: 768px) {
-            #countdown { padding: 30px 10px; gap: 5px; }
-            .segment { min-width: 70px; }
+        @media (max-width: 600px) {
+            #countdown { gap: 4px; }
+            .segment { min-width: 65px; }
             .separator { padding-bottom: 25px; }
-            .tab-btn { padding: 10px 15px; font-size: 10px; }
+            .tab-btn { padding: 8px 12px; font-size: 9px; margin: 4px; }
         }
     </style>
 </head>
 <body>
 
     <div class="header-container">
-        <i>A rendszerváltásig hátralévő idő</i>
+        <i>Visszaszámlálás a rendszerváltásig</i>
         <div id="target-date">2026. ÁPRILIS 12.</div>
     </div>
 
@@ -238,16 +230,14 @@
     </footer>
 
     <script>
-        // Cél dátum: 2026. április 12. 00:00:00
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         
         function updateValue(id, newValue) {
             const el = document.getElementById(id);
             if (el.innerText !== newValue) {
                 el.innerText = newValue;
-                // Piros villanás effekt frissítéskor
                 el.classList.remove('flash');
-                void el.offsetWidth; // Reflow kényszerítése az animáció újraindításához
+                void el.offsetWidth; 
                 el.classList.add('flash');
             }
         }
@@ -257,7 +247,7 @@
             const distance = targetDate - now;
 
             if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<div class='value'>ELÉRKEZETT</div>";
+                document.getElementById("countdown").innerHTML = "VÁLTOZÁS";
                 return;
             }
 
