@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visszaszámláló – 2026. április 12. | rendszer-valtas.hu</title>
     
-    <meta property="og:title" content="rendszer-valtas.hu - A változás napja">
-    <meta property="og:description" content="Számoljuk együtt a napokat a rendszerváltásig.">
-    
     <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --color-red: #D60000;
-            --color-green: #007A00;
-            --color-grey: #444444;
+            --bg-blue: #003366; /* Mélyebb kék háttér */
+            --accent-blue: #004d99;
+            --text-white: #ffffff;
+            --text-grey: #e0e0e0;
         }
 
         body {
-            background: linear-gradient(to bottom, rgba(214, 0, 0, 0.03), #ffffff 50%, rgba(0, 122, 0, 0.03));
-            color: var(--color-grey);
+            background-color: var(--bg-blue);
+            background: radial-gradient(circle at center, var(--accent-blue) 0%, var(--bg-blue) 100%);
+            color: var(--text-white);
             font-family: 'Sansation', sans-serif;
             margin: 0;
             display: flex;
@@ -32,23 +31,30 @@
         .header-container {
             width: 100%;
             max-width: 1200px;
-            text-align: right;
-            font-style: italic;
-            margin-bottom: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-container i {
+            color: var(--text-grey);
+            font-size: 20px;
         }
 
         #target-date {
-            font-size: clamp(20px, 2.5vw, 32px);
-            color: var(--color-red);
+            font-size: clamp(24px, 3vw, 40px);
+            color: var(--text-white);
             font-weight: 700;
+            letter-spacing: 2px;
+            margin-top: 10px;
         }
 
+        /* HANGSÚLYOS FEHÉR VISSZASZÁMLÁLÓ */
         #countdown {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 40px;
+            gap: 15px;
+            margin: 40px 0 60px 0;
         }
 
         .segment {
@@ -58,25 +64,25 @@
         }
 
         .value {
-            font-size: clamp(45px, 11vw, 140px);
+            font-size: clamp(55px, 14vw, 160px);
             font-weight: 700;
-            color: var(--color-green);
+            color: #ffffff; /* Tiszta fehér */
             line-height: 1;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease-in-out;
-            display: inline-block;
         }
 
         .separator {
-            font-size: clamp(35px, 9vw, 110px);
+            font-size: clamp(40px, 10vw, 120px);
             font-weight: 700;
-            color: var(--color-green);
-            padding-bottom: clamp(15px, 3vw, 35px);
+            color: rgba(255, 255, 255, 0.5);
+            padding-bottom: clamp(20px, 4vw, 40px);
             animation: blink 1.5s infinite;
         }
 
         @keyframes blink {
             0% { opacity: 1; }
-            50% { opacity: 0.3; }
+            50% { opacity: 0.2; }
             100% { opacity: 1; }
         }
 
@@ -86,45 +92,50 @@
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.08); color: var(--color-red); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
 
         .label {
-            font-size: clamp(10px, 1.3vw, 15px);
+            font-size: clamp(12px, 1.5vw, 18px);
             text-transform: uppercase;
-            color: var(--color-grey);
-            font-style: normal;
-            margin-top: 8px;
+            color: var(--text-grey);
+            letter-spacing: 1px;
+            margin-top: 10px;
         }
 
+        /* VIDEÓ SZEKCIÓ */
         .video-section {
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             margin-bottom: 60px;
             text-align: center;
         }
 
         .video-tabs {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .tab-btn {
-            background: white;
-            border: 2px solid var(--color-green);
-            color: var(--color-green);
-            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 12px 25px;
             cursor: pointer;
             font-family: 'Sansation', sans-serif;
             font-weight: 700;
-            border-radius: 25px;
-            margin: 5px;
+            border-radius: 30px;
+            margin: 8px;
             transition: 0.3s;
         }
 
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         .tab-btn.active {
-            background: var(--color-green);
-            color: white;
+            background: #ffffff;
+            color: var(--bg-blue);
         }
 
         .video-wrapper {
@@ -133,8 +144,9 @@
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-radius: 16px;
+            border: 4px solid #ffffff; /* Fehér keret a designhoz */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
             background: #000;
         }
 
@@ -151,19 +163,21 @@
             border: none;
         }
 
+        /* FACEBOOK POSZTOK */
         .fb-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
+            gap: 30px;
             width: 100%;
             max-width: 1400px;
             justify-content: center;
+            padding-bottom: 60px;
         }
 
         .fb-grid iframe {
             border: none;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             background: white;
             width: 100%;
             max-width: 450px;
@@ -171,23 +185,25 @@
         }
 
         footer {
-            margin-top: 60px;
-            color: #999;
+            margin-top: auto;
+            color: var(--text-grey);
             font-size: 14px;
             text-align: center;
+            opacity: 0.7;
+            padding: 20px;
         }
 
         @media (max-width: 600px) {
-            .header-container { text-align: center; }
-            #countdown { gap: 5px; }
-            .separator { padding-bottom: 20px; }
+            #countdown { gap: 8px; }
+            .separator { padding-bottom: 25px; }
+            .header-container i { font-size: 16px; }
         }
     </style>
 </head>
 <body>
 
     <div class="header-container">
-        <div style="font-size: 18px;"><i>A változás napjáig hátralévő idő:</i></div>
+        <i>A változás napjáig hátralévő idő:</i>
         <div id="target-date">2026. ÁPRILIS 12.</div>
     </div>
 
@@ -222,7 +238,6 @@
         <div id="video-yt1" class="video-wrapper active">
             <iframe src="https://www.youtube.com/embed/H7oLDNKE9vM" 
                 title="Bemutatkozik Orbán Anita" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowfullscreen>
             </iframe>
         </div>
@@ -230,7 +245,6 @@
         <div id="video-yt2" class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/cHXHJYQDiq0" 
                 title="Bemutatkozik Kapitány István" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowfullscreen>
             </iframe>
         </div>
