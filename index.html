@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visszaszámláló – 2026. április 12. | rendszer-valtas.hu</title>
+    
+    <meta property="og:title" content="rendszer-valtas.hu - A változás napja">
+    <meta property="og:description" content="Számoljuk együtt a napokat a rendszerváltásig.">
+    
     <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -11,6 +15,7 @@
             --color-red: #D60000;
             --color-green: #007A00;
             --color-grey: #444444;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         body {
@@ -95,22 +100,49 @@
             margin-top: 8px;
         }
 
-        /* VIDEÓ SZEKCIÓ */
-        .video-main-container {
+        /* VIDEÓ SZEKCIÓ VÁLTÓVAL */
+        .video-section {
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             margin-bottom: 60px;
             text-align: center;
         }
 
+        .video-tabs {
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            background: white;
+            border: 2px solid var(--color-green);
+            color: var(--color-green);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Sansation', sans-serif;
+            font-weight: 700;
+            border-radius: 25px;
+            margin: 5px;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--color-green);
+            color: white;
+        }
+
         .video-wrapper {
+            display: none;
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 arány */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 12px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             background: #000;
+        }
+
+        .video-wrapper.active {
+            display: block;
         }
 
         .video-wrapper iframe {
@@ -142,11 +174,17 @@
             justify-self: center;
         }
 
+        footer {
+            margin-top: 60px;
+            color: #999;
+            font-size: 14px;
+        }
+
         @media (max-width: 600px) {
             .header-container { text-align: center; }
             #countdown { gap: 5px; }
             .separator { padding-bottom: 20px; }
-            .video-main-container { margin-bottom: 40px; }
+            .video-section { margin-bottom: 40px; }
         }
     </style>
 </head>
@@ -179,11 +217,23 @@
         </div>
     </div>
 
-    <div class="video-main-container">
-        <div class="video-wrapper">
+    <div class="video-section">
+        <div class="video-tabs">
+            <button class="tab-btn active" onclick="showVideo('yt')">YouTube: Orbán Anita</button>
+            <button class="tab-btn" onclick="showVideo('fb')">Facebook: Élő bejelentkezés</button>
+        </div>
+
+        <div id="video-yt" class="video-wrapper active">
+            <iframe src="https://www.youtube.com/embed/H7oLDNKE9vM" 
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div id="video-fb" class="video-wrapper">
             <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fpeter.magyar.102%2Fvideos%2F1369546501320047%2F&show_text=false&width=560&t=0" 
                 scrolling="no" 
-                frameborder="0" 
                 allowfullscreen="true" 
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
             </iframe>
@@ -198,7 +248,12 @@
         <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ftelexhu%2Fposts%2Fpfbid0amwue61NYThNZHRQwEikoWWXRovUDSBTymZL8HQrE3GW6wTrJ8jMpYbuG55tTCH9l&show_text=true&width=450" height="550" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
     </div>
 
+    <footer>
+        © 2026 rendszer-valtas.hu | Április 12. - A nap, amikor visszavesszük a hazánkat.
+    </footer>
+
     <script>
+        // Visszaszámláló logika
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         
         function updateValue(id, newValue) {
@@ -233,6 +288,15 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // Videó váltó logika
+        function showVideo(type) {
+            document.querySelectorAll('.video-wrapper').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById('video-' + type).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
     </script>
 </body>
 </html>
