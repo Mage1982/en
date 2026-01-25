@@ -1,21 +1,67 @@
-<div id="countdown">
-    <div class="segment">
-        <span class="value" id="days">00</span>
-        <span class="label">Nap</span>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Visszaszámláló – 2026. április 12. | rendszer-valtas.hu</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7095892821119297" crossorigin="anonymous"></script>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="sub-header">a választásig hátra van még:</div>
+        <div id="target-date">2026. ÁPRILIS 12.</div>
     </div>
-    <div class="sep">:</div>
-    <div class="segment">
-        <span class="value" id="hours">00</span>
-        <span class="label">Óra</span>
+
+    <div id="countdown">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <div class="sep">:</div>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <div class="sep">:</div>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <div class="sep">:</div>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
     </div>
-    <div class="sep">:</div>
-    <div class="segment">
-        <span class="value" id="minutes">00</span>
-        <span class="label">Perc</span>
+
+    <div class="countdown-footer-text">Elindult a visszaszámlálás!</div>
+
+    <div class="video-section">
+        <div class="video-tabs">
+            <button class="tab-btn active" onclick="showVideo('yt1')">ORBÁN ANITA</button>
+            <button class="tab-btn" onclick="showVideo('yt2')">KAPITÁNY ISTVÁN</button>
+        </div>
+
+        <div id="video-yt1" class="video-wrapper active">
+            <iframe src="https://www.youtube.com/embed/H7oLDNKE9vM" allowfullscreen></iframe>
+        </div>
+
+        <div id="video-yt2" class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/cHXHJYQDiq0" allowfullscreen></iframe>
+        </div>
     </div>
-    <div class="sep">:</div>
-    <div class="segment">
-        <span class="value" id="seconds">00</span>
-        <span class="label">Mp</span>
-    </div>
-</div>
+
+    <footer>
+        © 2026 rendszer-valtas.hu
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
