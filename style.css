@@ -9,7 +9,7 @@
 
 /* --- ALAPOK --- */
 body {
-    background-color: var(--bg-blue); /* Fix mélykék háttér mindenhol */
+    background-color: var(--bg-blue);
     color: white;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -18,151 +18,158 @@ body {
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 20px;
     box-sizing: border-box;
+    overflow-x: hidden; /* Megakadályozza az oldalra csúszkálást */
 }
 
 /* --- FEJLÉC --- */
 .header-container {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     width: 100%;
 }
 
 .sub-header {
     font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
+    font-size: clamp(10px, 3vw, 16px);
     text-transform: uppercase;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     color: var(--digit-color);
-    margin-bottom: 15px;
-    opacity: 0.9;
+    margin-bottom: 10px;
 }
 
 #target-date {
     font-family: 'Orbitron', sans-serif;
-    font-size: 36px;
+    font-size: clamp(20px, 6vw, 36px);
     font-weight: 700;
     color: white;
-    letter-spacing: 3px;
-    text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
 }
 
-/* --- VISSZASZÁMLÁLÓ (FIXÁLT DESKTOP) --- */
+/* --- VISSZASZÁMLÁLÓ (OKOS MÉRETEZÉS) --- */
 #countdown {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
-    margin: 40px 0;
-    padding: 60px 80px;
-    /* Eltávolítottuk a zavaró fehér gradienset, maradt a sötét, elegáns panel */
-    background: rgba(0, 0, 0, 0.4); 
-    border-radius: 25px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5), 
-                inset 0 0 40px rgba(0, 242, 255, 0.1);
+    gap: clamp(5px, 2vw, 30px);
+    margin: 30px 0;
+    padding: clamp(15px, 4vw, 50px);
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
     border: 1px solid rgba(0, 242, 255, 0.2);
-    width: fit-content;
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
 }
 
 .segment {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 140px;
+    flex: 1; /* Egyenlő elosztás mobilon */
 }
 
 .value {
     font-family: 'Orbitron', sans-serif;
-    font-size: 110px;
+    font-size: clamp(28px, 9vw, 100px); /* Mobilon kicsi, desktopon óriási */
     font-weight: 700;
     color: var(--digit-color);
     line-height: 1.1;
     background: var(--display-bg);
-    padding: 25px 30px;
-    border-radius: 15px;
-    border: 3px solid #1e2a6e;
-    text-shadow: 0 0 30px rgba(0, 242, 255, 0.8);
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+    padding: clamp(8px, 2vw, 25px) 5px;
+    border-radius: clamp(4px, 1vw, 12px);
+    border: 2px solid #1e2a6e;
+    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+    width: 100%;
     text-align: center;
 }
 
 .separator {
     font-family: 'Orbitron', sans-serif;
-    font-size: 70px;
+    font-size: clamp(18px, 5vw, 60px);
     color: var(--digit-color);
-    margin-bottom: 50px;
-    text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+    margin-bottom: clamp(20px, 5vw, 45px);
+    opacity: 0.6;
 }
 
 .label {
     font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
+    font-size: clamp(8px, 2vw, 14px);
     text-transform: uppercase;
-    margin-top: 15px;
-    letter-spacing: 4px;
-    color: var(--digit-color);
+    margin-top: 10px;
+    letter-spacing: clamp(1px, 0.5vw, 4px);
+    color: var(--label-color);
 }
 
-/* --- VIDEÓ ÉS GOMBOK --- */
+.countdown-footer-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(12px, 3vw, 18px);
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-align: center;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* --- VIDEÓ ÉS GOMBOK (KERET NÉLKÜL) --- */
 .video-section {
     width: 100%;
     max-width: 850px;
-    text-align: center;
 }
 
 .video-tabs {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin: 30px 0;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .tab-btn {
-    background: rgba(0, 242, 255, 0.05);
+    flex: 1;
+    max-width: 250px;
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--digit-color);
     color: var(--digit-color);
-    padding: 12px 30px;
+    padding: 12px 5px;
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Orbitron', sans-serif;
-    text-transform: uppercase;
+    font-size: clamp(9px, 2.5vw, 12px);
     transition: all 0.3s;
 }
 
 .tab-btn.active {
     background: var(--digit-color);
     color: var(--bg-blue);
-    box-shadow: 0 0 20px var(--digit-color);
+    box-shadow: 0 0 15px var(--digit-color);
 }
 
 .video-wrapper {
     display: none;
     position: relative;
-    padding-bottom: 56.25%;
-    border-radius: 12px;
+    padding-bottom: 56.25%; /* 16:9 arány */
+    height: 0;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Keret és shadow eltávolítva a kérésnek megfelelően */
 }
 
 .video-wrapper.active { display: block; }
-.video-wrapper iframe { position: absolute; top:0; left:0; width:100%; height:100%; }
+.video-wrapper iframe { position: absolute; top:0; left:0; width:100%; height:100%; border: none; }
 
-/* --- RESPONSIVE JAVÍTÁSOK --- */
-@media (max-width: 1100px) {
-    .value { font-size: 80px; }
-    #countdown { padding: 40px; }
+/* --- ANIMÁCIÓK --- */
+.flash { animation: digital-flash 0.6s ease-out; }
+@keyframes digital-flash {
+    0% { color: var(--flash-red); text-shadow: 0 0 30px var(--flash-red); }
+    100% { color: var(--digit-color); text-shadow: 0 0 25px rgba(0, 242, 255, 0.8); }
 }
 
-@media (max-width: 650px) {
-    #countdown {
-        gap: 10px;
-        padding: 20px 10px;
-        width: 95%;
-    }
-    .value { font-size: 38px; padding: 10px 5px; }
-    .separator { font-size: 24px; margin-bottom: 25px; }
-    .label { font-size: 10px; letter-spacing: 1px; }
+/* --- MOBIL SPECIFIKUS KIIGAZÍTÁS --- */
+@media (max-width: 500px) {
     .video-tabs { flex-direction: column; align-items: center; }
-    .tab-btn { width: 80%; }
+    .tab-btn { width: 100%; }
+    #countdown { padding: 10px; border-radius: 10px; }
 }
