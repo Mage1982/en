@@ -9,7 +9,7 @@
 
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -30,7 +30,7 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            padding: 60px 20px;
+            padding: 40px 20px;
         }
 
         .header-container {
@@ -38,22 +38,24 @@
             margin-bottom: 20px;
         }
 
-        .header-container i {
-            font-style: normal;
-            font-size: 13px;
+        /* Felső kért szöveg stílusa */
+        .sub-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--label-color);
-            display: block;
-            margin-bottom: 8px;
+            letter-spacing: 3px;
+            color: var(--digit-color);
+            margin-bottom: 10px;
+            opacity: 0.8;
         }
 
         #target-date {
             font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            font-weight: 500;
+            font-size: 28px;
+            font-weight: 700;
             color: white;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
         #countdown {
@@ -61,11 +63,28 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            margin: 50px 0;
+            margin: 30px 0 15px 0; /* Alsó margó csökkentve a felirat miatt */
             padding: 25px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Alsó kért szöveg stílusa */
+        .countdown-footer-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: white;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
 
         .segment {
@@ -184,13 +203,14 @@
             .segment { min-width: 60px; }
             .value { padding: 8px 5px; }
             .separator { margin-bottom: 20px; }
+            .countdown-footer-text { font-size: 12px; }
         }
     </style>
 </head>
 <body>
 
     <div class="header-container">
-        <i>Visszaszámlálás a rendszerváltásig</i>
+        <div class="sub-header">a választásig hátra van még:</div>
         <div id="target-date">2026. ÁPRILIS 12.</div>
     </div>
 
@@ -215,6 +235,8 @@
             <span class="label">Mp</span>
         </div>
     </div>
+
+    <div class="countdown-footer-text">Elindult a visszaszámlálás!</div>
 
     <div class="video-section">
         <div class="video-tabs">
@@ -254,6 +276,7 @@
 
             if (distance < 0) {
                 document.getElementById("countdown").innerHTML = "<div class='value' style='width:100%; font-size: 2rem;'>A VÁLTOZÁS ELKEZDŐDÖTT</div>";
+                document.querySelector(".countdown-footer-text").style.display = "none";
                 return;
             }
 
