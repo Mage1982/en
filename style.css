@@ -1,13 +1,10 @@
-/* --- VÁLTOZÓK --- */
 :root {
     --bg-blue: #121c51; 
     --display-bg: #0a0f2b; 
     --digit-color: #00f2ff; 
-    --flash-red: #ff3333;
     --label-color: rgba(255, 255, 255, 0.6);
 }
 
-/* --- ALAPOK --- */
 body {
     background-color: var(--bg-blue);
     color: white;
@@ -16,14 +13,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-    overflow-x: hidden; /* Megakadályozza az oldalra csúszkálást */
+    overflow-x: hidden;
 }
 
-/* --- FEJLÉC --- */
+/* FEJLÉC */
 .header-container {
     text-align: center;
     margin-bottom: 20px;
@@ -32,33 +28,31 @@ body {
 
 .sub-header {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(10px, 3vw, 16px);
+    font-size: clamp(12px, 3vw, 16px);
     text-transform: uppercase;
     letter-spacing: 3px;
     color: var(--digit-color);
-    margin-bottom: 10px;
 }
 
 #target-date {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(20px, 6vw, 36px);
+    font-size: clamp(24px, 7vw, 42px);
     font-weight: 700;
-    color: white;
-    letter-spacing: 2px;
-    text-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+    margin: 10px 0;
+    text-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
 }
 
-/* --- VISSZASZÁMLÁLÓ (OKOS MÉRETEZÉS) --- */
+/* VISSZASZÁMLÁLÓ - MOBILBARÁT FLEX */
 #countdown {
     display: flex;
+    flex-wrap: wrap; /* Mobilon engedi a törést ha kell */
     justify-content: center;
     align-items: center;
-    gap: clamp(5px, 2vw, 30px);
-    margin: 30px 0;
-    padding: clamp(15px, 4vw, 50px);
+    gap: 10px;
+    margin: 20px 0;
+    padding: 20px;
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-    border: 1px solid rgba(0, 242, 255, 0.2);
+    border-radius: 15px;
     width: 100%;
     max-width: 900px;
     box-sizing: border-box;
@@ -68,84 +62,75 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1; /* Egyenlő elosztás mobilon */
+    /* Mobilon 2x2-es elrendezést tesz lehetővé ha nagyon kicsi a kijelző */
+    flex: 1 1 70px; 
 }
 
 .value {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(28px, 9vw, 100px); /* Mobilon kicsi, desktopon óriási */
+    font-size: clamp(32px, 10vw, 110px);
     font-weight: 700;
     color: var(--digit-color);
-    line-height: 1.1;
     background: var(--display-bg);
-    padding: clamp(8px, 2vw, 25px) 5px;
-    border-radius: clamp(4px, 1vw, 12px);
+    padding: 10px 5px;
+    border-radius: 8px;
     border: 2px solid #1e2a6e;
-    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8);
+    text-shadow: 0 0 20px rgba(0, 242, 255, 0.8);
     box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
     width: 100%;
+    max-width: 160px;
     text-align: center;
 }
 
-.separator {
+.sep {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(18px, 5vw, 60px);
+    font-size: clamp(20px, 5vw, 60px);
     color: var(--digit-color);
-    margin-bottom: clamp(20px, 5vw, 45px);
-    opacity: 0.6;
+    opacity: 0.5;
+    margin-bottom: 25px; /* A feliratok miatt eltolva */
 }
 
 .label {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(8px, 2vw, 14px);
+    font-size: clamp(9px, 2vw, 14px);
     text-transform: uppercase;
-    margin-top: 10px;
-    letter-spacing: clamp(1px, 0.5vw, 4px);
+    margin-top: 8px;
     color: var(--label-color);
 }
 
-.countdown-footer-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(12px, 3vw, 18px);
-    letter-spacing: 2px;
-    margin-bottom: 30px;
-    text-align: center;
-    animation: pulse 2s infinite ease-in-out;
-}
-
-@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-
-/* --- VIDEÓ ÉS GOMBOK (KERET NÉLKÜL) --- */
+/* VIDEÓ SZEKCIÓ KERET NÉLKÜL */
 .video-section {
     width: 100%;
-    max-width: 850px;
+    max-width: 800px;
+    margin-top: 20px;
 }
 
 .video-tabs {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Mobilon egymás alatt */
     gap: 10px;
     margin-bottom: 20px;
 }
 
+@media (min-width: 600px) {
+    .video-tabs { flex-direction: row; }
+    .video-tabs .tab-btn { flex: 1; }
+}
+
 .tab-btn {
-    flex: 1;
-    max-width: 250px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--digit-color);
     color: var(--digit-color);
-    padding: 12px 5px;
+    padding: 15px;
     cursor: pointer;
-    border-radius: 4px;
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(9px, 2.5vw, 12px);
-    transition: all 0.3s;
+    text-transform: uppercase;
+    transition: 0.3s;
 }
 
 .tab-btn.active {
     background: var(--digit-color);
     color: var(--bg-blue);
-    box-shadow: 0 0 15px var(--digit-color);
 }
 
 .video-wrapper {
@@ -153,23 +138,25 @@ body {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 arány */
     height: 0;
-    overflow: hidden;
-    /* Keret és shadow eltávolítva a kérésnek megfelelően */
 }
 
 .video-wrapper.active { display: block; }
-.video-wrapper iframe { position: absolute; top:0; left:0; width:100%; height:100%; border: none; }
 
-/* --- ANIMÁCIÓK --- */
-.flash { animation: digital-flash 0.6s ease-out; }
-@keyframes digital-flash {
-    0% { color: var(--flash-red); text-shadow: 0 0 30px var(--flash-red); }
-    100% { color: var(--digit-color); text-shadow: 0 0 25px rgba(0, 242, 255, 0.8); }
+.video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: none; /* NINCS KERET */
 }
 
-/* --- MOBIL SPECIFIKUS KIIGAZÍTÁS --- */
-@media (max-width: 500px) {
-    .video-tabs { flex-direction: column; align-items: center; }
-    .tab-btn { width: 100%; }
-    #countdown { padding: 10px; border-radius: 10px; }
+/* Animáció */
+.flash { animation: flash-anim 0.5s ease-out; }
+@keyframes flash-anim {
+    0% { transform: scale(1.05); color: #fff; }
+    100% { transform: scale(1); color: var(--digit-color); }
+}
+
+/* MOBIL EXTRÁK */
+@media (max-width: 450px) {
+    .sep { display: none; } /* Nagyon kicsi kijelzőn elrejtjük a kettőspontot */
+    #countdown { gap: 5px; padding: 10px; }
 }
