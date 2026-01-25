@@ -1,115 +1,89 @@
-:root {
-    --bg-blue: #121c51; 
-    --display-bg: #0a0f2b; 
-    --digit-color: #00f2ff; 
-    --label-color: rgba(255, 255, 255, 0.6);
-}
+/* --- VIDEÓ SZEKCIÓ ÉS GOMBOK FINOMÍTÁSA --- */
 
-body {
-    background-color: var(--bg-blue);
-    color: white;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-x: hidden; /* Garantálja, hogy ne legyen vízszintes görgetés */
-}
-
-/* FŐ KONTÉNER FINOMÍTÁSA */
-#countdown {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: clamp(4px, 1.5vw, 20px); /* Dinamikus távolság az egységek között */
-    margin: 30px auto;
-    padding: clamp(10px, 3vw, 40px);
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
-    border: 1px solid rgba(0, 242, 255, 0.15);
+.video-section {
     width: 100%;
-    max-width: 95vw; /* Sose legyen szélesebb a kijelzőnél */
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 10px; /* Biztonsági margó mobilon */
     box-sizing: border-box;
 }
 
-.segment {
+.video-tabs {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Mobilon alapértelmezetten egymás alatt */
     align-items: center;
-    flex: 1; /* Minden egység egyenlő helyet kap */
-    min-width: 0; /* Megakadályozza a flex-item túlnyúlását */
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
-.value {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(22px, 8vw, 100px); /* Rendkívül rugalmas méretezés */
-    font-weight: 700;
+/* Gombok stílusa */
+.tab-btn {
+    width: 100%; /* Mobilon teljes szélesség */
+    max-width: 320px; /* De ne legyen túl ormótlan */
+    background: rgba(0, 242, 255, 0.05);
+    border: 1px solid var(--digit-color);
     color: var(--digit-color);
-    background: var(--display-bg);
-    padding: 15px 5px;
-    border-radius: 12px;
-    border: 2px solid #1e2a6e;
-    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
-    width: 100%; /* Kitölti a segmentet */
-    max-width: 180px;
-    text-align: center;
-    line-height: 1;
-}
-
-.sep {
+    padding: 16px 20px;
+    cursor: pointer;
+    border-radius: 8px;
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(18px, 4vw, 50px);
-    color: var(--digit-color);
-    opacity: 0.4;
-    margin-bottom: 30px; /* Optikai középre igazítás a label miatt */
-    user-select: none;
-}
-
-.label {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(8px, 2vw, 13px);
+    font-size: 13px;
     text-transform: uppercase;
-    margin-top: 10px;
     letter-spacing: 2px;
-    color: var(--label-color);
-    white-space: nowrap; /* Ne törjön két sorba a felirat */
+    transition: all 0.3s ease;
+    outline: none;
 }
 
-/* VIDEÓ - KERET ÉS ÁRNYÉK NÉLKÜL */
+.tab-btn.active {
+    background: var(--digit-color);
+    color: var(--bg-blue);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+    font-weight: 700;
+}
+
+/* Videó konténer - Keret nélkül, reszponzívan */
 .video-wrapper {
     display: none;
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: 56.25%; /* 16:9 képarány */
     height: 0;
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    /* Minden keret és árnyék törölve a letisztult megjelenésért */
 }
 
-.video-wrapper.active { display: block; }
+.video-wrapper.active {
+    display: block;
+}
 
 .video-wrapper iframe {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border: none;
 }
 
-/* MOBIL OPTIMALIZÁLÁS */
-@media (max-width: 480px) {
-    #countdown {
-        padding: 15px 8px;
-        gap: 5px;
+/* --- DESKTOP KIIGAZÍTÁS (600px felett) --- */
+@media (min-width: 600px) {
+    .video-tabs {
+        flex-direction: row; /* Desktopon egymás mellett */
+        justify-content: center;
     }
-    .value {
-        padding: 10px 2px;
-        border-radius: 6px;
+
+    .tab-btn {
+        flex: 1;
+        max-width: 250px;
     }
-    .sep {
-        margin-bottom: 22px; /* Kisebb kijelzőn finomabb eltolás */
+}
+
+/* --- EXTRA MOBIL FINOMÍTÁS (Apró kijelzőkre) --- */
+@media (max-width: 380px) {
+    .tab-btn {
+        font-size: 11px;
+        padding: 12px 10px;
     }
 }
