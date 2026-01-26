@@ -107,16 +107,29 @@ body {
     color: var(--label-color);
 }
 
+/* --- ÚJ RÉSZ: ELINDULT A VISSZASZÁMLÁLÁS SZÖVEG --- */
+.status-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(20px, 5vw, 42px); /* Mobilon 20px, asztalin akár 42px */
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 4px;
+    margin: 30px 0;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    width: 100%;
+}
+
 /* VIDEÓ SZEKCIÓ ÉS GOMBOK */
 .video-section {
     width: 100%;
-    max-width: 850px; /* Megemeltem asztalihoz */
+    max-width: 850px; 
     margin-top: 30px;
 }
 
 .video-tabs {
     display: flex;
-    flex-direction: column; /* Mobilon egymás alatt */
+    flex-direction: column; 
     gap: 12px;
     margin-bottom: 20px;
 }
@@ -149,7 +162,7 @@ body {
 .video-wrapper {
     display: none;
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 arány */
+    padding-bottom: 56.25%; 
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
