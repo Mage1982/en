@@ -15,6 +15,7 @@
             --digit-color: #00f2ff; 
             --label-color: rgba(255, 255, 255, 0.9);
             --border-glow: rgba(0, 242, 255, 0.4);
+            --hungarian-red: #ce1126;
         }
 
         * { box-sizing: border-box; }
@@ -106,62 +107,51 @@
             letter-spacing: 2px;
         }
 
-        /* KIÁLTVÁNY SZEKCIÓ */
-        .manifesto-container {
+        /* EGYSÉGES STÍLUSÚ KONTEINER (Kiáltvány és Videók) */
+        .glass-panel {
             max-width: 850px;
             width: 100%;
-            margin: 40px auto;
-            padding: 40px;
+            margin: 30px auto;
+            padding: clamp(20px, 5vw, 40px);
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border-left: 5px solid #ce1126; /* Piros szél a kiemelt hatáshoz */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: center;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            border-left: 5px solid var(--hungarian-red);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
         .manifesto-title {
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(20px, 4vw, 32px);
             margin-bottom: 25px;
-            letter-spacing: 2px;
-            color: #ffffff;
+            text-align: center;
             text-transform: uppercase;
         }
 
         .manifesto-body {
             font-size: clamp(16px, 2.5vw, 19px);
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
             text-align: justify;
         }
 
-        .manifesto-body b { color: var(--digit-color); }
-
+        /* KIEMELT DÁTUM A SZÖVEGBEN */
         .highlight-date {
-            font-weight: 700;
+            font-weight: 900;
             font-family: 'Orbitron', sans-serif;
             display: block;
-            margin: 20px 0;
-            font-size: 1.2em;
+            margin: 25px 0;
+            font-size: 1.5em; /* Nagyobb méret */
+            text-align: center;
         }
 
-        /* DÁTUM STÍLUS */
-        #target-date-container { margin: 20px 0; perspective: 1000px; }
+        /* FERDE DÁTUM ALSÓ RÉSZ */
+        #target-date-container { margin: 20px 0; perspective: 1000px; text-align: center; }
         #target-date { font-size: clamp(32px, 7vw, 65px); transform: rotate(-3deg); display: inline-block; }
 
-        /* VIDEÓK */
-        .video-section {
-            width: 100%;
-            max-width: 850px;
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 25px;
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
+        /* VIDEÓ TABS */
         .video-tabs { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
         @media (min-width: 600px) { .video-tabs { flex-direction: row; justify-content: center; } }
 
@@ -194,7 +184,7 @@
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9));
         }
 
-        footer { margin: 40px 0 20px; font-size: 12px; opacity: 0.8; text-align: center; }
+        footer { margin: 40px 0 20px; font-size: 12px; opacity: 0.8; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
@@ -219,7 +209,7 @@
         <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
-    <div class="manifesto-container">
+    <div class="glass-panel">
         <div class="manifesto-title">Kiáltvány a normális Magyarországért</div>
         <div class="manifesto-body">
             Elég volt az igazságtalanságból és a megosztottságból. Mi, a normális többség, végre <b>normális országot</b> akarunk. 
@@ -231,11 +221,7 @@
         </div>
     </div>
 
-    <div id="target-date-container">
-        <div id="target-date" class="tricolor-text">2026. ÁPRILIS 12.</div>   
-    </div>
-
-    <div class="video-section">
+    <div class="glass-panel">
         <div class="video-tabs">
             <button class="tab-btn active" onclick="showVideo('yt1')">ORBÁN ANITA</button>
             <button class="tab-btn" onclick="showVideo('yt2')">KAPITÁNY ISTVÁN</button>
@@ -246,6 +232,10 @@
         <div id="video-yt2" class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/cHXHJYQDiq0" allowfullscreen></iframe>
         </div>
+    </div>
+
+    <div id="target-date-container">
+        <div id="target-date" class="tricolor-text">2026. ÁPRILIS 12.</div>   
     </div>
 
     <footer>© 2026 rendszer-valtas.hu</footer>
@@ -259,7 +249,7 @@
 
             if (distance < 0) {
                 document.querySelector(".status-text").innerText = "A változás elindult!";
-                document.getElementById("countdown").innerHTML = "<div class='tricolor-text' style='width:100%; font-size: clamp(28px, 6vw, 50px); text-align: center; grid-column: 1 / -1;'>A VÁLTOZÁS ELKEZDŐDÖTT</div>";
+                document.getElementById("countdown").innerHTML = "<div class='tricolor-text' style='width:100%; font-size: clamp(24px, 6vw, 45px); text-align: center; grid-column: 1 / -1;'>A VÁLTOZÁS ELKEZDŐDÖTT</div>";
                 return;
             }
 
