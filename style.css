@@ -263,3 +263,37 @@ footer {
 @keyframes fade-blink {
     50% { opacity: 0.2; }
 }
+/* Trikolor effekt a dátumhoz */
+.tricolor-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    background: linear-gradient(
+        to bottom, 
+        #ce1126 0%, #ce1126 33%, 
+        #ffffff 34%, #ffffff 66%, 
+        #008751 67%, #008751 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+}
+
+/* Vészhelyzeti piros villanás (utolsó 10 mp) */
+.critical-flash {
+    color: #ff0000 !important;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 1) !important;
+    animation: urgent-pulse 0.5s infinite alternate, shake 0.1s infinite;
+}
+
+@keyframes urgent-pulse {
+    from { transform: scale(1); filter: brightness(1); }
+    to { transform: scale(1.05); filter: brightness(1.5); }
+}
+
+@keyframes shake {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(1px, -1px); }
+    100% { transform: translate(-1px, 1px); }
+}
