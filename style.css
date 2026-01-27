@@ -192,3 +192,46 @@ footer {
     from { opacity: 1; transform: scale(1); }
     to { opacity: 0.7; transform: scale(1.02); }
 }
+
+/* Alap villanás minden másodpercváltásnál (fehér/szürke) */
+.flash {
+    animation: simple-flash 0.4s ease-out;
+}
+
+@keyframes simple-flash {
+    0% { opacity: 0.5; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* KRITIKUS ÁLLAPOT (Utolsó 10 mp) - Brutál látványos effekt */
+.critical-flash {
+    color: #ff0000 !important;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.4);
+    animation: emergency-shake 0.2s infinite, urgent-pulse 0.5s infinite alternate !important;
+}
+
+/* Finom rázkódás effekt */
+@keyframes emergency-shake {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(1px, -1px); }
+    50% { transform: translate(-1px, 1px); }
+    75% { transform: translate(1px, 1px); }
+    100% { transform: translate(0,0); }
+}
+
+/* Lüktető fény */
+@keyframes urgent-pulse {
+    from { filter: brightness(1); transform: scale(1); }
+    to { filter: brightness(1.5); transform: scale(1.05); }
+}
+
+/* A szeparátorok (kettőspontok) is villogjanak pirosan */
+.critical-separator {
+    color: #ff0000;
+    text-shadow: 0 0 10px red;
+    animation: fade-blink 0.5s infinite;
+}
+
+@keyframes fade-blink {
+    50% { opacity: 0.2; }
+}
