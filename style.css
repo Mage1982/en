@@ -232,6 +232,34 @@ footer {
     animation: fade-blink 0.5s infinite;
 }
 
+.tricolor-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    
+    /* Trikolor színátmenet beállítása */
+    background: linear-gradient(
+        to bottom, 
+        #ce1126 0%, #ce1126 33.3%,    /* Piros */
+        #ffffff 33.3%, #ffffff 66.6%, /* Fehér */
+        #008751 66.6%, #008751 100%   /* Zöld */
+    );
+    
+    /* Ez a rész "vágja rá" a színeket a szövegre */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    
+    /* Egy kis árnyék, hogy sötét háttéren is jól olvasható legyen a fehér sáv */
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+    
+    display: inline-block;
+    margin-top: 10px;
+}
+
 @keyframes fade-blink {
     50% { opacity: 0.2; }
 }
