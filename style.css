@@ -181,21 +181,14 @@ footer {
     opacity: 0.3;
     text-align: center;
 }
-/* A villogó animáció definíciója */
-@keyframes red-flash {
-  0% { color: inherit; }
-  50% { color: #ff0000; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-  100% { color: inherit; }
-}
-
+/* Utolsó 10 mp piros lüktetése */
 .critical-flash {
     color: #ff0000 !important;
-    animation: pulse-red 0.5s infinite alternate;
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.8) !important;
+    animation: pulse-red 0.5s infinite alternate !important;
 }
 
 @keyframes pulse-red {
-    from { opacity: 1; }
-    to { opacity: 0.5; }
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0.7; transform: scale(1.02); }
 }
-
