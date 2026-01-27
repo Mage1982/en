@@ -181,3 +181,15 @@ footer {
     opacity: 0.3;
     text-align: center;
 }
+/* A villogó animáció definíciója */
+@keyframes red-flash {
+  0% { color: inherit; }
+  50% { color: #ff0000; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+  100% { color: inherit; }
+}
+
+/* Az osztály, amit az utolsó 10 mp-ben adunk hozzá */
+.critical-countdown {
+  animation: red-flash 1s infinite;
+  font-weight: bold;
+}
