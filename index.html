@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --bg-overlay: rgba(10, 25, 80, 0.7); /* Kékes áttetsző réteg a videó felett */
+            --bg-overlay: rgba(10, 25, 80, 0.7); 
             --glass-bg: rgba(255, 255, 255, 0.1); 
             --digit-color: #00f2ff; 
             --label-color: rgba(255, 255, 255, 0.9);
@@ -32,38 +32,21 @@
             overflow-x: hidden;
         }
 
-        /* VIDEÓ HÁTTÉR KONTEINER */
+        /* VIDEÓ HÁTTÉR */
         .video-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none; overflow: hidden;
         }
 
         .video-background iframe {
-            width: 100vw;
-            height: 56.25vw; /* 16:9 arány */
-            min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 arány */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
         }
 
-        /* KÉK RÉTEG A VIDEÓ FELETT */
         .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-overlay);
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-overlay); z-index: -1;
         }
 
         .status-text {
@@ -123,14 +106,51 @@
             letter-spacing: 2px;
         }
 
-        #target-date-container { margin: 40px 0; perspective: 1000px; }
-
-        #target-date {
-            font-size: clamp(32px, 7vw, 65px);
-            transform: rotate(-3deg);
-            display: inline-block;
+        /* KIÁLTVÁNY SZEKCIÓ */
+        .manifesto-container {
+            max-width: 850px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border-left: 5px solid #ce1126; /* Piros szél a kiemelt hatáshoz */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
         }
 
+        .manifesto-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(20px, 4vw, 32px);
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .manifesto-body {
+            font-size: clamp(16px, 2.5vw, 19px);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: justify;
+        }
+
+        .manifesto-body b { color: var(--digit-color); }
+
+        .highlight-date {
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            display: block;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+
+        /* DÁTUM STÍLUS */
+        #target-date-container { margin: 20px 0; perspective: 1000px; }
+        #target-date { font-size: clamp(32px, 7vw, 65px); transform: rotate(-3deg); display: inline-block; }
+
+        /* VIDEÓK */
         .video-section {
             width: 100%;
             max-width: 850px;
@@ -174,12 +194,6 @@
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9));
         }
 
-        .critical-flash {
-            color: #ff4d4d !important;
-            animation: pulse-red 0.4s infinite alternate;
-        }
-        @keyframes pulse-red { from { transform: scale(1); } to { transform: scale(1.04); } }
-
         footer { margin: 40px 0 20px; font-size: 12px; opacity: 0.8; text-align: center; }
     </style>
 </head>
@@ -203,6 +217,18 @@
         <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
         <div class="sep">:</div>
         <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
+    </div>
+
+    <div class="manifesto-container">
+        <div class="manifesto-title">Kiáltvány a normális Magyarországért</div>
+        <div class="manifesto-body">
+            Elég volt az igazságtalanságból és a megosztottságból. Mi, a normális többség, végre <b>normális országot</b> akarunk. 
+            Egy helyet, ahol a tudás érték, a munka becsület, a jövő pedig nem félelem, hanem lehetőség. 
+            A változás órája ketyeg. Ez a visszaszámláló nem csak számokat mutat, hanem a reményt.
+            <span class="highlight-date tricolor-text">2026. ÁPRILIS 12.</span>
+            Ez a nap a mi napunk lesz. A nap, amikor a józan ész győzedelmeskedik az önkény felett. 
+            <b>A rendszerváltás elkerülhetetlen.</b>
+        </div>
     </div>
 
     <div id="target-date-container">
@@ -242,15 +268,9 @@
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-            const isCritical = (d === 0 && h === 0 && m === 0 && s <= 10);
-
             const update = (id, val) => {
                 const el = document.getElementById(id);
-                if(el) {
-                    el.innerText = String(val).padStart(2, '0');
-                    if(isCritical) el.classList.add('critical-flash');
-                    else el.classList.remove('critical-flash');
-                }
+                if(el) el.innerText = String(val).padStart(2, '0');
             };
 
             update("days", d); update("hours", h); update("minutes", m); update("seconds", s);
