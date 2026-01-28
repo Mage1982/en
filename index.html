@@ -6,12 +6,12 @@
     <title>A rendszerváltás még... | rendszer-valtas.hu</title>
     
     <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --bg-overlay: rgba(10, 25, 80, 0.7); 
-            --glass-bg: rgba(255, 255, 255, 0.1); 
+            --glass-bg: rgba(255, 255, 255, 0.05); 
             --digit-color: #00f2ff; 
             --label-color: rgba(255, 255, 255, 0.9);
             --border-glow: rgba(0, 242, 255, 0.4);
@@ -50,6 +50,7 @@
             background: var(--bg-overlay); z-index: -1;
         }
 
+        /* FEJLÉC */
         .status-text {
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(22px, 6vw, 48px);
@@ -60,6 +61,7 @@
             text-shadow: 0 0 20px rgba(0, 242, 255, 0.8);
         }
 
+        /* VISSZASZÁMLÁLÓ */
         #countdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -69,8 +71,8 @@
             margin: 10px auto;
             padding: clamp(20px, 4vw, 45px);
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
@@ -107,49 +109,56 @@
             letter-spacing: 2px;
         }
 
-        /* EGYSÉGES STÍLUSÚ KONTEINER (Kiáltvány és Videók) */
+        /* KIÁLTVÁNY PANEL */
         .glass-panel {
-            max-width: 850px;
+            max-width: 900px;
             width: 100%;
-            margin: 30px auto;
-            padding: clamp(20px, 5vw, 40px);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 25px;
-            border-left: 5px solid var(--hungarian-red);
+            margin: 40px auto;
+            padding: clamp(30px, 6vw, 60px);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border-left: 6px solid var(--hungarian-red);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
         }
 
-        .manifesto-title {
+        /* CÍMSOROK STÍLUSA */
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(20px, 4vw, 32px);
-            margin-bottom: 25px;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            line-height: 1.3;
             text-align: center;
-            text-transform: uppercase;
         }
 
-        .manifesto-body {
-            font-size: clamp(16px, 2.5vw, 19px);
+        h1 { font-size: clamp(28px, 5vw, 42px); color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.4); text-transform: uppercase; }
+        h2 { font-size: clamp(22px, 4vw, 30px); color: var(--digit-color); opacity: 0.9; }
+        h3 { font-size: clamp(20px, 3.5vw, 26px); color: #fff; border-bottom: 1px solid var(--border-glow); display: inline-block; width: 100%; padding-bottom: 10px; }
+        h4 { font-size: clamp(18px, 3vw, 22px); color: var(--label-color); text-align: left; margin-top: 2em; }
+        h5 { font-size: clamp(16px, 2.5vw, 20px); color: #fff; text-align: left; font-weight: 700; margin-bottom: 0px; }
+        h6 { font-size: 14px; text-transform: uppercase; letter-spacing: 3px; color: var(--digit-color); opacity: 0.7; }
+
+        p, li {
+            font-size: clamp(16px, 2.2vw, 18px);
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.95);
+            color: rgba(255, 255, 255, 0.85);
             text-align: justify;
         }
 
-        /* KIEMELT DÁTUM A SZÖVEGBEN */
-        .highlight-date {
+        ul { padding-left: 20px; list-style-type: none; }
+        li::before { content: "•"; color: var(--digit-color); font-weight: bold; display: inline-block; width: 1em; margin-left: -1em; }
+
+        .highlight-date-large {
             font-weight: 900;
             font-family: 'Orbitron', sans-serif;
             display: block;
-            margin: 25px 0;
-            font-size: 1.5em; /* Nagyobb méret */
+            margin: 40px 0;
+            font-size: clamp(35px, 8vw, 70px);
             text-align: center;
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.8));
         }
-
-        /* FERDE DÁTUM ALSÓ RÉSZ */
-        #target-date-container { margin: 20px 0; perspective: 1000px; text-align: center; }
-        #target-date { font-size: clamp(32px, 7vw, 65px); transform: rotate(-3deg); display: inline-block; }
 
         /* VIDEÓ TABS */
         .video-tabs { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
@@ -174,17 +183,14 @@
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         .tricolor-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
             background: linear-gradient(to bottom, #ce1126 0%, #ce1126 33%, #ffffff 34%, #ffffff 66%, #008751 67%, #008751 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9));
         }
 
-        footer { margin: 40px 0 20px; font-size: 12px; opacity: 0.8; text-align: center; width: 100%; }
+        footer { margin: 60px 0 20px; font-size: 12px; opacity: 0.8; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
@@ -209,17 +215,40 @@
         <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
-    <div class="glass-panel">
-        <div class="manifesto-title">Kiáltvány a normális Magyarországért</div>
-        <div class="manifesto-body">
-            Elég volt az igazságtalanságból és a megosztottságból. Mi, a normális többség, végre <b>normális országot</b> akarunk. 
-            Egy helyet, ahol a tudás érték, a munka becsület, a jövő pedig nem félelem, hanem lehetőség. 
-            A változás órája ketyeg. Ez a visszaszámláló nem csak számokat mutat, hanem a reményt.
-            <span class="highlight-date tricolor-text">2026. ÁPRILIS 12.</span>
-            Ez a nap a mi napunk lesz. A nap, amikor a józan ész győzedelmeskedik az önkény felett. 
-            <b>A rendszerváltás elkerülhetetlen.</b>
-        </div>
-    </div>
+    <article class="glass-panel">
+        <h6>Manifestum 2026</h6>
+        <h1>A változás nem halasztható tovább</h1>
+        <h2>Elég volt az igazságtalanságból – Itt az idő a cselekvésre</h2>
+        
+        <p>A történelem során minden nemzet életében eljön a pillanat, amikor a némaság már nem bölcsesség, hanem bűn. Mi, a <b>normális többség</b>, ma megtörjük ezt a csendet. Nem pártérdekekért emelünk szót, hanem a legelemibb emberi jogunkért: egy <b>normális országért</b>.</p>
+
+        <h3>Miért akarunk rendszerváltást?</h3>
+        <p>Az elmúlt évtizedek bebizonyították, hogy a jelenlegi keretek között az egyéni gőg fontosabbá vált, mint a közjó. Elég volt abból, hogy:</p>
+        <ul>
+            <li>Az igazság csak azoké, akik meg tudják fizetni.</li>
+            <li>A tudás és a tehetség háttérbe szorul a hűséggel szemben.</li>
+            <li>A jövőnk záloga, a fiatalság elvándorol az országból.</li>
+        </ul>
+
+        <h4>Alapértékeink a holnap Magyarországán</h4>
+        
+        <h5>1. A tudás tisztelete</h5>
+        <p>Az oktatás nem politikai játszótér, hanem a nemzet túlélésének záloga. Minden gyermeknek esélyt kell kapnia a fejlődésre.</p>
+
+        <h5>2. A munka és a tisztesség becsülete</h5>
+        <p>Megteremtjük a feltételeit annak, hogy a becsületes munkából tisztes megélhetést és biztos jövőt lehessen építeni.</p>
+
+        <h5>3. Az igazságos és átlátható állam</h5>
+        <p>Véget vetünk a titkolózásnak. Az állam az emberekért van, és minden elköltött fillérrel elszámolással tartozik.</p>
+
+        <h5>4. Nemzeti egység a gyűlölet helyett</h5>
+        <p>Le kell bontanunk a falakat. A rendszerváltás nem egyik tábor győzelme, hanem a nemzeti megbékélés kezdete.</p>
+
+        <span class="highlight-date-large tricolor-text">2026. ÁPRILIS 12.</span>
+
+        <h1>A nap, amikor visszavesszük a hazánkat</h1>
+        <p style="text-align: center; font-style: italic;">Minden magyar embert hívunk, aki hisz abban, hogy a sorsunk nem megmásíthatatlan. A rendszerváltás elkerülhetetlen. A jövő elkezdődött.</p>
+    </article>
 
     <div class="glass-panel">
         <div class="video-tabs">
@@ -232,10 +261,6 @@
         <div id="video-yt2" class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/cHXHJYQDiq0" allowfullscreen></iframe>
         </div>
-    </div>
-
-    <div id="target-date-container">
-        <div id="target-date" class="tricolor-text">2026. ÁPRILIS 12.</div>   
     </div>
 
     <footer>© 2026 rendszer-valtas.hu</footer>
