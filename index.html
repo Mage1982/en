@@ -1,17 +1,6 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://rendszer-valtas.hu/">
-    <meta property="og:title" content="A rendszerváltás még... | rendszer-valtas.hu">
-    <meta property="og:description" content="A történelem során eljön a pillanat, amikor a némaság már bűn. 2026. április 12. - A nap, amikor visszavesszük a hazánkat.">
-    <meta property="og:image" content="https://rendszer-valtas.hu/og-image.png"> 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="description" content="Manifestum 2026: A változás nem halasztható tovább. Csatlakozz a normális többséghez a rendszerváltásért.">
-    <meta name="keywords" content="rendszerváltás, 2026, Magyarország, változás, politika, összefogás">
-    <meta name="author" content="rendszer-valtas.hu">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A rendszerváltás még... | rendszer-valtas.hu</title>
@@ -19,19 +8,19 @@
 
     <style>
         :root {
-            --bg-overlay: rgba(3, 8, 25, 0.88); 
+            --bg-overlay: rgba(2, 6, 20, 0.9); 
             --digit-color: #00f2ff; 
-            --border-glow: rgba(0, 242, 255, 0.5);
+            --border-glow: rgba(0, 242, 255, 0.4);
             --hungarian-red: #ce1126;
             --hungarian-green: #008751;
             --panel-width: 900px;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
         body {
             margin: 0; padding: 0;
             display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; color: white; font-family: 'Arial', sans-serif;
+            min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #01030a; overflow-x: hidden;
         }
 
@@ -49,123 +38,90 @@
             background: var(--bg-overlay); z-index: -1;
         }
 
-        /* HERO IMAGE - SZOLIDABB, KREATÍV */
+        /* HERO IMAGE & ANIMÁCIÓ */
         .hero-img {
-            width: 180px; height: auto; margin-top: 40px;
-            border-radius: 12px; border: 1px solid var(--border-glow);
-            filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.3));
-            animation: float 4s ease-in-out infinite;
+            width: 160px; height: auto; margin-top: 30px;
+            border-radius: 50%; border: 2px solid var(--border-glow);
+            filter: drop-shadow(0 0 15px var(--border-glow));
+            animation: float 5s ease-in-out infinite;
         }
-
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(1deg); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
         .status-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(20px, 4vw, 36px);
-            text-transform: uppercase; letter-spacing: 6px;
-            margin: 30px 0 20px; text-align: center;
-            color: #fff; text-shadow: 0 0 20px var(--digit-color);
+            font-size: clamp(18px, 4vw, 32px);
+            text-transform: uppercase; letter-spacing: 5px;
+            margin: 20px 0; text-align: center;
+            text-shadow: 0 0 15px var(--digit-color);
         }
 
-        /* VISSZASZÁMLÁLÓ - TELJES SZÉLESSÉGŰ */
+        /* VISSZASZÁMLÁLÓ */
         #countdown {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: grid; grid-template-columns: repeat(4, 1fr);
             width: 95%; max-width: var(--panel-width);
-            margin-bottom: 30px;
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
+            backdrop-filter: blur(15px); border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5); margin-bottom: 40px;
         }
-
-        .segment {
-            padding: 30px 10px;
-            text-align: center;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            transition: background 0.3s;
-        }
+        .segment { padding: 25px 10px; text-align: center; border-right: 1px solid rgba(255, 255, 255, 0.05); }
         .segment:last-child { border-right: none; }
-
         .value {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(35px, 8vw, 90px);
-            font-weight: 900;
-            color: var(--digit-color);
-            display: block;
-            /* Látványos lüktetés */
-            animation: pulse 2s infinite alternate;
+            font-size: clamp(30px, 7vw, 80px);
+            font-weight: 900; color: var(--digit-color);
+            display: block; animation: pulse 2s infinite alternate;
         }
-
         @keyframes pulse {
-            from { text-shadow: 0 0 10px var(--digit-color), 0 0 20px var(--digit-color); transform: scale(1); }
-            to { text-shadow: 0 0 25px var(--digit-color), 0 0 40px var(--digit-color); transform: scale(1.02); }
-         segment:hover { background: rgba(0, 242, 255, 0.05); }
-
-        .label {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(10px, 2vw, 14px);
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.7);
-            letter-spacing: 3px;
-            margin-top: 10px;
-            display: block;
+            from { text-shadow: 0 0 10px var(--digit-color); transform: scale(1); }
+            to { text-shadow: 0 0 25px var(--digit-color); transform: scale(1.03); }
         }
+        .label { font-family: 'Orbitron', sans-serif; font-size: 12px; text-transform: uppercase; color: #ccc; margin-top: 5px; }
 
-        /* KIÁLTVÁNY PANEL */
+        /* PANELS */
         .glass-panel {
-            max-width: var(--panel-width);
-            width: 95%; padding: clamp(30px, 6vw, 70px);
+            max-width: var(--panel-width); width: 95%;
+            padding: clamp(25px, 5vw, 60px);
             background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(30px);
-            border-radius: 30px;
-            border-left: 8px solid var(--hungarian-red);
-            border-right: 8px solid var(--hungarian-green);
-            box-shadow: 0 20px 80px rgba(0,0,0,0.8);
-            margin-bottom: 50px;
+            backdrop-filter: blur(25px); border-radius: 25px;
+            border-left: 6px solid var(--hungarian-red);
+            border-right: 6px solid var(--hungarian-green);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            margin-bottom: 40px;
         }
 
-        h1, h2 { font-family: 'Orbitron', sans-serif; text-align: center; text-transform: uppercase; }
-        h1 { font-size: clamp(26px, 5vw, 48px); line-height: 1.1; margin-bottom: 15px; }
-        h2 { font-size: clamp(18px, 3vw, 24px); color: var(--digit-color); letter-spacing: 2px; }
-
-        p { font-size: 19px; line-height: 1.8; text-align: justify; color: rgba(255,255,255,0.9); }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; }
+        h1 { font-size: clamp(24px, 5vw, 42px); text-align: center; margin-bottom: 15px; }
+        h2 { font-size: clamp(18px, 3vw, 24px); color: var(--digit-color); text-align: center; margin-bottom: 30px; }
         
         .tricolor-text {
             background: linear-gradient(to right, #ce1126, #ffffff, #008751);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-weight: 900;
         }
 
-        .action-box {
-            border: 1px dashed var(--digit-color);
-            padding: 30px; margin: 40px 0; border-radius: 15px;
-            background: rgba(0, 242, 255, 0.05); text-align: center;
+        .argument-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
+        @media (min-width: 768px) { .argument-grid { grid-template-columns: 1fr 1fr; } }
+
+        .arg-card {
+            background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px;
+            border-bottom: 3px solid var(--digit-color); transition: 0.3s;
+        }
+        .arg-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.08); }
+        .arg-card h4 { font-family: 'Orbitron', sans-serif; color: var(--digit-color); margin-top: 0; }
+        .arg-card p { font-size: 16px; line-height: 1.6; text-align: left; margin-bottom: 0; }
+
+        .call-to-action {
+            background: linear-gradient(90deg, rgba(206,17,38,0.2), rgba(0,135,81,0.2));
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 30px; text-align: center; border-radius: 15px; margin: 40px 0;
         }
 
-        .action-box h3 { font-family: 'Orbitron', sans-serif; margin: 0; color: #fff; }
+        .cta-quote { font-family: 'Orbitron', sans-serif; font-style: italic; font-size: 20px; display: block; margin-bottom: 10px; }
 
-        /* VIDEÓ TABS */
-        .video-tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 25px; }
-        .tab-btn {
-            padding: 15px 25px; background: rgba(255,255,255,0.05);
-            border: 1px solid var(--digit-color); color: white;
-            border-radius: 10px; font-family: 'Orbitron', sans-serif;
-            cursor: pointer; transition: 0.3s;
-        }
-        .tab-btn.active { background: var(--digit-color); color: #01030a; font-weight: bold; box-shadow: 0 0 25px var(--digit-color); }
-
-        .video-wrapper { display: none; position: relative; padding-bottom: 56.25%; border-radius: 20px; overflow: hidden; }
-        .video-wrapper.active { display: block; animation: fadeIn 0.8s; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        footer { padding: 40px; font-size: 12px; opacity: 0.4; letter-spacing: 3px; }
+        footer { padding: 40px; font-size: 11px; opacity: 0.4; letter-spacing: 2px; text-align: center; }
     </style>
 </head>
 <body>
@@ -175,57 +131,52 @@
     </div>
     <div class="video-overlay"></div>
 
-    <img src="og-image.png" alt="Logo" class="hero-img">
+    <img src="og-image.png" alt="Manifestum 2026" class="hero-img">
     
     <div class="status-text">A rendszerváltás még...</div>
 
     <div id="countdown">
-        <div class="segment">
-            <span class="value" id="days">00</span>
-            <span class="label">Nap</span>
-        </div>
-        <div class="segment">
-            <span class="value" id="hours">00</span>
-            <span class="label">Óra</span>
-        </div>
-        <div class="segment">
-            <span class="value" id="minutes">00</span>
-            <span class="label">Perc</span>
-        </div>
-        <div class="segment">
-            <span class="value" id="seconds">00</span>
-            <span class="label">Mp</span>
-        </div>
+        <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
+        <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
+        <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
+        <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
     <article class="glass-panel">
-        <h1 class="tricolor-text">A NORMÁLIS TÖBBSÉG JOGA</h1>
-        <h2>Visszavesszük a törvény erejét és a hazánkat!</h2>
+        <h1 class="tricolor-text">KIÁLTVÁNY A NORMÁLIS MAGYARORSZÁGÉRT</h1>
+        <h2>Most vagy soha – A némaság bűn!</h2>
         
-        <p>A némaság már nem bölcsesség, hanem bűn. Mi vagyunk azok a milliók, akik a hátukon viszik ezt az országot. Eljött az idő, hogy a hatalom visszaszálljon a népre, és a tisztesség legyen az úr a gőg felett.</p>
+        <p>A történelem órája könyörtelenül üt. Mi vagyunk a <strong>normális többség</strong>: azok a milliók, akik tisztességgel dolgoznak, de látják a jog tiprását és a gyűlölet árát. Eljött az idő, hogy a hatalom ne az úr, hanem a szolga legyen!</p>
 
-        <div class="action-box">
-            <h3>„Mikor a jog tiprott, a kötelesség lázad!”</h3>
+        
+
+        <div class="argument-grid">
+            <div class="arg-card">
+                <h4>Jogállami Rend</h4>
+                <p>A törvény nem lehet furkósbot! Követeljük a független igazságszolgáltatást, ahol a hatalmasok is a bíró elé állnak. A jog pajzs legyen a kisembernek, nem pedig lánc a nemzet lábán.</p>
+            </div>
+            <div class="arg-card">
+                <h4>Kiszámíthatóság</h4>
+                <p>Véget vetünk az éjszakai rendeleti kormányzásnak. Egy normális országban nem dőlnek össze életek egy reggeli tollvonás miatt. Stabilitást és tisztességes versenyfeltételeket akarunk!</p>
+            </div>
+            <div class="arg-card">
+                <h4>Emberséges Társadalom</h4>
+                <p>A nemzet ereje nem a stadionokban, hanem az idősek megbecsülésében és a betegek gyógyításában mérhető. Az emberség nem gyengeség, hanem a civilizált világ alapköve.</p>
+            </div>
+            <div class="arg-card">
+                <h4>A Tudás Becsülete</h4>
+                <p>Az oktatás nem politikai játszótér! Visszaadjuk a pedagógusok méltóságát és gyermekeinknek a versenyképes tudás esélyét. Csak a művelt nemzet lehet valóban szabad.</p>
+            </div>
         </div>
 
-        <p>Visszaállítjuk a valódi elszámoltatást, ahol a törvény előtt mindenki egyenlő. 2026. április 12-e nem egy választás, hanem egy nemzeti önvédelmi reflex napja lesz.</p>
+        <div class="call-to-action">
+            <span class="cta-quote">"Mikor a jog tiprott, a kötelesség lázad!"</span>
+            <p style="text-align: center; margin: 0;">Ez nem választás, hanem történelmi önvédelem.</p>
+        </div>
 
-        <h1 style="margin-top: 50px; font-size: clamp(30px, 8vw, 70px);">2026. ÁPRILIS 12.</h1>
-        <p style="text-align: center; letter-spacing: 5px; font-family: 'Orbitron'; color: var(--digit-color);">VISSZAVESSZÜK A HAZÁNKAT!</p>
+        <h1 style="margin-top: 50px; font-size: clamp(30px, 8vw, 65px);">2026. ÁPRILIS 12.</h1>
+        <p style="text-align: center; letter-spacing: 5px; font-family: 'Orbitron'; color: var(--digit-color); font-weight: bold;">VISSZAVESSZÜK A HAZÁNKAT!</p>
     </article>
-
-    <div class="glass-panel" style="padding: 20px;">
-        <div class="video-tabs">
-            <button class="tab-btn active" onclick="showVideo('yt1')">ORBÁN ANITA</button>
-            <button class="tab-btn" onclick="showVideo('yt2')">KAPITÁNY ISTVÁN</button>
-        </div>
-        <div id="video-yt1" class="video-wrapper active">
-            <iframe src="https://www.youtube.com/embed/H7oLDNKE9vM" allowfullscreen></iframe>
-        </div>
-        <div id="video-yt2" class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/cHXHJYQDiq0" allowfullscreen></iframe>
-        </div>
-    </div>
 
     <footer>© 2026 RENDSZER-VALTAS.HU | A VÁLTOZÁS ELKERÜLHETETLEN</footer>
 
@@ -239,7 +190,6 @@
             if (distance < 0) {
                 document.querySelector(".status-text").innerText = "A VÁLTOZÁS ELINDULT!";
                 return;
-            segment.innerText = "00";
             }
 
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -253,16 +203,8 @@
             document.getElementById("seconds").innerText = String(s).padStart(2, '0');
         }
 
-        function showVideo(id) {
-            document.querySelectorAll('.video-wrapper').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('video-' + id).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
         setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
 </body>
 </html>
-
