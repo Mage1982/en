@@ -6,7 +6,8 @@
     <meta property="og:url" content="https://rendszer-valtas.hu/">
     <meta property="og:title" content="A rendszerváltás még... | rendszer-valtas.hu">
     <meta property="og:description" content="A történelem során eljön a pillanat, amikor a némaság már bűn. 2026. április 12. - A nap, amikor visszavesszük a hazánkat.">
-    <meta property="og:image" content="https://rendszer-valtas.hu/og-image.png"> <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://rendszer-valtas.hu/og-image.png"> 
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://rendszer-valtas.hu/">
     <meta name="twitter:title" content="A rendszerváltás még... | rendszer-valtas.hu">
     <meta name="twitter:description" content="A történelem során eljön a pillanat, amikor a némaság már bűn. 2026. április 12. - A nap, amikor visszavesszük a hazánkat.">
@@ -64,13 +65,23 @@
             background: var(--bg-overlay); z-index: -1;
         }
 
+        /* HERO KÉP */
+        .hero-image {
+            width: 100%;
+            max-width: 900px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-glow);
+        }
+
         /* FEJLÉC */
         .status-text {
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(22px, 6vw, 48px);
             text-transform: uppercase;
             letter-spacing: 4px;
-            margin: 30px 0;
+            margin: 20px 0;
             text-align: center;
             text-shadow: 0 0 20px rgba(0, 242, 255, 0.8);
         }
@@ -193,7 +204,6 @@
 
         .tab-btn.active { background: var(--digit-color); color: #121c51; box-shadow: 0 0 25px var(--digit-color); font-weight: bold; }
         
-        /* Külön stílus a Facebook gombnak, ha aktív */
         .tab-btn.fb-btn.active { background: var(--facebook-blue); border-color: var(--facebook-blue); color: white; box-shadow: 0 0 25px var(--facebook-blue); }
 
         .video-wrapper { display: none; position: relative; padding-bottom: 56.25%; width: 100%; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -218,6 +228,8 @@
                 allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
     <div class="video-overlay"></div>
+
+    <img src="og-image.png" alt="Rendszerváltás 2026" class="hero-image">
 
     <div class="header-container">
         <div class="status-text">A rendszerváltás még...</div> 
@@ -322,12 +334,9 @@
         }
 
         function showVideo(id) {
-            // Összes videó elrejtése
             document.querySelectorAll('.video-wrapper').forEach(v => v.classList.remove('active'));
-            // Összes gomb inaktívvá tétele
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             
-            // Kiválasztott videó és gomb aktiválása
             document.getElementById('video-' + id).classList.add('active');
             event.currentTarget.classList.add('active');
         }
@@ -337,5 +346,3 @@
     </script>
 </body>
 </html>
-
-
