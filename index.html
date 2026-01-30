@@ -1,37 +1,35 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rendszer-valtas.hu/">
     <meta property="og:title" content="A rendszerváltás még... | rendszer-valtas.hu">
     <meta property="og:description" content="A történelem során eljön a pillanat, amikor a némaság már bűn. 2026. április 12. - A nap, amikor visszavesszük a hazánkat.">
     <meta property="og:image" content="https://rendszer-valtas.hu/og-image.png"> 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://rendszer-valtas.hu/">
-    <meta name="twitter:title" content="A rendszerváltás még... | rendszer-valtas.hu">
-    <meta name="twitter:description" content="A történelem során eljön a pillanat, amikor a némaság már bűn. 2026. április 12. - A nap, amikor visszavesszük a hazánkat.">
-    <meta name="twitter:image" content="https://rendszer-valtas.hu/og-image.png">
-
     <meta name="description" content="Manifestum 2026: A változás nem halasztható tovább. Csatlakozz a normális többséghez a rendszerváltásért.">
     <meta name="keywords" content="rendszerváltás, 2026, Magyarország, változás, politika, összefogás">
     <meta name="author" content="rendszer-valtas.hu">
-    <meta name="viewport" content=
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A rendszerváltás még... | rendszer-valtas.hu</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-overlay: rgba(10, 25, 80, 0.75); 
-            --glass-bg: rgba(255, 255, 255, 0.05); 
+            --bg-overlay: rgba(5, 15, 45, 0.85); 
+            --glass-bg: rgba(255, 255, 255, 0.03); 
             --digit-color: #00f2ff; 
-            --label-color: rgba(255, 255, 255, 0.8);
+            --label-color: rgba(255, 255, 255, 0.9);
             --border-glow: rgba(0, 242, 255, 0.3);
             --hungarian-red: #ce1126;
+            --hungarian-green: #008751;
             --facebook-blue: #1877F2;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -42,7 +40,7 @@
             min-height: 100vh;
             color: white;
             font-family: 'Arial', sans-serif;
-            background-color: #050a1e;
+            background-color: #02050f;
             overflow-x: hidden;
         }
 
@@ -52,49 +50,54 @@
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; pointer-events: none; overflow: hidden;
         }
+
         .video-background iframe {
             width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
         }
+
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-overlay); z-index: -1;
         }
 
-        /* KREATÍV HERO KÉP ELRENDEZÉS */
-        .hero-container {
+        /* KREATÍV HERO SZAKASZ */
+        .hero-section {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1000px;
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
+        }
+
+        .hero-image-wrapper {
             position: relative;
+            margin-bottom: 30px;
         }
 
         .hero-image {
-            width: 280px; /* Szolidabb méret */
+            width: 220px; /* Szolid, kisebb méret */
             height: auto;
-            border-radius: 15px;
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
+            border-radius: 20px;
             border: 1px solid var(--border-glow);
-            transition: transform 0.5s ease;
-            z-index: 2;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            transition: all 0.4s ease;
         }
 
         .hero-image:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 0 45px rgba(0, 242, 255, 0.4);
         }
 
-        /* FEJLÉC */
         .status-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(20px, 5vw, 40px);
+            font-size: clamp(20px, 5vw, 38px);
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin: 30px 0 10px;
-            text-align: center;
-            text-shadow: 0 0 15px rgba(0, 242, 255, 0.6);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px var(--digit-color);
         }
 
         /* VISSZASZÁMLÁLÓ */
@@ -102,76 +105,110 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-            width: 90%;
-            max-width: 800px;
-            padding: 25px;
+            width: 100%;
+            max-width: 700px;
+            padding: 20px;
             background: var(--glass-bg);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .value {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(22px, 6vw, 60px);
+            font-size: clamp(24px, 7vw, 70px);
             color: var(--digit-color);
-            text-align: center;
-            padding: 10px 0;
-            text-shadow: 0 0 10px var(--digit-color);
+            font-weight: 900;
         }
 
         .label {
             font-family: 'Orbitron', sans-serif;
             font-size: 10px;
             text-transform: uppercase;
-            text-align: center;
             color: var(--label-color);
-            letter-spacing: 1px;
+            margin-top: 5px;
         }
 
-        /* TARTALMI PANEL */
+        /* KIÁLTVÁNY PANEL */
         .glass-panel {
-            max-width: 850px;
-            width: 90%;
-            margin: 30px 0;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            border-left: 4px solid var(--hungarian-red);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            max-width: 900px;
+            width: 95%;
+            margin: 20px auto;
+            padding: clamp(25px, 5vw, 60px);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(25px);
+            border-radius: 30px;
+            border-left: 6px solid var(--hungarian-red);
+            border-right: 6px solid var(--hungarian-green);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
         }
 
-        h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(24px, 4vw, 36px); text-align: center; }
-        p { line-height: 1.7; color: rgba(255,255,255,0.85); text-align: justify; }
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        h1 { font-size: clamp(26px, 5vw, 44px); margin-bottom: 10px; }
+        h2 { font-size: clamp(18px, 3vw, 26px); color: var(--digit-color); margin-bottom: 30px; }
+        h3 { font-size: 22px; border-bottom: 1px solid var(--border-glow); padding-bottom: 10px; margin-top: 40px; text-align: left; }
+
+        p, li {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: justify;
+        }
+
+        ul { padding-left: 20px; list-style-type: none; }
+        li::before { content: "◢"; color: var(--hungarian-red); margin-right: 15px; font-size: 14px; }
+
+        .call-to-action {
+            background: rgba(206, 17, 38, 0.15);
+            border: 1px solid var(--hungarian-red);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .highlight-date-large {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(30px, 8vw, 65px);
+            display: block;
+            margin: 40px 0;
+            text-align: center;
+        }
 
         .tricolor-text {
-            background: linear-gradient(to bottom, #ce1126, #ffffff, #008751);
+            background: linear-gradient(to bottom, #ce1126 30%, #ffffff 50%, #008751 70%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 900;
+            background-clip: text;
         }
 
-        /* VIDEÓ SZEKCIÓ */
-        .video-tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        /* VIDEÓ TABS */
+        .video-tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 25px; }
         .tab-btn {
-            padding: 10px 18px;
-            background: rgba(255,255,255,0.05);
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--digit-color);
             color: white;
             border-radius: 8px;
-            cursor: pointer;
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
+            cursor: pointer;
+            font-size: 12px;
             transition: 0.3s;
         }
-        .tab-btn.active { background: var(--digit-color); color: #050a1e; }
+        .tab-btn.active { background: var(--digit-color); color: #02050f; box-shadow: 0 0 20px var(--digit-color); }
 
-        .video-wrapper { display: none; position: relative; padding-bottom: 56.25%; border-radius: 12px; overflow: hidden; }
+        .video-wrapper { display: none; position: relative; padding-bottom: 56.25%; border-radius: 15px; overflow: hidden; }
         .video-wrapper.active { display: block; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        footer { padding: 40px; font-size: 11px; opacity: 0.6; }
+        footer { margin: 50px 0 20px; font-size: 11px; opacity: 0.5; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -181,8 +218,10 @@
     </div>
     <div class="video-overlay"></div>
 
-    <div class="hero-container">
-        <img src="og-image.png" alt="Rendszerváltás 2026" class="hero-image">
+    <section class="hero-section">
+        <div class="hero-image-wrapper">
+            <img src="og-image.png" alt="Rendszerváltás 2026" class="hero-image">
+        </div>
         
         <div class="status-text">A rendszerváltás még...</div> 
 
@@ -192,15 +231,34 @@
             <div class="segment"><div class="value" id="minutes">00</div><div class="label">Perc</div></div>
             <div class="segment"><div class="value" id="seconds">00</div><div class="label">Mp</div></div>
         </div>
-    </div>
+    </section>
 
     <article class="glass-panel">
-        <h1 style="color: var(--digit-color);">A változás nem halasztható tovább</h1>
-        <p>A történelem során minden nemzet életében eljön a pillanat, amikor a némaság már nem bölcsesség, hanem bűn. Mi, a <b>normális többség</b>, ma megtörjük ezt a csendet.</p>
+        <h6>Manifestum 2026</h6>
+        <h1 class="tricolor-text">A NORMÁLIS TÖBBSÉG JOGA</h1>
+        <h2>Visszavesszük a törvény erejét!</h2>
         
-        <div style="text-align: center; margin: 30px 0;">
-            <span class="tricolor-text" style="font-size: 40px; font-family: 'Orbitron';">2026. ÁPRILIS 12.</span>
+        <p>A történelem órája könyörtelenül üt. Eljött a pillanat, amikor a magyar nemzet gerinces többsége – azok a milliók, akik nap mint nap tisztességgel dolgoznak, gyermeket nevelnek és építik ezt a hazát – nem tűr tovább. <b>Mi vagyunk a többség, és eljött az idő, hogy a hatalom visszaszálljon a népre!</b></p>
+
+        <h3>A némaság kora lejárt</h3>
+        <p>Nem kérünk, hanem követelünk. A jelenlegi hatalom elfelejtette, hogy ő a nemzet szolgája, nem pedig az ura. Mi, a normális Magyarország polgárai, véget vetünk az önkénynek és a kiváltságosok uralmának.</p>
+
+        <ul>
+            <li><strong>A TÖRVÉNY EREJE:</strong> Többé nem lesz „kinek-kinek az ő igazsága”. A törvény előtt mindenki egyenlő – a hatalmasok is!</li>
+            <li><strong>ELSZÁMOLTATÁS:</strong> Minden elherdált forinttal és minden eltitkolt bűnnel elszámoltatunk. Ez nem bosszú, hanem a nemzet megtisztulása.</li>
+            <li><strong>A BECSÜLET MÉRCÉJE:</strong> Visszaadjuk a szavak hitelét. A tudás és a tisztesség lesz az egyetlen út a boldoguláshoz.</li>
+        </ul>
+
+        <div class="call-to-action">
+            „Mikor a jog tiprott, a kötelesség lázad!”
         </div>
+
+        <p>Ez nem egy egyszerű politikai váltás. Ez <strong>történelmi önvédelem</strong>. Nem táborok ellen harcolunk, hanem egy élhetetlen rendszer ellen, amely fojtogatja a jövőnket.</p>
+
+        <span class="highlight-date-large tricolor-text">2026. ÁPRILIS 12.</span>
+
+        <h1 style="letter-spacing: 5px;">VISSZAVESSZÜK A HAZÁNKAT!</h1>
+        <p style="text-align: center; font-weight: bold; color: var(--digit-color);">Legyen ez a nap a magyar szabadság és a józan ész győzelme!</p>
     </article>
 
     <div class="glass-panel">
@@ -221,7 +279,7 @@
         </div>
     </div>
 
-    <footer>© 2026 rendszer-valtas.hu</footer>
+    <footer>© 2026 RENDSZER-VALTAS.HU | A JÖVŐ ELKEZDŐDÖTT</footer>
 
     <script>
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
@@ -232,6 +290,7 @@
 
             if (distance < 0) {
                 document.querySelector(".status-text").innerText = "A változás elindult!";
+                document.getElementById("countdown").innerHTML = "<div style='grid-column: 1/-1; font-size: 24px;' class='tricolor-text'>A VÁLTOZÁS NAPJA ELJÖTT!</div>";
                 return;
             }
 
@@ -258,4 +317,3 @@
     </script>
 </body>
 </html>
-
