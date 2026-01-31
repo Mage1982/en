@@ -20,6 +20,7 @@
             --panel-width: 900px;
         }
 
+        /* ALAPBEÁLLÍTÁSOK ÉS ANIMÁCIÓK */
         * { box-sizing: border-box; scroll-behavior: smooth; }
         body {
             margin: 0; padding: 0;
@@ -27,6 +28,20 @@
             min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #01030a; overflow-x: hidden;
         }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
 
         /* VIDEÓ HÁTTÉR */
         .video-background {
@@ -48,7 +63,7 @@
             width: 160px; height: auto; margin-top: 30px;
             border-radius: 50%; border: 2px solid var(--border-glow);
             filter: drop-shadow(0 0 15px var(--border-glow));
-            animation: float 5s ease-in-out infinite;
+            animation: float 5s ease-in-out infinite, fadeInUp 0.8s ease-out forwards;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -124,8 +139,8 @@
         .video-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(0, 242, 255, 0.3);
-            color: #fff; padding: 10px 18px;
-            font-family: 'Orbitron', sans-serif; font-size: 11px;
+            color: #fff; padding: 12px 22px;
+            font-family: 'Orbitron', sans-serif; font-size: 12px;
             cursor: pointer; border-radius: 4px; transition: 0.3s;
             text-transform: uppercase; letter-spacing: 1px;
         }
@@ -135,14 +150,13 @@
             border-color: var(--digit-color);
         }
 
-        /* TÖBBI ELEM */
+        /* EGYÉB */
         .argument-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
         @media (min-width: 768px) { .argument-grid { grid-template-columns: 1fr 1fr; } }
         .arg-card {
             background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px;
-            border-bottom: 3px solid var(--digit-color); transition: 0.3s;
+            border-bottom: 3px solid var(--digit-color);
         }
-        .arg-card h4 { font-family: 'Orbitron', sans-serif; color: var(--digit-color); margin: 0 0 10px 0; }
         .call-to-action {
             background: linear-gradient(90deg, rgba(206,17,38,0.1), rgba(0,135,81,0.1));
             border: 1px solid rgba(255,255,255,0.1);
@@ -159,16 +173,17 @@
     <div class="video-overlay"></div>
 
     <img src="og-image.png" alt="Manifestum 2026" class="hero-img">
-    <div class="status-text">A rendszerváltás még...</div>
+    
+    <div class="status-text animate delay-1">A rendszerváltás még...</div>
 
-    <div id="countdown">
+    <div id="countdown" class="animate delay-1">
         <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
         <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
         <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
         <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
-    <article class="glass-panel">
+    <article class="glass-panel animate delay-2">
         <h1 class="tricolor-text">KIÁLTVÁNY A NORMÁLIS MAGYARORSZÁGÉRT</h1>
         <h2>Most vagy soha – A némaság bűn!</h2>
 
@@ -177,15 +192,15 @@
                 <iframe id="videoPlayer" src="https://www.youtube.com/embed/m0XWP6B5nfU" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="video-nav">
-                <button class="video-btn active" onclick="changeVideo('m0XWP6B5nfU', this)">Gulyás Balázs</button>
-                <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">Puzsér Róbert</button>
-                <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">Közös jövőnk</button>
+                <button class="video-btn active" onclick="changeVideo('m0XWP6B5nfU', this)">1. Csézy</button>
+                <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">2. Orbán Anita</button>
+                <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">3. Kapitány István</button>
             </div>
         </div>
 
         <p>A történelem órája könyörtelenül üt. Mi vagyunk a <strong>normális többség</strong>: azok a milliók, akik tisztességgel dolgoznak, de látják a jog tiprását és a gyűlölet árát. Eljött az idő, hogy a hatalom ne az úr, hanem a szolga legyen!</p>
 
-        <div class="argument-grid">
+        <div class="argument-grid animate delay-3">
             <div class="arg-card">
                 <h4>Jogállami Rend</h4>
                 <p>A törvény nem lehet furkósbot! Követeljük a független igazságszolgáltatást, ahol a hatalmasok is a bíró elé állnak.</p>
@@ -196,7 +211,7 @@
             </div>
         </div>
 
-        <div class="call-to-action">
+        <div class="call-to-action animate delay-3">
             <span class="cta-quote">"Mikor a jog tiprott, a kötelesség lázad!"</span>
         </div>
 
@@ -204,7 +219,7 @@
         <p style="text-align: center; letter-spacing: 5px; font-family: 'Orbitron'; color: var(--digit-color); font-weight: bold;">VISSZAVESSZÜK A HAZÁNKAT!</p>
     </article>
 
-    <footer>© 2026 RENDSZER-VALTAS.HU</footer>
+    <footer class="animate delay-3">© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
         // Visszaszámláló
