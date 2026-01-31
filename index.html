@@ -28,7 +28,7 @@
             background-color: #01030a; overflow-x: hidden;
         }
 
-        /* VIDEÓ HÁTTÉR */
+        /* VIDEÓ HÁTTÉR - VISSZAÁLLÍTVA */
         .video-background {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; pointer-events: none; overflow: hidden;
@@ -36,6 +36,7 @@
         .video-background iframe {
             width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            border: none;
         }
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -131,7 +132,7 @@
 <body>
 
     <div class="video-background">
-        <iframe src="https://www.youtube.com/embed/SJhZdcrob_I?autoplay=1&mute=1&loop=1&playlist=SJhZdcrob_I&controls=0&rel=0&showinfo=0&iv_load_policy=3" allow="autoplay; encrypted-media"></iframe>
+        <iframe src="https://www.youtube.com/embed/SJhZdcrob_I?autoplay=1&mute=1&loop=1&playlist=SJhZdcrob_I&controls=0" allow="autoplay; encrypted-media"></iframe>
     </div>
     <div class="video-overlay"></div>
 
@@ -183,7 +184,6 @@
     <footer>© 2026 RENDSZER-VALTAS.HU | A VÁLTOZÁS ELKERÜLHETETLEN</footer>
 
     <script>
-        // Cél dátum: 2026. április 12. 00:00:00
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
 
         function updateCountdown() {
@@ -192,7 +192,6 @@
 
             if (distance < 0) {
                 document.querySelector(".status-text").innerText = "A VÁLTOZÁS ELINDULT!";
-                document.getElementById("countdown").style.display = "none";
                 return;
             }
 
