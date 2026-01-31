@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A rendszerváltás még... | rendszer-valtas.hu</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
@@ -127,7 +131,7 @@
 <body>
 
     <div class="video-background">
-        <iframe src="https://www.youtube.com/embed/SJhZdcrob_I?autoplay=1&mute=1&loop=1&playlist=SJhZdcrob_I&controls=0" allow="autoplay; encrypted-media"></iframe>
+        <iframe src="https://www.youtube.com/embed/SJhZdcrob_I?autoplay=1&mute=1&loop=1&playlist=SJhZdcrob_I&controls=0&rel=0&showinfo=0&iv_load_policy=3" allow="autoplay; encrypted-media"></iframe>
     </div>
     <div class="video-overlay"></div>
 
@@ -147,8 +151,6 @@
         <h2>Most vagy soha – A némaság bűn!</h2>
         
         <p>A történelem órája könyörtelenül üt. Mi vagyunk a <strong>normális többség</strong>: azok a milliók, akik tisztességgel dolgoznak, de látják a jog tiprását és a gyűlölet árát. Eljött az idő, hogy a hatalom ne az úr, hanem a szolga legyen!</p>
-
-        
 
         <div class="argument-grid">
             <div class="arg-card">
@@ -181,6 +183,7 @@
     <footer>© 2026 RENDSZER-VALTAS.HU | A VÁLTOZÁS ELKERÜLHETETLEN</footer>
 
     <script>
+        // Cél dátum: 2026. április 12. 00:00:00
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
 
         function updateCountdown() {
@@ -189,6 +192,7 @@
 
             if (distance < 0) {
                 document.querySelector(".status-text").innerText = "A VÁLTOZÁS ELINDULT!";
+                document.getElementById("countdown").style.display = "none";
                 return;
             }
 
