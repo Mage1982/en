@@ -28,7 +28,7 @@
             background-color: #01030a; overflow-x: hidden;
         }
 
-        /* VIDEÓ HÁTTÉR - VISSZAÁLLÍTVA */
+        /* VIDEÓ HÁTTÉR */
         .video-background {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; pointer-events: none; overflow: hidden;
@@ -107,6 +107,54 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
+        /* VIDEÓ SZECKIÓ */
+        .video-selector-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .main-video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            margin-bottom: 20px;
+        }
+        .main-video-wrapper iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .video-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .video-btn {
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--digit-color);
+            color: white;
+            padding: 12px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .video-btn:hover {
+            background: var(--digit-color);
+            color: black;
+            box-shadow: 0 0 15px var(--digit-color);
+        }
+        .video-btn.active {
+            background: var(--digit-color);
+            color: black;
+        }
+
+        /* ARGUMENT GRID */
         .argument-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
         @media (min-width: 768px) { .argument-grid { grid-template-columns: 1fr 1fr; } }
 
@@ -153,6 +201,18 @@
         
         <p>A történelem órája könyörtelenül üt. Mi vagyunk a <strong>normális többség</strong>: azok a milliók, akik tisztességgel dolgoznak, de látják a jog tiprását és a gyűlölet árát. Eljött az idő, hogy a hatalom ne az úr, hanem a szolga legyen!</p>
 
+        <div class="video-selector-container">
+            <h3>Videó Archívum</h3>
+            <div class="main-video-wrapper">
+                <iframe id="videoPlayer" src="https://www.youtube.com/embed/m0XWP6B5nfU" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video-buttons">
+                <button class="video-btn active" onclick="changeVideo('m0XWP6B5nfU', this)">1. Videó</button>
+                <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">2. Videó</button>
+                <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">3. Videó</button>
+            </div>
+        </div>
+
         <div class="argument-grid">
             <div class="arg-card">
                 <h4>Jogállami Rend</h4>
@@ -184,6 +244,7 @@
     <footer>© 2026 RENDSZER-VALTAS.HU | A VÁLTOZÁS ELKERÜLHETETLEN</footer>
 
     <script>
+        // Visszaszámláló logika
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
 
         function updateCountdown() {
@@ -208,6 +269,17 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // Videó váltó logika
+        function changeVideo(videoId, btn) {
+            // Iframe forrásának cseréje
+            document.getElementById('videoPlayer').src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+            
+            // Aktív gomb stílusának kezelése
+            const buttons = document.querySelectorAll('.video-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
     </script>
 </body>
 </html>
