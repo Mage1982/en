@@ -171,10 +171,19 @@
         }
 
         .call-to-action {
-            background: linear-gradient(90deg, rgba(206,17,38,0.1), rgba(0,135,81,0.1));
-            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(90deg, rgba(206,17,38,0.2), rgba(0,135,81,0.2));
+            border: 1px solid var(--border-glow);
             padding: 30px; text-align: center; border-radius: 15px; margin: 40px 0;
         }
+        .cta-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(24px, 6vw, 48px);
+            font-weight: 900;
+            letter-spacing: 15px;
+            text-shadow: 0 0 20px var(--digit-color);
+            color: white;
+        }
+
         footer { padding: 40px; font-size: 11px; opacity: 0.4; letter-spacing: 2px; text-align: center; }
     </style>
 </head>
@@ -219,7 +228,7 @@
         </div>
 
         <div class="call-to-action animate delay-5">
-            <span class="cta-quote">"Mikor a jog tiprott, a kötelesség lázad!"</span>
+            <div class="cta-text">RENDSZERVÁLTÁS</div>
         </div>
 
         <h1 class="animate delay-5" style="margin-top: 50px; font-size: clamp(30px, 8vw, 65px);">2026. ÁPRILIS 12.</h1>
