@@ -30,18 +30,20 @@
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .animate {
             opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
         .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
 
         /* VIDEÓ HÁTTÉR */
         .video-background {
@@ -168,13 +170,6 @@
             border-color: var(--digit-color);
         }
 
-        /* EGYÉB */
-        .argument-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
-        @media (min-width: 768px) { .argument-grid { grid-template-columns: 1fr 1fr; } }
-        .arg-card {
-            background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px;
-            border-bottom: 3px solid var(--digit-color);
-        }
         .call-to-action {
             background: linear-gradient(90deg, rgba(206,17,38,0.1), rgba(0,135,81,0.1));
             border: 1px solid rgba(255,255,255,0.1);
@@ -194,18 +189,18 @@
     
     <div class="status-text animate delay-1">A rendszerváltás még...</div>
 
-    <div id="countdown" class="animate delay-1">
+    <div id="countdown" class="animate delay-2">
         <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
         <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
         <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
         <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
-    <article class="glass-panel animate delay-2">
-        <h1 class="tricolor-text">KIÁLTVÁNY A NORMÁLIS MAGYARORSZÁGÉRT</h1>
-        <h2>Most vagy soha – A némaság bűn!</h2>
+    <article class="glass-panel animate delay-3">
+        <h1 class="tricolor-text animate delay-3">KIÁLTVÁNY A NORMÁLIS MAGYARORSZÁGÉRT</h1>
+        <h2 class="animate delay-4">Most vagy soha – A némaság bűn!</h2>
 
-        <div class="video-container">
+        <div class="video-container animate delay-5">
             <div class="main-video-wrapper">
                 <iframe id="videoPlayer" src="https://www.youtube.com/embed/m0XWP6B5nfU" frameborder="0" allowfullscreen></iframe>
             </div>
@@ -216,38 +211,24 @@
             </div>
         </div>
 
-        <div class="fb-video-container animate delay-2">
+        <div class="fb-video-container animate delay-5">
             <h3 style="font-family: 'Orbitron'; font-size: 14px; margin-bottom: 20px; color: var(--digit-color);">Kiemelt üzenet</h3>
             <div class="fb-video-wrapper">
                 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1520302922394544%2F&show_text=true&width=267&t=0" width="267" height="591" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
         </div>
 
-        <p>A történelem órája könyörtelenül üt. Mi vagyunk a <strong>normális többség</strong>: azok a milliók, akik tisztességgel dolgoznak, de látják a jog tiprását és a gyűlölet árát. Eljött az idő, hogy a hatalom ne az úr, hanem a szolga legyen!</p>
-
-        <div class="argument-grid animate delay-3">
-            <div class="arg-card">
-                <h4>Jogállami Rend</h4>
-                <p>A törvény nem lehet furkósbot! Követeljük a független igazságszolgáltatást, ahol a hatalmasok is a bíró elé állnak.</p>
-            </div>
-            <div class="arg-card">
-                <h4>Kiszámíthatóság</h4>
-                <p>Véget vetünk az éjszakai rendeleti kormányzásnak. Stabilitást és tisztességes versenyfeltételeket akarunk!</p>
-            </div>
-        </div>
-
-        <div class="call-to-action animate delay-3">
+        <div class="call-to-action animate delay-5">
             <span class="cta-quote">"Mikor a jog tiprott, a kötelesség lázad!"</span>
         </div>
 
-        <h1 style="margin-top: 50px; font-size: clamp(30px, 8vw, 65px);">2026. ÁPRILIS 12.</h1>
-        <p style="text-align: center; letter-spacing: 5px; font-family: 'Orbitron'; color: var(--digit-color); font-weight: bold;">VISSZAVESSZÜK A HAZÁNKAT!</p>
+        <h1 class="animate delay-5" style="margin-top: 50px; font-size: clamp(30px, 8vw, 65px);">2026. ÁPRILIS 12.</h1>
+        <p class="animate delay-5" style="text-align: center; letter-spacing: 5px; font-family: 'Orbitron'; color: var(--digit-color); font-weight: bold;">VISSZAVESSZÜK A HAZÁNKAT!</p>
     </article>
 
-    <footer class="animate delay-3">© 2026 RENDSZER-VALTAS.HU</footer>
+    <footer class="animate delay-5">© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
-        // Visszaszámláló
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -265,7 +246,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Videó váltó
         function changeVideo(videoId, btn) {
             document.getElementById('videoPlayer').src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
             document.querySelectorAll('.video-btn').forEach(b => b.classList.remove('active'));
