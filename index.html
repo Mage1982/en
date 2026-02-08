@@ -40,6 +40,12 @@
             100% { transform: translateY(100%); }
         }
 
+        @keyframes pulse-border {
+            0% { border-color: rgba(0, 242, 255, 0.3); box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); }
+            50% { border-color: rgba(0, 242, 255, 0.8); box-shadow: 0 0 25px rgba(0, 242, 255, 0.4); }
+            100% { border-color: rgba(0, 242, 255, 0.3); box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); }
+        }
+
         .animate { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
@@ -59,7 +65,7 @@
             background: var(--bg-overlay); z-index: -1;
         }
 
-        /* VISSZASZÁMLÁLÓ FEJLÉC */
+        /* VISSZASZÁMLÁLÓ */
         .status-header {
             width: 90%; max-width: var(--panel-width);
             text-align: center; margin-bottom: 15px;
@@ -73,10 +79,9 @@
             text-shadow: 0 0 10px var(--digit-color);
         }
 
-        /* DINAMIKUS VISSZASZÁMLÁLÓ RÁCS */
         #countdown {
             display: grid; 
-            grid-template-columns: repeat(4, 1fr); /* Asztali nézet */
+            grid-template-columns: repeat(4, 1fr);
             width: 90%; max-width: var(--panel-width);
             background: rgba(0, 242, 255, 0.05);
             backdrop-filter: blur(20px); border-radius: 20px;
@@ -92,11 +97,7 @@
             animation: scanline 4s linear infinite; pointer-events: none;
         }
 
-        .segment { 
-            padding: 30px 10px; 
-            text-align: center; 
-            border-right: 1px solid rgba(0, 242, 255, 0.2); 
-        }
+        .segment { padding: 30px 10px; text-align: center; border-right: 1px solid rgba(0, 242, 255, 0.2); }
         .segment:last-child { border-right: none; }
         
         .value {
@@ -106,14 +107,7 @@
             text-shadow: 0 0 15px var(--digit-color);
             line-height: 1; display: block;
         }
-        .label { 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 10px;
-            text-transform: uppercase; 
-            color: var(--digit-color); 
-            margin-top: 8px;
-            letter-spacing: 2px;
-        }
+        .label { font-family: 'Orbitron', sans-serif; font-size: 10px; text-transform: uppercase; color: var(--digit-color); margin-top: 8px; letter-spacing: 2px; }
 
         /* GLASS PANEL */
         .glass-panel {
@@ -136,14 +130,7 @@
             color: #fff;
         }
 
-        .sub-message {
-            font-family: 'Segoe UI', sans-serif;
-            font-size: clamp(15px, 1.8vw, 19px);
-            color: #ccc; max-width: 700px; margin: 0 auto 30px auto;
-            line-height: 1.5;
-        }
-
-        /* VIDEÓ */
+        /* VIDEÓK */
         .video-container { margin: 30px 0; width: 100%; }
         .main-video-wrapper {
             position: relative; padding-bottom: 56.25%; height: 0;
@@ -152,24 +139,41 @@
         }
         .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
-        .video-nav {
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); /* Mobilon 2x2 gomb rács */
-            gap: 10px;
-            margin-top: 20px;
-        }
+        .video-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
         .video-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; padding: 12px 5px;
-            font-family: 'Orbitron', sans-serif; font-size: 9px;
-            cursor: pointer; border-radius: 6px; transition: 0.3s;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff; padding: 12px 5px; font-family: 'Orbitron', sans-serif; font-size: 9px;
+            cursor: pointer; border-radius: 6px; transition: 0.3s; text-transform: uppercase;
+        }
+        .video-btn.active { background: var(--digit-color); color: #000; border-color: var(--digit-color); box-shadow: 0 0 15px var(--digit-color); }
+
+        /* SZEPARÁLT KIEMELT VIDEÓ SZAKASZ */
+        .special-video-section {
+            margin: 50px 0 30px 0;
+            padding: 25px;
+            background: rgba(0, 242, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 15px;
+            animation: pulse-border 3s infinite ease-in-out;
+        }
+        .special-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: var(--digit-color);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
-        .video-btn.active {
-            background: var(--digit-color); color: #000;
-            border-color: var(--digit-color);
-            box-shadow: 0 0 15px var(--digit-color);
+        .cta-box {
+            font-family: 'Orbitron', sans-serif;
+            background: var(--digit-color);
+            color: #000;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: inline-block;
         }
 
         .date-highlight {
@@ -183,28 +187,15 @@
 
         footer { padding: 30px; font-size: 9px; opacity: 0.3; letter-spacing: 2px; text-align: center; line-height: 1.6; }
 
-        /* MOBIL SPECIFIKUS MÓDOSÍTÁSOK */
         @media (max-width: 600px) {
-            #countdown {
-                grid-template-columns: repeat(2, 1fr); /* 2x2 elrendezés mobilon */
-            }
-            .segment {
-                border-bottom: 1px solid rgba(0, 242, 255, 0.1);
-                padding: 20px 5px;
-            }
+            #countdown { grid-template-columns: repeat(2, 1fr); }
+            .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); padding: 20px 5px; }
             .segment:nth-child(2) { border-right: none; }
             .segment:nth-child(3), .segment:nth-child(4) { border-bottom: none; }
-            
             .glass-panel { padding: 30px 20px; }
-            
-            body { padding-top: 10px; }
         }
-
         @media (min-width: 601px) {
-            .video-nav {
-                display: flex; /* Asztalin marad a soros elrendezés */
-                justify-content: center;
-            }
+            .video-nav { display: flex; justify-content: center; }
             .video-btn { font-size: 11px; padding: 12px 20px; }
         }
     </style>
@@ -233,7 +224,7 @@
             Méltó régi nagy hiréhez"
         </h1>
 
-        <p class="sub-message">
+        <p style="color: #ccc; font-style: italic; margin-bottom: 30px;">
             2026-ban visszavesszük a sorsunkat. Nem csak kormányt, hanem rendszert váltunk.
         </p>
 
@@ -247,6 +238,17 @@
                 <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">Orbán Anita</button>
                 <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">Kapitány István</button>
             </div>
+        </div>
+
+        <div class="special-video-section">
+            <div class="cta-box">NÉZD MEG MOST: RENDVÁLTÁS, DE HOGYAN?</div>
+            <div class="special-title">Best of TISZA-program 🌊</div>
+            <div class="main-video-wrapper">
+                <iframe src="https://www.youtube.com/embed/ApQLK2-mB0w" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p style="font-size: 13px; color: #aaa; margin-top: 15px;">
+                Értsd meg a program lényegét 52 percben. Juhász Péter elemzése a valódi esélyekről.
+            </p>
         </div>
 
         <div style="margin-top: 40px;">
@@ -265,15 +267,11 @@
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) { 
-                document.querySelector(".status-label").innerText = "A VÁLTOZÁS MEGKEZDŐDÖTT!"; 
-                return; 
-            }
+            if (distance < 0) { document.querySelector(".status-label").innerText = "A VÁLTOZÁS MEGKEZDŐDÖTT!"; return; }
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
-            
             document.getElementById("days").innerText = String(d).padStart(2, '0');
             document.getElementById("hours").innerText = String(h).padStart(2, '0');
             document.getElementById("minutes").innerText = String(m).padStart(2, '0');
