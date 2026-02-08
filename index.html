@@ -12,25 +12,26 @@
 
     <style>
         :root {
-            --bg-overlay: radial-gradient(circle at center, rgba(2, 20, 50, 0.92) 0%, rgba(1, 3, 10, 0.98) 100%); 
+            --bg-overlay: radial-gradient(circle at center, rgba(2, 20, 50, 0.94) 0%, rgba(1, 3, 10, 0.98) 100%); 
             --digit-color: #00f2ff; 
-            --border-glow: rgba(0, 242, 255, 0.6);
+            --border-glow: rgba(0, 242, 255, 0.5);
             --hungarian-red: #ce1126;
             --hungarian-green: #008751;
             --panel-width: 900px;
         }
 
-        * { box-sizing: border-box; scroll-behavior: smooth; }
+        * { box-sizing: border-box; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        
         body {
             margin: 0; padding: 0;
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #01030a; overflow-x: hidden;
-            padding-top: 40px;
+            padding: 20px 0;
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -51,47 +52,48 @@
         .video-background iframe {
             width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border: none; opacity: 0.4;
+            border: none; opacity: 0.35;
         }
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-overlay); z-index: -1;
         }
 
-        /* HATALMAS VISSZASZÁMLÁLÓ */
+        /* VISSZASZÁMLÁLÓ FEJLÉC */
         .status-header {
-            width: 95%; max-width: var(--panel-width);
-            text-align: center; margin-bottom: 10px;
+            width: 90%; max-width: var(--panel-width);
+            text-align: center; margin-bottom: 15px;
         }
         
         .status-label {
             font-family: 'Orbitron', sans-serif;
-            font-size: 14px; letter-spacing: 12px;
+            font-size: clamp(10px, 3vw, 14px); 
+            letter-spacing: clamp(4px, 2vw, 12px);
             color: var(--digit-color); text-transform: uppercase;
             text-shadow: 0 0 10px var(--digit-color);
         }
 
+        /* DINAMIKUS VISSZASZÁMLÁLÓ RÁCS */
         #countdown {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            width: 95%; max-width: var(--panel-width);
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); /* Asztali nézet */
+            width: 90%; max-width: var(--panel-width);
             background: rgba(0, 242, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
+            backdrop-filter: blur(20px); border-radius: 20px;
             border: 2px solid var(--border-glow);
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.2), inset 0 0 20px rgba(0, 242, 255, 0.1);
-            margin-bottom: 40px;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
+            margin-bottom: 30px;
             position: relative; overflow: hidden;
         }
 
-        /* Scanline effekt a visszaszámlálón */
         #countdown::after {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(0,242,255,0.1), transparent);
+            background: linear-gradient(to bottom, transparent, rgba(0,242,255,0.05), transparent);
             animation: scanline 4s linear infinite; pointer-events: none;
         }
 
         .segment { 
-            padding: clamp(20px, 4vw, 50px) 10px; 
+            padding: 30px 10px; 
             text-align: center; 
             border-right: 1px solid rgba(0, 242, 255, 0.2); 
         }
@@ -99,86 +101,112 @@
         
         .value {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(35px, 8vw, 100px);
+            font-size: clamp(32px, 7vw, 90px);
             font-weight: 900; color: #fff;
-            text-shadow: 0 0 20px var(--digit-color);
-            line-height: 1;
+            text-shadow: 0 0 15px var(--digit-color);
+            line-height: 1; display: block;
         }
         .label { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: clamp(10px, 1.5vw, 14px); 
+            font-size: 10px;
             text-transform: uppercase; 
             color: var(--digit-color); 
-            margin-top: 10px;
-            letter-spacing: 3px;
+            margin-top: 8px;
+            letter-spacing: 2px;
         }
 
         /* GLASS PANEL */
         .glass-panel {
-            max-width: var(--panel-width); width: 95%;
-            padding: clamp(30px, 7vw, 70px);
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(30px); border-radius: 30px;
-            border-left: 6px solid var(--hungarian-red);
-            border-right: 6px solid var(--hungarian-green);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-            margin-bottom: 60px;
+            max-width: var(--panel-width); width: 90%;
+            padding: clamp(25px, 6vw, 60px);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px); border-radius: 25px;
+            border-left: 4px solid var(--hungarian-red);
+            border-right: 4px solid var(--hungarian-green);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            margin-bottom: 50px;
             text-align: center;
         }
 
         .epic-quote {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(22px, 5vw, 42px);
-            line-height: 1.3; margin-bottom: 40px;
-            font-weight: 900; letter-spacing: -1px;
+            font-size: clamp(20px, 4.5vw, 38px);
+            line-height: 1.4; margin-bottom: 30px;
+            font-weight: 700; letter-spacing: -0.5px;
             color: #fff;
         }
 
         .sub-message {
             font-family: 'Segoe UI', sans-serif;
-            font-size: clamp(16px, 2vw, 20px);
-            color: #ccc; max-width: 700px; margin: 0 auto 40px auto;
-            line-height: 1.6;
+            font-size: clamp(15px, 1.8vw, 19px);
+            color: #ccc; max-width: 700px; margin: 0 auto 30px auto;
+            line-height: 1.5;
         }
 
-        /* VIDEÓ SZEKCIÓ */
-        .video-container { margin: 40px 0; width: 100%; }
+        /* VIDEÓ */
+        .video-container { margin: 30px 0; width: 100%; }
         .main-video-wrapper {
             position: relative; padding-bottom: 56.25%; height: 0;
             overflow: hidden; border-radius: 12px;
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(0, 242, 255, 0.2);
         }
         .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
         .video-nav {
-            display: flex; justify-content: center; gap: 10px;
-            flex-wrap: wrap; margin-top: 25px;
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); /* Mobilon 2x2 gomb rács */
+            gap: 10px;
+            margin-top: 20px;
         }
         .video-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; padding: 12px 22px;
-            font-family: 'Orbitron', sans-serif; font-size: 11px;
-            cursor: pointer; border-radius: 4px; transition: 0.3s;
+            color: #fff; padding: 12px 5px;
+            font-family: 'Orbitron', sans-serif; font-size: 9px;
+            cursor: pointer; border-radius: 6px; transition: 0.3s;
             text-transform: uppercase;
         }
-        .video-btn:hover, .video-btn.active {
+        .video-btn.active {
             background: var(--digit-color); color: #000;
             border-color: var(--digit-color);
-            box-shadow: 0 0 20px var(--digit-color);
+            box-shadow: 0 0 15px var(--digit-color);
         }
 
         .date-highlight {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(35px, 10vw, 85px);
+            font-size: clamp(30px, 9vw, 80px);
             font-weight: 900; display: block;
             background: linear-gradient(to right, #ce1126, #ffffff, #008751);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
-        footer { padding: 50px; font-size: 10px; opacity: 0.3; letter-spacing: 3px; text-align: center; }
+        footer { padding: 30px; font-size: 9px; opacity: 0.3; letter-spacing: 2px; text-align: center; line-height: 1.6; }
+
+        /* MOBIL SPECIFIKUS MÓDOSÍTÁSOK */
+        @media (max-width: 600px) {
+            #countdown {
+                grid-template-columns: repeat(2, 1fr); /* 2x2 elrendezés mobilon */
+            }
+            .segment {
+                border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+                padding: 20px 5px;
+            }
+            .segment:nth-child(2) { border-right: none; }
+            .segment:nth-child(3), .segment:nth-child(4) { border-bottom: none; }
+            
+            .glass-panel { padding: 30px 20px; }
+            
+            body { padding-top: 10px; }
+        }
+
+        @media (min-width: 601px) {
+            .video-nav {
+                display: flex; /* Asztalin marad a soros elrendezés */
+                justify-content: center;
+            }
+            .video-btn { font-size: 11px; padding: 12px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -196,7 +224,7 @@
         <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
         <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
         <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
-        <div class="segment"><span class="value" id="seconds">00</span><span class="label">Másodperc</span></div>
+        <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
     <article class="glass-panel animate delay-2">
@@ -206,9 +234,7 @@
         </h1>
 
         <p class="sub-message">
-            Elérkezett az idő, hogy visszavegyük a sorsunkat. <br>
-            2026-ban nem csak kormányt, hanem **rendszert váltunk**. <br>
-            Csatlakozz azokhoz, akik már elindultak:
+            2026-ban visszavesszük a sorsunkat. Nem csak kormányt, hanem rendszert váltunk.
         </p>
 
         <div class="video-container">
@@ -223,13 +249,16 @@
             </div>
         </div>
 
-        <div style="margin-top: 60px;">
-            <span style="font-family: 'Orbitron'; letter-spacing: 8px; color: var(--digit-color);">A NAP, AMIKOR MINDEN MEGVÁLTOZIK:</span>
+        <div style="margin-top: 40px;">
+            <span style="font-family: 'Orbitron'; letter-spacing: 4px; color: var(--digit-color); font-size: 12px; display: block;">A NAP, AMIKOR MINDEN MEGVÁLTOZIK:</span>
             <span class="date-highlight">2026. ÁPRILIS 12.</span>
         </div>
     </article>
 
-    <footer class="animate delay-2">RENDSZER-VALTAS.HU // 2026 // A JÖVŐ MEGÉRKEZETT</footer>
+    <footer class="animate delay-2">
+        RENDSZER-VALTAS.HU // 2026<br>
+        A JÖVŐT NEM LEHET MEGÁLLÍTANI
+    </footer>
 
     <script>
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
