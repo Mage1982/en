@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rendszerváltás 2026 | rendszer-valtas.hu</title>
     
+    <title>Rendszerváltás 2026 | Visszavesszük a hazánkat!</title>
+    <meta name="description" content="2026. április 12. - A nap, amikor visszavesszük a sorsunkat. Csatlakozz a rendszerváltáshoz!">
+    <meta property="og:title" content="Rendszerváltás 2026 - rendszer-valtas.hu">
+    <meta property="og:description" content="A magyar név megint szép lesz! Nézd meg a programot és csatlakozz hozzánk.">
+    <meta property="og:image" content="parlament.png">
+    <meta property="og:url" content="https://rendszer-valtas.hu">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png"> 
-
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Sötétkék gradiens, ami átengedi a parlament képét */
-            --bg-overlay: radial-gradient(circle at center, rgba(2, 20, 50, 0.85) 0%, rgba(1, 3, 10, 0.95) 100%); 
+            /* Kreatív áttetszőség: a parlament láthatóbb, de a szöveg olvasható marad */
+            --bg-overlay: linear-gradient(180deg, rgba(2, 20, 50, 0.7) 0%, rgba(1, 3, 10, 0.9) 100%); 
             --digit-color: #00f2ff; 
             --border-glow: rgba(0, 242, 255, 0.5);
             --hungarian-red: #ce1126;
@@ -28,32 +34,17 @@
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #01030a;
-            
-            /* PARLAMENT HÁTTÉR BEÁLLÍTÁSA */
+            /* PARLAMENT HÁTTÉR */
             background-image: var(--bg-overlay), url('parlament.png');
             background-attachment: fixed;
             background-size: cover;
-            background-position: center;
-            
+            background-position: center top;
             overflow-x: hidden;
             padding: 20px 0;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        @keyframes pulse-border {
-            0% { border-color: rgba(0, 242, 255, 0.3); box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); }
-            50% { border-color: rgba(0, 242, 255, 0.8); box-shadow: 0 0 25px rgba(0, 242, 255, 0.4); }
-            100% { border-color: rgba(0, 242, 255, 0.3); box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
         .animate { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .delay-1 { animation-delay: 0.2s; }
@@ -63,107 +54,89 @@
         .status-header { width: 90%; max-width: var(--panel-width); text-align: center; margin-bottom: 15px; }
         .status-label {
             font-family: 'Orbitron', sans-serif; font-size: clamp(10px, 3vw, 14px); 
-            letter-spacing: clamp(4px, 2vw, 12px); color: var(--digit-color); 
-            text-transform: uppercase; text-shadow: 0 0 10px var(--digit-color);
+            letter-spacing: 8px; color: var(--digit-color); 
+            text-transform: uppercase; text-shadow: 0 0 15px var(--digit-color);
         }
 
         #countdown {
             display: grid; grid-template-columns: repeat(4, 1fr);
             width: 90%; max-width: var(--panel-width);
-            background: rgba(0, 242, 255, 0.07);
-            backdrop-filter: blur(15px); border-radius: 20px;
+            background: rgba(0, 242, 255, 0.1);
+            backdrop-filter: blur(10px); border-radius: 20px;
             border: 2px solid var(--border-glow);
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
-            margin-bottom: 30px; position: relative; overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
+            margin-bottom: 30px;
         }
 
-        #countdown::after {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(0,242,255,0.05), transparent);
-            animation: scanline 4s linear infinite; pointer-events: none;
-        }
-
-        .segment { padding: 30px 10px; text-align: center; border-right: 1px solid rgba(0, 242, 255, 0.2); }
+        .segment { padding: clamp(15px, 4vw, 35px) 5px; text-align: center; border-right: 1px solid rgba(0, 242, 255, 0.2); }
         .segment:last-child { border-right: none; }
-        
-        .value {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(32px, 7vw, 90px);
-            font-weight: 900; color: #fff; text-shadow: 0 0 15px var(--digit-color);
-            line-height: 1; display: block;
-        }
-        .label { font-family: 'Orbitron', sans-serif; font-size: 10px; text-transform: uppercase; color: var(--digit-color); margin-top: 8px; letter-spacing: 2px; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: clamp(28px, 7vw, 85px); font-weight: 900; text-shadow: 0 0 20px var(--digit-color); line-height: 1; }
+        .label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--digit-color); margin-top: 5px; letter-spacing: 2px; }
 
         /* GLASS PANEL */
         .glass-panel {
             max-width: var(--panel-width); width: 90%;
-            padding: clamp(25px, 6vw, 60px);
-            background: rgba(0, 10, 30, 0.4); /* Sötétebb üveg, hogy a parlament ne zavarjon be */
-            backdrop-filter: blur(25px); border-radius: 25px;
+            padding: clamp(25px, 5vw, 60px);
+            background: rgba(1, 3, 10, 0.6);
+            backdrop-filter: blur(20px); border-radius: 25px;
             border-left: 4px solid var(--hungarian-red);
             border-right: 4px solid var(--hungarian-green);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            margin-bottom: 50px; text-align: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            margin-bottom: 40px; text-align: center;
         }
 
-        .epic-quote {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(20px, 4.5vw, 38px);
-            line-height: 1.4; margin-bottom: 30px; font-weight: 700; color: #fff;
-        }
+        .epic-quote { font-family: 'Orbitron', sans-serif; font-size: clamp(20px, 4vw, 36px); line-height: 1.4; margin-bottom: 30px; }
 
         /* VIDEÓK */
-        .video-container { margin: 30px 0; width: 100%; }
-        .main-video-wrapper {
-            position: relative; padding-bottom: 56.25%; height: 0;
-            overflow: hidden; border-radius: 12px; border: 1px solid rgba(0, 242, 255, 0.3);
-        }
+        .main-video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 1px solid var(--border-glow); }
         .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
         .video-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
         .video-btn {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; padding: 12px 5px; font-family: 'Orbitron', sans-serif; font-size: 9px;
+            color: #fff; padding: 12px 5px; font-family: 'Orbitron', sans-serif; font-size: 10px;
             cursor: pointer; border-radius: 6px; transition: 0.3s; text-transform: uppercase;
         }
         .video-btn.active { background: var(--digit-color); color: #000; border-color: var(--digit-color); box-shadow: 0 0 15px var(--digit-color); }
 
-        /* SZEPARÁLT VIDEÓ SZAKASZ */
+        /* KIEMELT SZEKCIÓ */
         .special-video-section {
-            margin: 50px 0 30px 0; padding: 25px;
-            background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.3);
-            border-radius: 15px; animation: pulse-border 3s infinite ease-in-out;
+            margin: 40px 0; padding: 20px;
+            background: rgba(0, 242, 255, 0.05); border: 1px solid var(--border-glow);
+            border-radius: 15px;
         }
-        .cta-box {
-            font-family: 'Orbitron', sans-serif; background: var(--digit-color);
-            color: #000; padding: 10px; font-size: 11px; font-weight: 900;
-            margin-bottom: 20px; border-radius: 4px; display: inline-block;
+        .cta-label { background: var(--digit-color); color: #000; font-family: 'Orbitron', sans-serif; padding: 8px 15px; font-size: 11px; font-weight: 900; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
+
+        /* OSZD MEG FUNKCIÓ */
+        .share-container { margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .share-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 10px 20px; border-radius: 50px; font-family: 'Orbitron', sans-serif;
+            font-size: 10px; cursor: pointer; transition: 0.3s; text-decoration: none;
         }
+        .share-btn:hover { background: white; color: black; }
 
         .date-highlight {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 9vw, 80px);
-            font-weight: 900; display: block;
+            font-family: 'Orbitron', sans-serif; font-size: clamp(35px, 8vw, 80px); font-weight: 900;
             background: linear-gradient(to right, #ce1126, #ffffff, #008751);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin: 15px 0;
+            margin: 20px 0; display: block;
         }
 
-        footer { padding: 30px; font-size: 9px; opacity: 0.4; letter-spacing: 2px; text-align: center; }
+        footer { padding: 40px; font-size: 10px; opacity: 0.5; letter-spacing: 2px; text-align: center; }
 
         @media (max-width: 600px) {
             #countdown { grid-template-columns: repeat(2, 1fr); }
-            .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); }
             .segment:nth-child(2) { border-right: none; }
-            .segment:nth-child(3), .segment:nth-child(4) { border-bottom: none; }
+            .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); }
         }
-        @media (min-width: 601px) {
-            .video-nav { display: flex; justify-content: center; }
-            .video-btn { font-size: 11px; padding: 12px 20px; }
-        }
+        @media (min-width: 601px) { .video-nav { display: flex; justify-content: center; } .video-btn { padding: 12px 25px; } }
     </style>
 </head>
 <body>
 
     <div class="status-header animate delay-1">
-        <div class="status-label">A visszaszámlálás elindult</div>
+        <div class="status-label">A visszaszámlálás megállíthatatlan</div>
     </div>
 
     <div id="countdown" class="animate delay-1">
@@ -192,21 +165,27 @@
         </div>
 
         <div class="special-video-section">
-            <div class="cta-box">KIEMELT ELEMZÉS: RENDVÁLTÁS, DE HOGYAN?</div>
+            <div class="cta-label">KIEMELT: RENDVÁLTÁS, DE HOGYAN?</div>
             <div class="main-video-wrapper">
                 <iframe src="https://www.youtube.com/embed/ApQLK2-mB0w" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
 
-        <div style="margin-top: 40px;">
-            <span style="font-family: 'Orbitron'; letter-spacing: 4px; color: var(--digit-color); font-size: 12px; display: block;">A NAP, AMIKOR MINDEN MEGVÁLTOZIK:</span>
+        <div style="margin-top: 50px;">
             <span class="date-highlight">2026. ÁPRILIS 12.</span>
+            <p style="font-family: 'Orbitron'; letter-spacing: 5px; color: var(--digit-color);">VISSZAVESSZÜK A HAZÁNKAT</p>
+        </div>
+
+        <div class="share-container">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://rendszer-valtas.hu" target="_blank" class="share-btn">FACEBOOK</a>
+            <a href="https://twitter.com/intent/tweet?text=Csatlakozz+a+rendszerváltáshoz!&url=https://rendszer-valtas.hu" target="_blank" class="share-btn">X / TWITTER</a>
+            <a href="fb-messenger://share/?link=https://rendszer-valtas.hu" class="share-btn">MESSENGER</a>
         </div>
     </article>
 
     <footer class="animate delay-2">
-        RENDSZER-VALTAS.HU // 2026<br>
-        VISSZAVESSZÜK A HAZÁNKAT
+        © 2026 RENDSZER-VALTAS.HU<br>
+        AZ IGAZSÁG SZABADDÁ TESZ.
     </footer>
 
     <script>
@@ -214,7 +193,7 @@
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) { document.querySelector(".status-label").innerText = "A VÁLTOZÁS MEGKEZDŐDÖTT!"; return; }
+            if (distance < 0) { document.querySelector(".status-label").innerText = "ELKEZDŐDÖTT!"; return; }
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
