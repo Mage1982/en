@@ -12,7 +12,8 @@
 
     <style>
         :root {
-            --bg-overlay: radial-gradient(circle at center, rgba(2, 20, 50, 0.94) 0%, rgba(1, 3, 10, 0.98) 100%); 
+            /* Sötétkék gradiens, ami átengedi a parlament képét */
+            --bg-overlay: radial-gradient(circle at center, rgba(2, 20, 50, 0.85) 0%, rgba(1, 3, 10, 0.95) 100%); 
             --digit-color: #00f2ff; 
             --border-glow: rgba(0, 242, 255, 0.5);
             --hungarian-red: #ce1126;
@@ -26,7 +27,15 @@
             margin: 0; padding: 0;
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #01030a; overflow-x: hidden;
+            background-color: #01030a;
+            
+            /* PARLAMENT HÁTTÉR BEÁLLÍTÁSA */
+            background-image: var(--bg-overlay), url('parlament.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            
+            overflow-x: hidden;
             padding: 20px 0;
         }
 
@@ -50,45 +59,22 @@
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
 
-        /* VIDEÓ HÁTTÉR */
-        .video-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2; pointer-events: none; overflow: hidden;
-        }
-        .video-background iframe {
-            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border: none; opacity: 0.35;
-        }
-        .video-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-overlay); z-index: -1;
-        }
-
         /* VISSZASZÁMLÁLÓ */
-        .status-header {
-            width: 90%; max-width: var(--panel-width);
-            text-align: center; margin-bottom: 15px;
-        }
-        
+        .status-header { width: 90%; max-width: var(--panel-width); text-align: center; margin-bottom: 15px; }
         .status-label {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(10px, 3vw, 14px); 
-            letter-spacing: clamp(4px, 2vw, 12px);
-            color: var(--digit-color); text-transform: uppercase;
-            text-shadow: 0 0 10px var(--digit-color);
+            font-family: 'Orbitron', sans-serif; font-size: clamp(10px, 3vw, 14px); 
+            letter-spacing: clamp(4px, 2vw, 12px); color: var(--digit-color); 
+            text-transform: uppercase; text-shadow: 0 0 10px var(--digit-color);
         }
 
         #countdown {
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr);
+            display: grid; grid-template-columns: repeat(4, 1fr);
             width: 90%; max-width: var(--panel-width);
-            background: rgba(0, 242, 255, 0.05);
-            backdrop-filter: blur(20px); border-radius: 20px;
+            background: rgba(0, 242, 255, 0.07);
+            backdrop-filter: blur(15px); border-radius: 20px;
             border: 2px solid var(--border-glow);
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
-            margin-bottom: 30px;
-            position: relative; overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
+            margin-bottom: 30px; position: relative; overflow: hidden;
         }
 
         #countdown::after {
@@ -101,10 +87,8 @@
         .segment:last-child { border-right: none; }
         
         .value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(32px, 7vw, 90px);
-            font-weight: 900; color: #fff;
-            text-shadow: 0 0 15px var(--digit-color);
+            font-family: 'Orbitron', sans-serif; font-size: clamp(32px, 7vw, 90px);
+            font-weight: 900; color: #fff; text-shadow: 0 0 15px var(--digit-color);
             line-height: 1; display: block;
         }
         .label { font-family: 'Orbitron', sans-serif; font-size: 10px; text-transform: uppercase; color: var(--digit-color); margin-top: 8px; letter-spacing: 2px; }
@@ -113,29 +97,24 @@
         .glass-panel {
             max-width: var(--panel-width); width: 90%;
             padding: clamp(25px, 6vw, 60px);
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(30px); border-radius: 25px;
+            background: rgba(0, 10, 30, 0.4); /* Sötétebb üveg, hogy a parlament ne zavarjon be */
+            backdrop-filter: blur(25px); border-radius: 25px;
             border-left: 4px solid var(--hungarian-red);
             border-right: 4px solid var(--hungarian-green);
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            margin-bottom: 50px;
-            text-align: center;
+            margin-bottom: 50px; text-align: center;
         }
 
         .epic-quote {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(20px, 4.5vw, 38px);
-            line-height: 1.4; margin-bottom: 30px;
-            font-weight: 700; letter-spacing: -0.5px;
-            color: #fff;
+            font-family: 'Orbitron', sans-serif; font-size: clamp(20px, 4.5vw, 38px);
+            line-height: 1.4; margin-bottom: 30px; font-weight: 700; color: #fff;
         }
 
         /* VIDEÓK */
         .video-container { margin: 30px 0; width: 100%; }
         .main-video-wrapper {
             position: relative; padding-bottom: 56.25%; height: 0;
-            overflow: hidden; border-radius: 12px;
-            border: 1px solid rgba(0, 242, 255, 0.2);
+            overflow: hidden; border-radius: 12px; border: 1px solid rgba(0, 242, 255, 0.3);
         }
         .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
@@ -147,52 +126,33 @@
         }
         .video-btn.active { background: var(--digit-color); color: #000; border-color: var(--digit-color); box-shadow: 0 0 15px var(--digit-color); }
 
-        /* SZEPARÁLT KIEMELT VIDEÓ SZAKASZ */
+        /* SZEPARÁLT VIDEÓ SZAKASZ */
         .special-video-section {
-            margin: 50px 0 30px 0;
-            padding: 25px;
-            background: rgba(0, 242, 255, 0.03);
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            border-radius: 15px;
-            animation: pulse-border 3s infinite ease-in-out;
-        }
-        .special-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            color: var(--digit-color);
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin: 50px 0 30px 0; padding: 25px;
+            background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 15px; animation: pulse-border 3s infinite ease-in-out;
         }
         .cta-box {
-            font-family: 'Orbitron', sans-serif;
-            background: var(--digit-color);
-            color: #000;
-            padding: 10px;
-            font-size: 12px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            display: inline-block;
+            font-family: 'Orbitron', sans-serif; background: var(--digit-color);
+            color: #000; padding: 10px; font-size: 11px; font-weight: 900;
+            margin-bottom: 20px; border-radius: 4px; display: inline-block;
         }
 
         .date-highlight {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(30px, 9vw, 80px);
+            font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 9vw, 80px);
             font-weight: 900; display: block;
             background: linear-gradient(to right, #ce1126, #ffffff, #008751);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin: 15px 0;
         }
 
-        footer { padding: 30px; font-size: 9px; opacity: 0.3; letter-spacing: 2px; text-align: center; line-height: 1.6; }
+        footer { padding: 30px; font-size: 9px; opacity: 0.4; letter-spacing: 2px; text-align: center; }
 
         @media (max-width: 600px) {
             #countdown { grid-template-columns: repeat(2, 1fr); }
-            .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); padding: 20px 5px; }
+            .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); }
             .segment:nth-child(2) { border-right: none; }
             .segment:nth-child(3), .segment:nth-child(4) { border-bottom: none; }
-            .glass-panel { padding: 30px 20px; }
         }
         @media (min-width: 601px) {
             .video-nav { display: flex; justify-content: center; }
@@ -201,11 +161,6 @@
     </style>
 </head>
 <body>
-
-    <div class="video-background">
-        <iframe src="https://www.youtube.com/embed/SJhZdcrob_I?autoplay=1&mute=1&loop=1&playlist=SJhZdcrob_I&controls=0" allow="autoplay; encrypted-media"></iframe>
-    </div>
-    <div class="video-overlay"></div>
 
     <div class="status-header animate delay-1">
         <div class="status-label">A visszaszámlálás elindult</div>
@@ -224,10 +179,6 @@
             Méltó régi nagy hiréhez"
         </h1>
 
-        <p style="color: #ccc; font-style: italic; margin-bottom: 30px;">
-            2026-ban visszavesszük a sorsunkat. Nem csak kormányt, hanem rendszert váltunk.
-        </p>
-
         <div class="video-container">
             <div class="main-video-wrapper">
                 <iframe id="videoPlayer" src="https://www.youtube.com/embed/fhh1hnU6yus" frameborder="0" allowfullscreen></iframe>
@@ -241,14 +192,10 @@
         </div>
 
         <div class="special-video-section">
-            <div class="cta-box">NÉZD MEG MOST: RENDVÁLTÁS, DE HOGYAN?</div>
-            <div class="special-title">Best of TISZA-program 🌊</div>
+            <div class="cta-box">KIEMELT ELEMZÉS: RENDVÁLTÁS, DE HOGYAN?</div>
             <div class="main-video-wrapper">
                 <iframe src="https://www.youtube.com/embed/ApQLK2-mB0w" frameborder="0" allowfullscreen></iframe>
             </div>
-            <p style="font-size: 13px; color: #aaa; margin-top: 15px;">
-                Értsd meg a program lényegét 52 percben. Juhász Péter elemzése a valódi esélyekről.
-            </p>
         </div>
 
         <div style="margin-top: 40px;">
@@ -259,7 +206,7 @@
 
     <footer class="animate delay-2">
         RENDSZER-VALTAS.HU // 2026<br>
-        A JÖVŐT NEM LEHET MEGÁLLÍTANI
+        VISSZAVESSZÜK A HAZÁNKAT
     </footer>
 
     <script>
