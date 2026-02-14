@@ -18,7 +18,6 @@
 
     <style>
         :root {
-            /* Kreatív áttetszőség: a parlament láthatóbb, de a szöveg olvasható marad */
             --bg-overlay: linear-gradient(180deg, rgba(2, 20, 50, 0.7) 0%, rgba(1, 3, 10, 0.9) 100%); 
             --digit-color: #00f2ff; 
             --border-glow: rgba(0, 242, 255, 0.5);
@@ -34,7 +33,6 @@
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #01030a;
-            /* PARLAMENT HÁTTÉR */
             background-image: var(--bg-overlay), url('parlament.png');
             background-attachment: fixed;
             background-size: cover;
@@ -44,8 +42,6 @@
         }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse-glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
-
         .animate { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
@@ -91,11 +87,18 @@
         .main-video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 1px solid var(--border-glow); }
         .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
-        .video-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
+        .video-nav { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 10px; 
+            margin-top: 20px; 
+        }
         .video-btn {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; padding: 12px 5px; font-family: 'Orbitron', sans-serif; font-size: 10px;
+            color: #fff; padding: 12px 15px; font-family: 'Orbitron', sans-serif; font-size: 10px;
             cursor: pointer; border-radius: 6px; transition: 0.3s; text-transform: uppercase;
+            flex: 1 1 calc(33% - 10px); min-width: 120px;
         }
         .video-btn.active { background: var(--digit-color); color: #000; border-color: var(--digit-color); box-shadow: 0 0 15px var(--digit-color); }
 
@@ -107,7 +110,7 @@
         }
         .cta-label { background: var(--digit-color); color: #000; font-family: 'Orbitron', sans-serif; padding: 8px 15px; font-size: 11px; font-weight: 900; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
 
-        /* OSZD MEG FUNKCIÓ */
+        /* OSZD MEG */
         .share-container { margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         .share-btn {
             background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
@@ -129,8 +132,8 @@
             #countdown { grid-template-columns: repeat(2, 1fr); }
             .segment:nth-child(2) { border-right: none; }
             .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); }
+            .video-btn { flex: 1 1 calc(50% - 10px); }
         }
-        @media (min-width: 601px) { .video-nav { display: flex; justify-content: center; } .video-btn { padding: 12px 25px; } }
     </style>
 </head>
 <body>
@@ -158,6 +161,7 @@
             </div>
             <div class="video-nav">
                 <button class="video-btn active" onclick="changeVideo('fhh1hnU6yus', this)">A Stratégia</button>
+                <button class="video-btn" onclick="changeVideo('fsv5WlC1oLE', this)">Új Világ</button>
                 <button class="video-btn" onclick="changeVideo('m0XWP6B5nfU', this)">Csézy</button>
                 <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">Orbán Anita</button>
                 <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">Kapitány István</button>
