@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     <title>Rendszerváltás 2026 | Visszavesszük a hazánkat!</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-overlay: linear-gradient(180deg, rgba(15, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.98) 100%); 
+            --bg-overlay: linear-gradient(180deg, rgba(20, 0, 0, 0.95) 0%, rgba(0, 0, 0, 1) 100%); 
             --warning-red: #ff0000;
-            --danger-glow: rgba(255, 0, 0, 0.6);
+            --danger-glow: rgba(255, 0, 0, 0.7);
             --hungarian-green: #008751;
-            --panel-width: 900px;
         }
 
-        * { box-sizing: border-box; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
         
         body {
             margin: 0; padding: 0;
@@ -24,177 +22,142 @@
             min-height: 100vh; color: white; font-family: 'JetBrains Mono', monospace;
             background-color: #050000;
             background-image: var(--bg-overlay), url('parlament.png');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center top;
-            padding: 10px 0;
+            background-attachment: fixed; background-size: cover; background-position: center top;
+            padding: 10px 0; overflow-x: hidden;
         }
 
-        /* ANIMÁCIÓK */
-        @keyframes glitch-heavy {
-            0% { transform: translate(0); text-shadow: 4px 0 var(--warning-red), -4px 0 var(--hungarian-green); }
-            25% { transform: translate(-2px, 1px); text-shadow: -4px 0 var(--warning-red), 4px 0 var(--hungarian-green); }
-            50% { transform: translate(2px, -1px); text-shadow: 3px 0 var(--warning-red), -3px 0 var(--hungarian-green); }
-            75% { transform: translate(-1px, -1px); text-shadow: -3px 0 var(--warning-red), 3px 0 var(--hungarian-green); }
-            100% { transform: translate(0); text-shadow: 4px 0 var(--warning-red), -4px 0 var(--hungarian-green); }
+        /* GLITCH ANIMÁCIÓ A SZÁMOKRA */
+        @keyframes glitch-data {
+            0% { text-shadow: 3px 0 var(--warning-red), -3px 0 var(--hungarian-green); transform: translate(0); }
+            20% { text-shadow: -3px 0 var(--warning-red), 3px 0 var(--hungarian-green); transform: translate(-1px, 1px); }
+            40% { text-shadow: 3px 0 var(--warning-red), -3px 0 var(--hungarian-green); transform: translate(-1px, -1px); }
+            60% { text-shadow: -3px 0 var(--warning-red), 3px 0 var(--hungarian-green); transform: translate(1px, 1px); }
+            100% { text-shadow: 3px 0 var(--warning-red), -3px 0 var(--hungarian-green); transform: translate(0); }
         }
 
-        @keyframes pulse-red-border {
-            0%, 100% { border-color: var(--warning-red); box-shadow: 0 0 15px var(--danger-glow); }
-            50% { border-color: #550000; box-shadow: 0 0 40px var(--warning-red); }
+        @keyframes border-pulse {
+            0%, 100% { border-color: var(--warning-red); box-shadow: 0 0 20px var(--danger-glow); }
+            50% { border-color: #440000; box-shadow: 0 0 40px var(--warning-red); }
         }
 
-        .animate { opacity: 0; animation: fadeInUp 0.6s ease-out forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* BRUTÁLIS VISSZASZÁMLÁLÓ - DÁTUM STÍLUSBAN */
-        .status-header { width: 100%; text-align: center; margin-bottom: 5px; }
-        .status-label {
-            font-family: 'Orbitron', sans-serif; font-size: 14px;
-            letter-spacing: 6px; color: #fff; 
-            text-transform: uppercase; font-weight: 900;
-        }
-
-        #countdown {
-            display: flex;
-            justify-content: space-around;
+        /* VISSZASZÁMLÁLÓ KONTAÉNER */
+        #countdown-container {
             width: 98%; max-width: 900px;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.9);
             border: 3px solid var(--warning-red);
-            margin-bottom: 30px;
-            padding: 25px 0;
-            animation: pulse-red-border 2s infinite ease-in-out;
+            padding: 25px 0; margin-bottom: 30px;
+            display: flex; justify-content: space-around;
+            animation: border-pulse 2s infinite ease-in-out;
+            position: relative;
         }
 
-        .segment { flex: 1; text-align: center; }
+        .segment { text-align: center; flex: 1; }
 
         .value { 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: clamp(40px, 12vw, 100px); /* NAGYOBB MÉRET */
-            font-weight: 900; 
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(38px, 11vw, 90px);
+            font-weight: 900;
             color: #fff;
-            line-height: 0.8;
             display: block;
-            letter-spacing: -2px;
-            /* DÁTUM STÍLUS: GLITCH ÉS SZÍNEK */
-            animation: glitch-heavy 1.5s infinite;
-        }
-        .label { 
-            font-size: clamp(10px, 2.5vw, 14px); 
-            color: #fff; 
-            text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 3px;
-            margin-top: 10px;
-            display: block;
+            line-height: 1;
+            animation: glitch-data 2s infinite; /* Ez adja meg a dátumhoz hasonló vibe-ot */
         }
 
-        /* GLASS PANEL */
+        .label {
+            font-size: clamp(10px, 2.5vw, 14px);
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* PANEL ÉS GOMBOK */
         .glass-panel {
-            max-width: var(--panel-width); width: 92%;
+            width: 92%; max-width: 900px;
             padding: 40px 20px;
             background: rgba(0, 0, 0, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             border-left: 10px solid var(--warning-red);
             border-right: 10px solid var(--hungarian-green);
-            box-shadow: 0 0 80px rgba(0,0,0,1);
+            box-shadow: 0 0 100px rgba(0,0,0,1);
             text-align: center;
         }
 
-        .epic-quote { 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: clamp(20px, 6vw, 36px); 
-            line-height: 1.2; margin-bottom: 35px;
-            color: white; font-weight: 900;
-        }
-
-        /* VIDEÓK */
-        .main-video-wrapper { 
-            position: relative; padding-bottom: 56.25%; height: 0; 
-            border: 2px solid #222;
-            overflow: hidden;
-        }
-        .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        
-        /* NAGYOBB GOMBOK */
         .video-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 25px; }
+        
         .video-btn {
             background: #111; border: 2px solid #333;
-            color: #fff; padding: 18px 20px; /* JELENTŐSEN NAGYOBB PADDING */
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 14px; /* NAGYOBB BETŰ */
-            cursor: pointer; transition: 0.2s;
-            flex: 1 1 calc(45% - 12px); /* MOBILON 2 GOMB EGY SORBAN */
-            min-width: 140px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            color: #fff; padding: 18px 25px;
+            font-family: 'Orbitron', sans-serif; font-size: 14px;
+            cursor: pointer; transition: 0.2s; font-weight: 900;
+            flex: 1 1 calc(45% - 12px); text-transform: uppercase;
         }
+
         .video-btn.active { 
-            background: var(--warning-red); color: #fff;
-            box-shadow: 0 0 25px var(--danger-glow); border-color: #fff;
+            background: var(--warning-red);
+            box-shadow: 0 0 30px var(--danger-glow); border-color: #fff;
         }
 
-        .date-highlight {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(45px, 14vw, 120px); font-weight: 900;
-            color: white; margin: 20px 0; display: block;
-            animation: glitch-heavy 1.5s infinite;
+        .date-glitch {
+            font-family: 'Orbitron', sans-serif; font-size: clamp(45px, 14vw, 110px);
+            font-weight: 900; margin: 20px 0; display: block;
+            animation: glitch-data 1.5s infinite;
         }
 
-        .share-btn {
-            background: var(--warning-red); border: none;
-            color: white; padding: 15px 30px; font-family: 'Orbitron', sans-serif; 
-            font-size: 14px; font-weight: 900; text-decoration: none;
-            transition: 0.3s; margin: 10px; display: inline-block;
-            letter-spacing: 2px;
-        }
-        .share-btn:hover { transform: translateY(-5px) scale(1.05); background: white; color: black; }
+        .main-video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border: 2px solid #222; }
+        .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        footer { padding: 50px; font-size: 11px; opacity: 0.8; text-align: center; letter-spacing: 5px; color: var(--warning-red); font-weight: bold; }
+        footer { padding: 40px; color: var(--warning-red); font-weight: bold; letter-spacing: 4px; text-align: center; font-size: 12px; }
 
         @media (min-width: 768px) {
-            .video-btn { flex: 1 1 calc(18% - 12px); font-size: 12px; padding: 15px 10px; }
+            .video-btn { flex: 1; font-size: 13px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="status-header animate">
-        <div class="status-label">RENDSZERVÁLTÁS_VISSZASZÁMLÁLÁS</div>
+    <div style="text-align: center; color: var(--warning-red); font-weight: 900; letter-spacing: 5px; margin-bottom: 10px; font-size: 12px;">
+        STATUS: IN_PROGRESS // SYSTEM_BOOT
     </div>
 
-    <div id="countdown" class="animate">
-        <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
-        <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
-        <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
-        <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
+    <div id="countdown-container">
+        <div class="segment">
+            <span class="value" id="days">00</span>
+            <span class="label">Nap</span>
+        </div>
+        <div class="segment">
+            <span class="value" id="hours">00</span>
+            <span class="label">Óra</span>
+        </div>
+        <div class="segment">
+            <span class="value" id="minutes">00</span>
+            <span class="label">Perc</span>
+        </div>
+        <div class="segment">
+            <span class="value" id="seconds">00</span>
+            <span class="label">Mp</span>
+        </div>
     </div>
 
-    <article class="glass-panel animate">
-        <h1 class="epic-quote">"A MAGYAR NÉV MEGINT SZÉP LESZ"</h1>
+    <article class="glass-panel">
+        <h1 style="font-family: 'Orbitron'; font-size: clamp(20px, 6vw, 36px); margin-bottom: 30px;">"A MAGYAR NÉV MEGINT SZÉP LESZ"</h1>
 
-        <div class="video-container">
-            <div class="main-video-wrapper">
-                <iframe id="videoPlayer" src="https://www.youtube.com/embed/fhh1hnU6yus" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="video-nav">
-                <button class="video-btn active" onclick="changeVideo('fhh1hnU6yus', this)">A Stratégia</button>
-                <button class="video-btn" onclick="changeVideo('fsv5WlC1oLE', this)">Új Világ</button>
-                <button class="video-btn" onclick="changeVideo('m0XWP6B5nfU', this)">Csézy</button>
-                <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">Orbán Anita</button>
-                <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">Kapitány István</button>
-            </div>
+        <div class="main-video-wrapper">
+            <iframe id="videoPlayer" src="https://www.youtube.com/embed/fhh1hnU6yus" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="video-nav">
+            <button class="video-btn active" onclick="changeVideo('fhh1hnU6yus', this)">A Stratégia</button>
+            <button class="video-btn" onclick="changeVideo('fsv5WlC1oLE', this)">Új Világ</button>
+            <button class="video-btn" onclick="changeVideo('m0XWP6B5nfU', this)">Csézy</button>
+            <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">Orbán Anita</button>
+            <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">Kapitány István</button>
         </div>
 
         <div style="margin-top: 60px;">
-            <span class="date-highlight">2026.04.12</span>
-            <p style="font-family: 'Orbitron'; font-size: 16px; letter-spacing: 5px; color: var(--warning-red); font-weight: 900;">VISSZAVESSZÜK A HAZÁNKAT</p>
-        </div>
-
-        <div class="share-container" style="margin-top: 30px;">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://rendszer-valtas.hu" target="_blank" class="share-btn">FACEBOOK MEGOSZTÁS</a>
-            <a href="fb-messenger://share/?link=https://rendszer-valtas.hu" class="share-btn">KÜLDÉS</a>
+            <span class="date-glitch">2026.04.12</span>
+            <p style="color: var(--warning-red); font-weight: 900; letter-spacing: 3px;">VISSZAVESSZÜK A HAZÁNKAT</p>
         </div>
     </article>
 
@@ -203,22 +166,33 @@
     </footer>
 
     <script>
+        // A dátum beállítása: 2026. április 12. 
+        // JavaScriptben a hónapok 0-tól indulnak (0=Január, 3=Április)
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
+
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) { document.querySelector(".status-label").innerText = "A RENDSZERVÁLTÁS ELKEZDŐDÖTT!"; return; }
-            
+
+            if (distance < 0) {
+                document.getElementById("countdown-container").innerHTML = "<div class='value' style='width:100%'>ELKEZDŐDÖTT!</div>";
+                return;
+            }
+
+            // Számítások
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            document.getElementById("days").innerText = String(d).padStart(2, '0');
-            document.getElementById("hours").innerText = String(h).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(m).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+
+            // Megjelenítés padStart-tal a fix 2 számjegyért
+            document.getElementById("days").textContent = d;
+            document.getElementById("hours").textContent = String(h).padStart(2, '0');
+            document.getElementById("minutes").textContent = String(m).padStart(2, '0');
+            document.getElementById("seconds").textContent = String(s).padStart(2, '0');
         }
+
+        // Azonnali indítás és másodpercenkénti frissítés
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
