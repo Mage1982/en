@@ -5,22 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>Rendszerváltás 2026 | Visszavesszük a hazánkat!</title>
-    <meta name="description" content="2026. április 12. - A nap, amikor visszavesszük a sorsunkat. Csatlakozz a rendszerváltáshoz!">
-    <meta property="og:title" content="Rendszerváltás 2026 - rendszer-valtas.hu">
-    <meta property="og:description" content="A magyar név megint szép lesz! Nézd meg a programot és csatlakozz hozzánk.">
-    <meta property="og:image" content="parlament.png">
-    <meta property="og:url" content="https://rendszer-valtas.hu">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png"> 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-overlay: linear-gradient(180deg, rgba(2, 20, 50, 0.7) 0%, rgba(1, 3, 10, 0.9) 100%); 
+            --bg-overlay: linear-gradient(180deg, rgba(2, 10, 25, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%); 
             --digit-color: #00f2ff; 
-            --border-glow: rgba(0, 242, 255, 0.5);
+            --accent-red: #ff003c;
+            --border-glow: rgba(0, 242, 255, 0.4);
             --hungarian-red: #ce1126;
             --hungarian-green: #008751;
             --panel-width: 900px;
@@ -31,128 +23,159 @@
         body {
             margin: 0; padding: 0;
             display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh; color: white; font-family: 'JetBrains Mono', monospace;
             background-color: #01030a;
             background-image: var(--bg-overlay), url('parlament.png');
             background-attachment: fixed;
             background-size: cover;
             background-position: center top;
             overflow-x: hidden;
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .animate { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
+        /* ANIMÁCIÓK */
+        @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* VISSZASZÁMLÁLÓ */
-        .status-header { width: 90%; max-width: var(--panel-width); text-align: center; margin-bottom: 15px; }
+        .animate { opacity: 0; animation: fadeInUp 0.6s ease-out forwards; }
+        .delay-1 { animation-delay: 0.2s; }
+
+        /* EXTRÉM VISSZASZÁMLÁLÓ - MOBIL OPTIMALIZÁLT */
+        .status-header { width: 100%; text-align: center; margin-bottom: 10px; }
         .status-label {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(10px, 3vw, 14px); 
-            letter-spacing: 8px; color: var(--digit-color); 
-            text-transform: uppercase; text-shadow: 0 0 15px var(--digit-color);
+            font-family: 'Orbitron', sans-serif; font-size: 10px;
+            letter-spacing: 5px; color: var(--digit-color); 
+            text-transform: uppercase; animation: pulse 2s infinite;
         }
 
         #countdown {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            width: 90%; max-width: var(--panel-width);
-            background: rgba(0, 242, 255, 0.1);
-            backdrop-filter: blur(10px); border-radius: 20px;
-            border: 2px solid var(--border-glow);
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
-            margin-bottom: 30px;
+            display: flex; /* Kényszerített egy sor */
+            justify-content: space-around;
+            width: 95%; max-width: 800px;
+            background: rgba(0, 5, 15, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            border: 1px solid var(--digit-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2), inset 0 0 15px rgba(0, 242, 255, 0.1);
+            margin-bottom: 25px;
+            padding: 10px 0;
         }
 
-        .segment { padding: clamp(15px, 4vw, 35px) 5px; text-align: center; border-right: 1px solid rgba(0, 242, 255, 0.2); }
+        /* A "szkenner" csík az egység mögött */
+        #countdown::after {
+            content: "";
+            position: absolute; width: 100%; height: 2px;
+            background: rgba(0, 242, 255, 0.5);
+            box-shadow: 0 0 15px var(--digit-color);
+            left: 0; z-index: 1;
+            animation: scanline 4s linear infinite;
+        }
+
+        .segment { 
+            position: relative; z-index: 2;
+            flex: 1; text-align: center; 
+            border-right: 1px solid rgba(0, 242, 255, 0.2); 
+        }
         .segment:last-child { border-right: none; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: clamp(28px, 7vw, 85px); font-weight: 900; text-shadow: 0 0 20px var(--digit-color); line-height: 1; }
-        .label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--digit-color); margin-top: 5px; letter-spacing: 2px; }
+
+        .value { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: clamp(22px, 6vw, 60px); 
+            font-weight: 900; 
+            color: #fff;
+            text-shadow: 0 0 10px var(--digit-color);
+            display: block;
+        }
+        .label { 
+            font-size: clamp(8px, 2vw, 12px); 
+            color: var(--digit-color); 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
 
         /* GLASS PANEL */
         .glass-panel {
-            max-width: var(--panel-width); width: 90%;
-            padding: clamp(25px, 5vw, 60px);
-            background: rgba(1, 3, 10, 0.6);
-            backdrop-filter: blur(20px); border-radius: 25px;
-            border-left: 4px solid var(--hungarian-red);
-            border-right: 4px solid var(--hungarian-green);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            margin-bottom: 40px; text-align: center;
+            max-width: var(--panel-width); width: 92%;
+            padding: 30px 15px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(20px); border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 4px solid var(--hungarian-green);
+            border-top: 4px solid var(--hungarian-red);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            text-align: center;
         }
 
-        .epic-quote { font-family: 'Orbitron', sans-serif; font-size: clamp(20px, 4vw, 36px); line-height: 1.4; margin-bottom: 30px; }
+        .epic-quote { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: clamp(16px, 4vw, 30px); 
+            line-height: 1.3; margin-bottom: 25px;
+            color: #eee;
+        }
 
         /* VIDEÓK */
-        .main-video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 1px solid var(--border-glow); }
+        .main-video-wrapper { 
+            position: relative; padding-bottom: 56.25%; height: 0; 
+            border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
         .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
-        .video-nav { 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 10px; 
-            margin-top: 20px; 
-        }
+        .video-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 15px; }
         .video-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; padding: 12px 15px; font-family: 'Orbitron', sans-serif; font-size: 10px;
-            cursor: pointer; border-radius: 6px; transition: 0.3s; text-transform: uppercase;
-            flex: 1 1 calc(33% - 10px); min-width: 120px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa; padding: 10px 12px; font-family: 'Orbitron', sans-serif; font-size: 9px;
+            cursor: pointer; border-radius: 4px; transition: 0.3s;
+            flex: 1 1 calc(30% - 10px); min-width: 100px;
         }
-        .video-btn.active { background: var(--digit-color); color: #000; border-color: var(--digit-color); box-shadow: 0 0 15px var(--digit-color); }
-
-        /* KIEMELT SZEKCIÓ */
-        .special-video-section {
-            margin: 40px 0; padding: 20px;
-            background: rgba(0, 242, 255, 0.05); border: 1px solid var(--border-glow);
-            border-radius: 15px;
+        .video-btn.active { 
+            background: var(--digit-color); color: #000; font-weight: bold;
+            box-shadow: 0 0 15px var(--digit-color); border-color: transparent;
         }
-        .cta-label { background: var(--digit-color); color: #000; font-family: 'Orbitron', sans-serif; padding: 8px 15px; font-size: 11px; font-weight: 900; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
-
-        /* OSZD MEG */
-        .share-container { margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .share-btn {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            color: white; padding: 10px 20px; border-radius: 50px; font-family: 'Orbitron', sans-serif;
-            font-size: 10px; cursor: pointer; transition: 0.3s; text-decoration: none;
-        }
-        .share-btn:hover { background: white; color: black; }
 
         .date-highlight {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(35px, 8vw, 80px); font-weight: 900;
-            background: linear-gradient(to right, #ce1126, #ffffff, #008751);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 10vw, 70px); font-weight: 900;
+            color: white; text-shadow: 2px 2px 0 var(--hungarian-red), -2px -2px 0 var(--hungarian-green);
             margin: 20px 0; display: block;
         }
 
-        footer { padding: 40px; font-size: 10px; opacity: 0.5; letter-spacing: 2px; text-align: center; }
+        .share-btn {
+            background: transparent; border: 1px solid var(--digit-color);
+            color: var(--digit-color); padding: 8px 15px; border-radius: 4px; 
+            font-family: 'Orbitron', sans-serif; font-size: 9px; text-decoration: none;
+            transition: 0.3s; margin: 5px; display: inline-block;
+        }
+        .share-btn:hover { background: var(--digit-color); color: black; }
 
-        @media (max-width: 600px) {
-            #countdown { grid-template-columns: repeat(2, 1fr); }
-            .segment:nth-child(2) { border-right: none; }
-            .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); }
-            .video-btn { flex: 1 1 calc(50% - 10px); }
+        footer { padding: 30px; font-size: 9px; opacity: 0.4; text-align: center; letter-spacing: 3px; }
+
+        @media (max-width: 480px) {
+            .glass-panel { padding: 20px 10px; }
+            .video-btn { flex: 1 1 45%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="status-header animate delay-1">
-        <div class="status-label">A visszaszámlálás megállíthatatlan</div>
+    <div class="status-header animate">
+        <div class="status-label">Rendszer Frissítés Folyamatban...</div>
     </div>
 
-    <div id="countdown" class="animate delay-1">
+    <div id="countdown" class="animate">
         <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
         <div class="segment"><span class="value" id="hours">00</span><span class="label">Óra</span></div>
         <div class="segment"><span class="value" id="minutes">00</span><span class="label">Perc</span></div>
         <div class="segment"><span class="value" id="seconds">00</span><span class="label">Mp</span></div>
     </div>
 
-    <article class="glass-panel animate delay-2">
+    <article class="glass-panel animate delay-1">
         <h1 class="epic-quote">
-            "A magyar név megint szép lesz, <br> 
-            Méltó régi nagy hiréhez"
+            "A MAGYAR NÉV MEGINT SZÉP LESZ"
         </h1>
 
         <div class="video-container">
@@ -168,28 +191,20 @@
             </div>
         </div>
 
-        <div class="special-video-section">
-            <div class="cta-label">KIEMELT: RENDVÁLTÁS, DE HOGYAN?</div>
-            <div class="main-video-wrapper">
-                <iframe src="https://www.youtube.com/embed/ApQLK2-mB0w" frameborder="0" allowfullscreen></iframe>
-            </div>
+        <div style="margin-top: 40px;">
+            <span class="date-highlight">2026.04.12</span>
+            <p style="font-family: 'Orbitron'; font-size: 12px; letter-spacing: 4px; color: var(--digit-color); margin-top: -10px;">VISSZAVESSZÜK A HAZÁNKAT</p>
         </div>
 
-        <div style="margin-top: 50px;">
-            <span class="date-highlight">2026. ÁPRILIS 12.</span>
-            <p style="font-family: 'Orbitron'; letter-spacing: 5px; color: var(--digit-color);">VISSZAVESSZÜK A HAZÁNKAT</p>
-        </div>
-
-        <div class="share-container">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://rendszer-valtas.hu" target="_blank" class="share-btn">FACEBOOK</a>
-            <a href="https://twitter.com/intent/tweet?text=Csatlakozz+a+rendszerváltáshoz!&url=https://rendszer-valtas.hu" target="_blank" class="share-btn">X / TWITTER</a>
+        <div class="share-container" style="margin-top: 20px;">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://rendszer-valtas.hu" target="_blank" class="share-btn">FB_SHARE</a>
             <a href="fb-messenger://share/?link=https://rendszer-valtas.hu" class="share-btn">MESSENGER</a>
         </div>
     </article>
 
-    <footer class="animate delay-2">
-        © 2026 RENDSZER-VALTAS.HU<br>
-        AZ IGAZSÁG SZABADDÁ TESZ.
+    <footer>
+        [ SENDSZER-VALTAS.HU // 2026 ] <br>
+        ACCESS GRANTED . . .
     </footer>
 
     <script>
@@ -197,11 +212,13 @@
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) { document.querySelector(".status-label").innerText = "ELKEZDŐDÖTT!"; return; }
+            if (distance < 0) { document.querySelector(".status-label").innerText = "RENDSZERVÁLTÁS ELKEZDŐDÖTT!"; return; }
+            
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
+            
             document.getElementById("days").innerText = String(d).padStart(2, '0');
             document.getElementById("hours").innerText = String(h).padStart(2, '0');
             document.getElementById("minutes").innerText = String(m).padStart(2, '0');
