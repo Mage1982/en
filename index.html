@@ -1,143 +1,179 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A rendszerváltás még... | rendszer-valtas.hu</title>
     
-    <title>Rendszerváltás 2026 | Visszavesszük a hazánkat!</title>
-    <meta name="description" content="2026. április 12. - A nap, amikor visszavesszük a sorsunkat. Csatlakozz a rendszerváltáshoz!">
-    <meta property="og:title" content="Rendszerváltás 2026 - rendszer-valtas.hu">
-    <meta property="og:description" content="A magyar név megint szép lesz! Nézd meg a programot és csatlakozz hozzánk.">
-    <meta property="og:image" content="parlament.png">
-    <meta property="og:url" content="https://rendszer-valtas.hu">
-    <meta name="twitter:card" content="summary_large_image">
-
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png"> 
+    <link rel="apple-touch-icon" href="favicon.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Kreatív áttetszőség: a parlament láthatóbb, de a szöveg olvasható marad */
-            --bg-overlay: linear-gradient(180deg, rgba(2, 20, 50, 0.7) 0%, rgba(1, 3, 10, 0.9) 100%); 
+            --bg-overlay: rgba(2, 6, 20, 0.92); 
             --digit-color: #00f2ff; 
-            --border-glow: rgba(0, 242, 255, 0.5);
+            --border-glow: rgba(0, 242, 255, 0.4);
             --hungarian-red: #ce1126;
             --hungarian-green: #008751;
             --panel-width: 900px;
         }
 
-        * { box-sizing: border-box; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
-        
+        /* ALAP ÉS ANIMÁCIÓK */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             margin: 0; padding: 0;
             display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #01030a;
-            /* PARLAMENT HÁTTÉR */
-            background-image: var(--bg-overlay), url('parlament.png');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center top;
-            overflow-x: hidden;
-            padding: 20px 0;
+            min-height: 100vh; color: white; font-family: 'Segoe UI', sans-serif;
+            background-color: #01030a; overflow-x: hidden;
         }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse-glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        .animate { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .animate { opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
 
-        /* VISSZASZÁMLÁLÓ */
-        .status-header { width: 90%; max-width: var(--panel-width); text-align: center; margin-bottom: 15px; }
-        .status-label {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(10px, 3vw, 14px); 
-            letter-spacing: 8px; color: var(--digit-color); 
-            text-transform: uppercase; text-shadow: 0 0 15px var(--digit-color);
+        /* VIDEÓ HÁTTÉR */
+        .video-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none; overflow: hidden;
+        }
+        .video-background iframe {
+            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            border: none;
+        }
+        .video-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-overlay); z-index: -1;
         }
 
+        /* HERO IMAGE */
+        .hero-img {
+            width: 140px; height: auto; margin-top: 20px;
+            border-radius: 50%; border: 2px solid var(--border-glow);
+            filter: drop-shadow(0 0 15px var(--border-glow));
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .status-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(16px, 4.5vw, 28px);
+            text-transform: uppercase; letter-spacing: 3px;
+            margin: 15px 0; text-align: center;
+            text-shadow: 0 0 10px var(--digit-color);
+            padding: 0 10px;
+        }
+
+        /* VISSZASZÁMLÁLÓ - MOBILRA OPTIMALIZÁLVA */
         #countdown {
             display: grid; grid-template-columns: repeat(4, 1fr);
-            width: 90%; max-width: var(--panel-width);
-            background: rgba(0, 242, 255, 0.1);
-            backdrop-filter: blur(10px); border-radius: 20px;
-            border: 2px solid var(--border-glow);
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
+            width: 95%; max-width: var(--panel-width);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px); border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 30px;
         }
-
-        .segment { padding: clamp(15px, 4vw, 35px) 5px; text-align: center; border-right: 1px solid rgba(0, 242, 255, 0.2); }
+        .segment { padding: 15px 5px; text-align: center; border-right: 1px solid rgba(255, 255, 255, 0.05); }
         .segment:last-child { border-right: none; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: clamp(28px, 7vw, 85px); font-weight: 900; text-shadow: 0 0 20px var(--digit-color); line-height: 1; }
-        .label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--digit-color); margin-top: 5px; letter-spacing: 2px; }
+        .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(24px, 6vw, 60px);
+            font-weight: 900; color: var(--digit-color);
+            display: block;
+        }
+        .label { font-family: 'Orbitron', sans-serif; font-size: 10px; text-transform: uppercase; color: #aaa; }
 
         /* GLASS PANEL */
         .glass-panel {
-            max-width: var(--panel-width); width: 90%;
-            padding: clamp(25px, 5vw, 60px);
-            background: rgba(1, 3, 10, 0.6);
-            backdrop-filter: blur(20px); border-radius: 25px;
-            border-left: 4px solid var(--hungarian-red);
-            border-right: 4px solid var(--hungarian-green);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            margin-bottom: 40px; text-align: center;
+            max-width: var(--panel-width); width: 95%;
+            padding: clamp(20px, 5vw, 40px);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px); border-radius: 20px;
+            border-left: 5px solid var(--hungarian-red);
+            border-right: 5px solid var(--hungarian-green);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
         }
 
-        .epic-quote { font-family: 'Orbitron', sans-serif; font-size: clamp(20px, 4vw, 36px); line-height: 1.4; margin-bottom: 30px; }
-
-        /* VIDEÓK */
-        .main-video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 1px solid var(--border-glow); }
-        .main-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        h1, h2 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; text-align: center; margin: 10px 0; }
+        h1 { font-size: clamp(20px, 5.5vw, 36px); line-height: 1.2; }
+        h2 { font-size: clamp(14px, 3.5vw, 20px); color: var(--digit-color); opacity: 0.9; }
         
-        .video-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
-        .video-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; padding: 12px 5px; font-family: 'Orbitron', sans-serif; font-size: 10px;
-            cursor: pointer; border-radius: 6px; transition: 0.3s; text-transform: uppercase;
-        }
-        .video-btn.active { background: var(--digit-color); color: #000; border-color: var(--digit-color); box-shadow: 0 0 15px var(--digit-color); }
-
-        /* KIEMELT SZEKCIÓ */
-        .special-video-section {
-            margin: 40px 0; padding: 20px;
-            background: rgba(0, 242, 255, 0.05); border: 1px solid var(--border-glow);
-            border-radius: 15px;
-        }
-        .cta-label { background: var(--digit-color); color: #000; font-family: 'Orbitron', sans-serif; padding: 8px 15px; font-size: 11px; font-weight: 900; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
-
-        /* OSZD MEG FUNKCIÓ */
-        .share-container { margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .share-btn {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            color: white; padding: 10px 20px; border-radius: 50px; font-family: 'Orbitron', sans-serif;
-            font-size: 10px; cursor: pointer; transition: 0.3s; text-decoration: none;
-        }
-        .share-btn:hover { background: white; color: black; }
-
-        .date-highlight {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(35px, 8vw, 80px); font-weight: 900;
+        .tricolor-text {
             background: linear-gradient(to right, #ce1126, #ffffff, #008751);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin: 20px 0; display: block;
         }
 
-        footer { padding: 40px; font-size: 10px; opacity: 0.5; letter-spacing: 2px; text-align: center; }
-
-        @media (max-width: 600px) {
-            #countdown { grid-template-columns: repeat(2, 1fr); }
-            .segment:nth-child(2) { border-right: none; }
-            .segment { border-bottom: 1px solid rgba(0, 242, 255, 0.1); }
+        /* VIDEÓ LEJÁTSZÓ ÉS NAVIGÁCIÓ */
+        .video-section { margin: 30px 0; width: 100%; }
+        .video-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0;
+            overflow: hidden; border-radius: 12px;
+            border: 1px solid var(--border-glow);
+            background: #000;
         }
-        @media (min-width: 601px) { .video-nav { display: flex; justify-content: center; } .video-btn { padding: 12px 25px; } }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        .video-nav {
+            display: flex; justify-content: center; gap: 8px;
+            flex-wrap: wrap; margin-top: 15px;
+        }
+        .video-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            color: #eee; padding: 10px 14px;
+            font-family: 'Orbitron', sans-serif; font-size: 11px;
+            cursor: pointer; border-radius: 6px; transition: 0.3s;
+            text-transform: uppercase; flex-grow: 1; max-width: 180px;
+        }
+        .video-btn:active, .video-btn.active {
+            background: var(--digit-color); color: #000;
+            box-shadow: 0 0 15px var(--digit-color);
+            border-color: var(--digit-color);
+        }
+
+        /* TARTALOM */
+        p { line-height: 1.6; font-size: 16px; color: #ddd; }
+        .argument-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 30px; }
+        @media (min-width: 768px) { .argument-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .arg-card {
+            background: rgba(255,255,255,0.04); padding: 20px; border-radius: 12px;
+            border-bottom: 2px solid var(--digit-color);
+        }
+        .arg-card h4 { font-family: 'Orbitron', sans-serif; color: var(--digit-color); margin: 0 0 10px 0; font-size: 14px; }
+        
+        .call-to-action {
+            background: linear-gradient(90deg, rgba(206,17,38,0.1), rgba(0,135,81,0.1));
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px; text-align: center; border-radius: 12px; margin: 30px 0;
+        }
+        .cta-quote { font-family: 'Orbitron', sans-serif; font-style: italic; font-size: 16px; color: #fff; }
+
+        footer { padding: 30px; font-size: 10px; opacity: 0.5; letter-spacing: 2px; text-align: center; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <div class="status-header animate delay-1">
-        <div class="status-label">A visszaszámlálás megállíthatatlan</div>
+    <div class="video-background">
+        <iframe src="https://www.youtube.com/embed/SJhZdcrob_I?autoplay=1&mute=1&loop=1&playlist=SJhZdcrob_I&controls=0&disablekb=1&modestbranding=1" allow="autoplay; encrypted-media"></iframe>
     </div>
+    <div class="video-overlay"></div>
+
+    <img src="og-image.png" alt="Manifestum 2026" class="hero-img animate">
+    
+    <div class="status-text animate delay-1">A rendszerváltás még...</div>
 
     <div id="countdown" class="animate delay-1">
         <div class="segment"><span class="value" id="days">00</span><span class="label">Nap</span></div>
@@ -147,57 +183,59 @@
     </div>
 
     <article class="glass-panel animate delay-2">
-        <h1 class="epic-quote">
-            "A magyar név megint szép lesz, <br> 
-            Méltó régi nagy hiréhez"
-        </h1>
+        <h1 class="tricolor-text">KIÁLTVÁNY A NORMÁLIS MAGYARORSZÁGÉRT</h1>
+        <h2>A jövőnk a tét – 2026</h2>
 
-        <div class="video-container">
-            <div class="main-video-wrapper">
-                <iframe id="videoPlayer" src="https://www.youtube.com/embed/fhh1hnU6yus" frameborder="0" allowfullscreen></iframe>
+        <div class="video-section">
+            <div class="video-wrapper">
+                <iframe id="videoPlayer" src="https://www.youtube.com/embed/m0XWP6B5nfU" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="video-nav">
-                <button class="video-btn active" onclick="changeVideo('fhh1hnU6yus', this)">A Stratégia</button>
-                <button class="video-btn" onclick="changeVideo('m0XWP6B5nfU', this)">Csézy</button>
-                <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">Orbán Anita</button>
-                <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">Kapitány István</button>
+                <button class="video-btn active" onclick="changeVideo('m0XWP6B5nfU', this)">1. Csézy</button>
+                <button class="video-btn" onclick="changeVideo('H7oLDNKE9vM', this)">2. Orbán Anita</button>
+                <button class="video-btn" onclick="changeVideo('cHXHJYQDiq0', this)">3. Kapitány István</button>
+                <button class="video-btn" onclick="changeVideo('fsv5WlC1oLE', this)">4. Fókuszcsoport</button>
             </div>
         </div>
 
-        <div class="special-video-section">
-            <div class="cta-label">KIEMELT: RENDVÁLTÁS, DE HOGYAN?</div>
-            <div class="main-video-wrapper">
-                <iframe src="https://www.youtube.com/embed/ApQLK2-mB0w" frameborder="0" allowfullscreen></iframe>
+        <p>A történelem órája könyörtelenül üt. Mi vagyunk a <strong>normális többség</strong>: azok a milliók, akik tisztességgel dolgoznak, de látják a jog tiprását és a gyűlölet árát. Eljött az idő!</p>
+
+        <div class="argument-grid animate delay-3">
+            <div class="arg-card">
+                <h4>Jogállami Rend</h4>
+                <p>A törvény nem lehet furkósbot! Követeljük a független igazságszolgáltatást.</p>
+            </div>
+            <div class="arg-card">
+                <h4>Kiszámíthatóság</h4>
+                <p>Véget vetünk az éjszakai rendeleti kormányzásnak. Stabilitást akarunk!</p>
             </div>
         </div>
 
-        <div style="margin-top: 50px;">
-            <span class="date-highlight">2026. ÁPRILIS 12.</span>
-            <p style="font-family: 'Orbitron'; letter-spacing: 5px; color: var(--digit-color);">VISSZAVESSZÜK A HAZÁNKAT</p>
+        <div class="call-to-action animate delay-3">
+            <span class="cta-quote">"Mikor a jog tiprott, a kötelesség lázad!"</span>
         </div>
 
-        <div class="share-container">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://rendszer-valtas.hu" target="_blank" class="share-btn">FACEBOOK</a>
-            <a href="https://twitter.com/intent/tweet?text=Csatlakozz+a+rendszerváltáshoz!&url=https://rendszer-valtas.hu" target="_blank" class="share-btn">X / TWITTER</a>
-            <a href="fb-messenger://share/?link=https://rendszer-valtas.hu" class="share-btn">MESSENGER</a>
-        </div>
+        <h1 style="margin-top: 40px; font-size: clamp(28px, 8vw, 60px);">2026. ÁPRILIS 12.</h1>
+        <p style="text-align: center; letter-spacing: 3px; font-family: 'Orbitron'; color: var(--digit-color); font-weight: bold; font-size: 14px;">VISSZAVESSZÜK A HAZÁNKAT!</p>
     </article>
 
-    <footer class="animate delay-2">
-        © 2026 RENDSZER-VALTAS.HU<br>
-        LEGYÜNK ÚJRA SZABADOK!
-    </footer>
+    <footer class="animate delay-3">© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
+        // Visszaszámláló
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) { document.querySelector(".status-label").innerText = "ELKEZDŐDÖTT!"; return; }
+            if (distance < 0) { 
+                document.querySelector(".status-text").innerText = "A VÁLTOZÁS ELINDULT!"; 
+                return; 
+            }
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((distance % (1000 * 60)) / 1000);
+            
             document.getElementById("days").innerText = String(d).padStart(2, '0');
             document.getElementById("hours").innerText = String(h).padStart(2, '0');
             document.getElementById("minutes").innerText = String(m).padStart(2, '0');
@@ -206,12 +244,17 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // Videó váltó
         function changeVideo(videoId, btn) {
-            document.getElementById('videoPlayer').src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+            const player = document.getElementById('videoPlayer');
+            player.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&modestbranding=1&rel=0";
+            
             document.querySelectorAll('.video-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            
+            // Finom görgetés a videóhoz mobilnál, ha a gombok lentebb vannak
+            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     </script>
 </body>
 </html>
-
