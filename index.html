@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RENDSZERVÁLTÁS 2026</title>
     
+    <link rel="icon" type="image/png" href="favicon.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
@@ -15,6 +17,7 @@
             --glitch-blue: rgba(0, 255, 255, 0.8);
             --hungarian-red: #ce1126;
             --hungarian-green: #008751;
+            --nav-bg: rgba(1, 3, 10, 0.95);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,7 +41,7 @@
         .video-background iframe {
             width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border: none; opacity: 0.5;
+            border: none; opacity: 0.4;
         }
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -46,27 +49,93 @@
             z-index: -1;
         }
 
-        /* GLITCH ANIMATION */
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); opacity: 0.8; }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); opacity: 0.9; }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+        /* NAVIGATION MENU */
+        header {
+            width: 100%;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(1, 3, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            display: flex;
+            justify-content: center;
         }
 
-        .glitch-text {
+        .menu-container {
+            width: 95%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .dropdown {
             position: relative;
             display: inline-block;
-            animation: glitch 1.5s linear infinite;
-            text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-blue);
         }
 
-        /* GIANT COUNTDOWN */
+        .dropbtn {
+            background: none;
+            border: 1px solid var(--digit-color);
+            color: var(--digit-color);
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .dropbtn:hover {
+            background: var(--digit-color);
+            color: black;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--nav-bg);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
+            z-index: 1;
+            border: 1px solid var(--digit-color);
+            margin-top: 5px;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .dropdown-content button:hover {
+            background: rgba(0, 242, 255, 0.2);
+            color: var(--digit-color);
+        }
+
+        .dropdown:hover .dropdown-content { display: block; }
+
+        /* GIANT DIGITAL COUNTDOWN */
         .hero-section {
             text-align: center;
-            margin-top: 4vh;
+            margin-top: 2vh;
             width: 100%;
             padding: 20px;
         }
@@ -76,35 +145,41 @@
             letter-spacing: 8px;
             color: var(--digit-color);
             text-transform: uppercase;
-            margin-bottom: 10px;
         }
 
         #giant-countdown {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(10px, 3vw, 50px);
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .count-item { display: flex; flex-direction: column; align-items: center; }
-
-        .count-value {
-            font-size: clamp(55px, 14vw, 170px);
             font-weight: 900;
-            line-height: 1;
             color: #fff;
-            text-shadow: 0 0 40px var(--digit-color);
+            text-shadow: 0 0 30px var(--digit-color);
+            margin: 20px 0;
+            font-size: clamp(40px, 12vw, 150px);
+            line-height: 1;
         }
 
-        .count-label {
-            font-size: clamp(9px, 2vw, 16px);
-            text-transform: uppercase;
-            letter-spacing: 4px;
+        .separator {
+            margin: 0 10px;
+            padding-bottom: 20px; /* Optikai igazítás a számokhoz */
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.3; }
+        }
+
+        .labels-container {
+            display: flex;
+            justify-content: center;
+            gap: clamp(20px, 8vw, 100px);
+            margin-top: -10px;
+            margin-bottom: 40px;
+            opacity: 0.6;
             color: var(--digit-color);
-            margin-top: 5px;
-            opacity: 0.7;
+            letter-spacing: 4px;
+            font-size: clamp(8px, 1.5vw, 14px);
+            text-transform: uppercase;
         }
 
         /* MAIN CONTAINER */
@@ -115,7 +190,7 @@
             backdrop-filter: blur(25px);
             border-bottom: 4px solid var(--hungarian-green);
             border-top: 4px solid var(--hungarian-red);
-            padding: clamp(20px, 5vw, 50px);
+            padding: clamp(15px, 4vw, 50px);
             margin-bottom: 80px;
             box-shadow: 0 0 50px rgba(0,0,0,1);
         }
@@ -124,76 +199,47 @@
             width: 100%;
             aspect-ratio: 16/9;
             border: 1px solid rgba(0, 242, 255, 0.4);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
-            margin-bottom: 25px;
             background: #000;
-        }
-
-        .group-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--digit-color);
-            margin: 20px 0 10px;
-            opacity: 0.8;
-            border-left: 3px solid var(--digit-color);
-            padding-left: 10px;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .nav-btn {
-            flex: 1;
-            min-width: 140px;
-            padding: 12px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--digit-color);
-            color: black;
-            box-shadow: 0 0 15px var(--digit-color);
-            border-color: var(--digit-color);
         }
 
         /* GLASS QUOTE */
         .glass-box {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(30px);
-            padding: clamp(30px, 6vw, 50px);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
             margin: 40px 0;
-            position: relative;
         }
 
         .quote {
-            font-size: clamp(16px, 4vw, 28px);
+            font-size: clamp(14px, 3.5vw, 24px);
             font-weight: 700;
             line-height: 1.6;
             letter-spacing: 2px;
-            color: #fff;
         }
 
-        footer {
-            padding: 40px;
-            opacity: 0.3;
-            font-size: 9px;
-            letter-spacing: 4px;
-            text-align: center;
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
         }
+
+        .glitch-text {
+            animation: glitch 2s linear infinite;
+            text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-blue);
+        }
+
+        /* MOBILE MENU ADAPTATION */
+        @media (max-width: 600px) {
+            .nav-links { width: 100%; justify-content: space-around; }
+            .dropbtn { padding: 10px 10px; font-size: 10px; }
+            #giant-countdown { font-size: clamp(35px, 15vw, 70px); }
+            .separator { margin: 0 2px; }
+        }
+
+        footer { padding: 40px; opacity: 0.3; font-size: 9px; letter-spacing: 4px; text-align: center; }
     </style>
 </head>
 <body>
@@ -203,45 +249,54 @@
     </div>
     <div class="video-overlay"></div>
 
+    <header>
+        <div class="menu-container">
+            <div class="nav-links">
+                <div class="dropdown">
+                    <button class="dropbtn">Tisza Párt ▼</button>
+                    <div class="dropdown-content">
+                        <button onclick="changeVideo('7IC-7l9JOcQ')">ÉLŐ: Rendszerváltás</button>
+                        <button onclick="changeVideo('EpebxMhRi7g')">A program</button>
+                        <button onclick="changeVideo('m0XWP6B5nfU')">Csézy</button>
+                        <button onclick="changeVideo('H7oLDNKE9vM')">Orbán Anita</button>
+                        <button onclick="changeVideo('cHXHJYQDiq0')">Kapitány István</button>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Elemzők ▼</button>
+                    <div class="dropdown-content">
+                        <button onclick="changeVideo('ApQLK2-mB0w')">Juhi</button>
+                        <button onclick="changeVideo('fsv5WlC1oLE')">Fókuszcsoport</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <div class="hero-section">
-        <div class="status-header glitch-text">A rendszerváltás még...</div>
+        <div class="status-header glitch-text">Még ennyi idő a rendszerváltásig</div>
         
         <div id="giant-countdown">
-            <div class="count-item">
-                <span class="count-value" id="days">000</span>
-                <span class="count-label">Nap</span>
-            </div>
-            <div class="count-item">
-                <span class="count-value" id="hours">00</span>
-                <span class="count-label">Óra</span>
-            </div>
-            <div class="count-item">
-                <span class="count-value" id="minutes">00</span>
-                <span class="count-label">Perc</span>
-            </div>
-            <div class="count-item">
-                <span class="count-value" id="seconds">00</span>
-                <span class="count-label">Mp</span>
-            </div>
+            <span id="days">000</span>
+            <span class="separator">:</span>
+            <span id="hours">00</span>
+            <span class="separator">:</span>
+            <span id="minutes">00</span>
+            <span class="separator">:</span>
+            <span id="seconds">00</span>
+        </div>
+        
+        <div class="labels-container">
+            <span>Nap</span>
+            <span>Óra</span>
+            <span>Perc</span>
+            <span>Mp</span>
         </div>
     </div>
 
     <div class="main-container">
-        <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/EpebxMhRi7g" frameborder="0" allowfullscreen></iframe>
-
-        <div class="group-label">Tisza Párt</div>
-        <div class="btn-group">
-            <button class="nav-btn active" onclick="changeVideo('EpebxMhRi7g', this)">A program</button>
-            <button class="nav-btn" onclick="changeVideo('m0XWP6B5nfU', this)">Csézy</button>
-            <button class="nav-btn" onclick="changeVideo('H7oLDNKE9vM', this)">Orbán Anita</button>
-            <button class="nav-btn" onclick="changeVideo('cHXHJYQDiq0', this)">Kapitány István</button>
-        </div>
-
-        <div class="group-label">Független Elemzők</div>
-        <div class="btn-group">
-            <button class="nav-btn" onclick="changeVideo('ApQLK2-mB0w', this)">Juhi</button>
-            <button class="nav-btn" onclick="changeVideo('fsv5WlC1oLE', this)">Fókuszcsoport</button>
-        </div>
+        <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ" frameborder="0" allowfullscreen></iframe>
 
         <div class="glass-box">
             <div class="quote glitch-text">
@@ -250,7 +305,7 @@
             </div>
         </div>
 
-        <h2 style="text-align: center; letter-spacing: 12px; font-size: clamp(20px, 5vw, 40px); margin-top: 50px; opacity: 0.9;">2026. 04. 12.</h2>
+        <h2 style="text-align: center; letter-spacing: 12px; font-size: clamp(20px, 5vw, 40px); margin-top: 50px; opacity: 0.9; color: var(--digit-color);">2026. 04. 12.</h2>
     </div>
 
     <footer>© 2026 RENDSZER-VALTAS.HU</footer>
@@ -264,6 +319,7 @@
 
             if (distance < 0) {
                 document.querySelector(".status-header").innerText = "A VÁLTOZÁS ELINDULT!";
+                document.getElementById("giant-countdown").innerHTML = "00:00:00:00";
                 return;
             }
 
@@ -281,12 +337,11 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        function changeVideo(videoId, btn) {
+        function changeVideo(videoId) {
             document.getElementById('videoPlayer').src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            // Automatikusan felgördít a videóhoz, ha mobilon vagyunk
+            document.getElementById('videoPlayer').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
 </html>
-
