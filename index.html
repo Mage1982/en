@@ -49,7 +49,7 @@
             width: 115vw; height: 115vh;
             transform: translate(-50%, -50%);
             border: none; opacity: 0.55;
-            filter: blur(50px) brightness(0.6) contrast(1.2);
+            filter: blur(55px) brightness(0.5) contrast(1.2);
             pointer-events: none;
         }
 
@@ -99,7 +99,7 @@
 
         .dropdown-menu button:hover { background: rgba(0, 242, 255, 0.2); }
 
-        /* VISSZASZÁMLÁLÓ - ÖSSZEHANGOLVA */
+        /* VISSZASZÁMLÁLÓ */
         .hero-section { text-align: center; margin: 30px 0; z-index: 10; width: 100%; }
 
         .target-date-label {
@@ -115,7 +115,7 @@
 
         .countdown-grid {
             display: flex; justify-content: center; align-items: flex-start;
-            gap: 0; /* A separatorok adják a közt */
+            gap: 0;
         }
 
         .time-unit {
@@ -145,30 +145,28 @@
 
         @keyframes blink { 50% { opacity: 0.1; } }
 
-        /* KONTÉNER */
+        /* MEGNÖVELT KONTÉNER ÉS VIDEÓ */
         .main-container {
-            width: 95%; max-width: 940px;
-            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+            width: 98%; /* Szélesebb konténer */
+            max-width: 1200px; /* Nagyobb maximum szélesség */
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
             border-top: 4px solid var(--hungarian-red);
             border-bottom: 4px solid var(--hungarian-green);
-            padding: 25px; margin-bottom: 60px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            padding: clamp(10px, 3vw, 40px);
+            margin-bottom: 60px;
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
         }
 
         .main-video-wrapper {
-            width: 100%; aspect-ratio: 16/9;
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            margin-bottom: 30px; background: #000;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            background: #000;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
         }
 
-        .main-video { width: 100%; height: 100%; }
-
-        .glass-box {
-            background: rgba(255, 255, 255, 0.02); padding: 40px 20px;
-            text-align: center; border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .quote { font-size: clamp(14px, 3.2vw, 22px); line-height: 1.8; letter-spacing: 2px; }
+        .main-video { width: 100%; height: 100%; border: none; }
 
         .glitch-text {
             text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-blue);
@@ -186,7 +184,8 @@
         @media (max-width: 600px) {
             .nav-container { gap: 8px; }
             .menu-trigger { padding: 8px 12px; font-size: 8px; }
-            .time-unit { min-width: 20vw; }
+            .time-unit { min-width: 21vw; }
+            .main-container { width: 100%; border-left: none; border-right: none; }
         }
     </style>
 </head>
@@ -249,14 +248,7 @@
 
     <div class="main-container">
         <div class="main-video-wrapper">
-            <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
-        </div>
-
-        <div class="glass-box">
-            <div class="quote glitch-text">
-                A MAGYAR NÉV MEGINT SZÉP LESZ<br>
-                MÉLTÓ RÉGI NAGY HIRÉHEZ!
-            </div>
+            <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ?enablejsapi=1" allowfullscreen></iframe>
         </div>
     </div>
 
