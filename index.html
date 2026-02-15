@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --bg-blue-overlay: rgba(2, 10, 30, 0.9);
+            --bg-blue-overlay: rgba(2, 10, 30, 0.85);
             --digit-color: #00f2ff;
             --glitch-red: rgba(255, 0, 128, 0.8);
             --glitch-blue: rgba(0, 255, 255, 0.8);
@@ -39,18 +39,25 @@
             animation: pageReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        .video-background {
+        /* DINAMIKUS HÁTTÉR VIDEÓ */
+        .video-background-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2; pointer-events: none;
+            z-index: -2; pointer-events: none; overflow: hidden;
         }
-        .video-background iframe {
+        
+        #bg-video-iframe {
             width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border: none; opacity: 0.35;
+            border: none; opacity: 0.4;
+            filter: grayscale(30%) contrast(110%);
         }
+
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, var(--bg-blue-overlay) 0%, #01030a 100%);
+            background: linear-gradient(180deg, 
+                rgba(1, 3, 10, 0.7) 0%, 
+                var(--bg-blue-overlay) 50%, 
+                rgba(1, 3, 10, 0.9) 100%);
             z-index: -1;
         }
 
@@ -60,7 +67,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(1, 3, 10, 0.85);
+            background: rgba(1, 3, 10, 0.8);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0, 242, 255, 0.3);
         }
@@ -98,10 +105,11 @@
             display: none;
             position: absolute;
             top: 100%;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--nav-bg);
             border: 1px solid var(--digit-color);
-            min-width: 220px;
+            min-width: 240px;
             margin-top: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
@@ -132,24 +140,24 @@
         /* COUNTDOWN SECTION */
         .hero-section { 
             text-align: center; 
-            margin: 20px 0 40px; 
+            margin: 40px 0; 
             width: 100%; 
         }
 
         .target-date-label {
-            font-size: clamp(18px, 5vw, 36px);
-            letter-spacing: 12px;
+            font-size: clamp(24px, 6vw, 42px);
+            letter-spacing: 15px;
             color: var(--digit-color);
-            margin-bottom: 5px;
-            font-weight: 700;
-            text-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
+            margin-bottom: 10px;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
         }
 
         .status-text {
             font-size: clamp(12px, 2.5vw, 18px);
             letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             opacity: 0.9;
         }
         
@@ -160,7 +168,7 @@
             font-weight: 900;
             color: #fff;
             text-shadow: 0 0 30px var(--digit-color);
-            font-size: clamp(45px, 14vw, 150px);
+            font-size: clamp(45px, 14vw, 160px);
             line-height: 1;
         }
 
@@ -170,41 +178,50 @@
         .labels {
             display: flex;
             justify-content: center;
-            gap: clamp(30px, 10vw, 110px);
+            gap: clamp(35px, 11vw, 120px);
             color: var(--digit-color);
             font-size: clamp(8px, 1.5vw, 12px);
             text-transform: uppercase;
             letter-spacing: 3px;
-            opacity: 0.7;
-            margin-top: 5px;
+            opacity: 0.8;
+            margin-top: 10px;
         }
 
+        /* MAIN CONTENT BOX */
         .main-container {
             width: 95%;
             max-width: 900px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(25px);
             border-top: 4px solid var(--hungarian-red);
             border-bottom: 4px solid var(--hungarian-green);
-            padding: 20px;
-            margin-bottom: 50px;
+            padding: 25px;
+            margin-bottom: 60px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        .main-video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            margin-bottom: 30px;
+            background: #000;
         }
 
         .main-video {
             width: 100%;
-            aspect-ratio: 16/9;
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            margin-bottom: 30px;
+            height: 100%;
         }
 
         .glass-box {
             background: rgba(255, 255, 255, 0.03);
-            padding: 30px;
+            padding: 40px 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .quote { font-size: clamp(14px, 3vw, 22px); line-height: 1.8; letter-spacing: 2px; }
+        .quote { font-size: clamp(14px, 3.2vw, 24px); line-height: 1.8; letter-spacing: 2px; }
 
         .glitch-text {
             text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-blue);
@@ -218,19 +235,20 @@
             3% { transform: translate(0); }
         }
 
-        footer { padding: 30px; opacity: 0.4; font-size: 8px; letter-spacing: 3px; }
+        footer { padding: 40px; opacity: 0.5; font-size: 9px; letter-spacing: 4px; }
 
         @media (max-width: 600px) {
             .nav-container { gap: 8px; }
-            .menu-trigger { padding: 10px 12px; font-size: 9px; }
-            .labels { gap: clamp(20px, 12vw, 60px); }
+            .menu-trigger { padding: 10px 10px; font-size: 8px; letter-spacing: 1px; }
+            .dropdown-menu { min-width: 180px; }
+            .labels { gap: clamp(25px, 13vw, 70px); }
         }
     </style>
 </head>
 <body>
 
-    <div class="video-background">
-        <iframe src="https://www.youtube.com/embed/SJhZdcrob_I?autoplay=1&mute=1&loop=1&playlist=SJhZdcrob_I&controls=0&modestbranding=1" allow="autoplay"></iframe>
+    <div class="video-background-container">
+        <iframe id="bg-video-iframe" src="https://www.youtube.com/embed/7IC-7l9JOcQ?autoplay=1&mute=1&loop=1&playlist=7IC-7l9JOcQ&controls=0&modestbranding=1" allow="autoplay"></iframe>
     </div>
     <div class="video-overlay"></div>
 
@@ -273,7 +291,9 @@
     </div>
 
     <div class="main-container">
-        <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ" frameborder="0" allowfullscreen></iframe>
+        <div class="main-video-wrapper">
+            <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ" frameborder="0" allowfullscreen></iframe>
+        </div>
 
         <div class="glass-box">
             <div class="quote glitch-text">
@@ -286,6 +306,7 @@
     <footer>© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
+        // MENÜ KEZELÉSE
         function toggleMenu(menuId, btn) {
             const menus = document.querySelectorAll('.dropdown-menu');
             const triggers = document.querySelectorAll('.menu-trigger');
@@ -308,11 +329,19 @@
             }
         }
 
+        // VIDEÓ VÁLTÁSA (Fő lejátszó + Háttér szinkron)
         function changeVideo(videoId) {
+            // Fő lejátszó frissítése
             document.getElementById('videoPlayer').src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+            
+            // Háttér videó frissítése (Némítva, végtelenítve)
+            document.getElementById('bg-video-iframe').src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&mute=1&loop=1&playlist=" + videoId + "&controls=0&modestbranding=1";
+            
+            // Gördítés a lejátszóhoz
             window.scrollTo({ top: document.querySelector('header').offsetHeight, behavior: 'smooth' });
         }
 
+        // VISSZASZÁMLÁLÓ LOGIKA
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
 
         function updateCountdown() {
