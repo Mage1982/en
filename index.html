@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --bg-blue-overlay: rgba(1, 5, 15, 0.82);
+            --bg-blue-overlay: rgba(1, 5, 15, 0.85);
             --digit-color: #00f2ff;
             --glitch-red: rgba(255, 0, 128, 0.8);
             --glitch-blue: rgba(0, 255, 255, 0.8);
@@ -19,7 +19,7 @@
         }
 
         @keyframes pageReveal {
-            0% { opacity: 0; transform: scale(1.05); filter: blur(15px); }
+            0% { opacity: 0; transform: scale(1.02); filter: blur(15px); }
             100% { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
@@ -38,163 +38,137 @@
             animation: pageReveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        /* AMBILIGHT HÁTTÉR EFFEKT */
+        /* AMBILIGHT HÁTTÉR */
         .video-bg-wrapper {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2;
-            overflow: hidden;
-            background: #000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; overflow: hidden; background: #000;
         }
 
         #bg-video-iframe {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 120vw; height: 120vh; /* Nagyobb, hogy a széleken is kitöltsön */
+            position: absolute; top: 50%; left: 50%;
+            width: 115vw; height: 115vh;
             transform: translate(-50%, -50%);
-            border: none;
-            opacity: 0.6;
-            filter: blur(60px) brightness(0.7) contrast(1.2); /* Erős blur a hangulathoz */
+            border: none; opacity: 0.55;
+            filter: blur(50px) brightness(0.6) contrast(1.2);
             pointer-events: none;
         }
 
         .video-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at center, transparent 20%, var(--bg-blue-overlay) 100%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 10%, var(--bg-blue-overlay) 100%);
             z-index: -1;
         }
 
         /* NAVIGÁCIÓ */
         header {
-            width: 100%;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
+            width: 100%; padding: 15px 0; position: sticky; top: 0; z-index: 1000;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 242, 255, 0.2);
         }
 
-        .nav-container { display: flex; justify-content: center; gap: 20px; }
-
-        .menu-item { position: relative; }
+        .nav-container { display: flex; justify-content: center; gap: 15px; }
 
         .menu-trigger {
-            background: transparent;
-            border: 1px solid var(--digit-color);
-            color: var(--digit-color);
-            padding: 12px 25px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            transition: all 0.4s ease;
+            background: transparent; border: 1px solid var(--digit-color);
+            color: var(--digit-color); padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif; font-size: 10px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            transition: all 0.3s ease;
         }
 
         .menu-trigger:hover, .menu-trigger.active {
-            background: var(--digit-color);
-            color: #000;
-            box-shadow: 0 0 25px var(--digit-color);
+            background: var(--digit-color); color: #000;
+            box-shadow: 0 0 20px var(--digit-color);
         }
 
         .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(1, 10, 25, 0.95);
-            border: 1px solid var(--digit-color);
-            min-width: 260px;
-            margin-top: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            display: none; position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%); background: rgba(1, 10, 25, 0.98);
+            border: 1px solid var(--digit-color); min-width: 240px;
+            margin-top: 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.9);
         }
 
-        .dropdown-menu.show { display: block; animation: pageReveal 0.4s ease-out; }
+        .dropdown-menu.show { display: block; animation: pageReveal 0.3s ease-out; }
 
         .dropdown-menu button {
-            width: 100%;
-            padding: 18px;
-            background: none; border: none;
-            color: #fff; text-align: left;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 10px; text-transform: uppercase;
-            cursor: pointer;
+            width: 100%; padding: 15px; background: none; border: none;
+            color: #fff; text-align: left; font-family: 'Orbitron', sans-serif;
+            font-size: 10px; text-transform: uppercase; cursor: pointer;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .dropdown-menu button:hover {
-            background: rgba(0, 242, 255, 0.2);
-            padding-left: 25px;
-        }
+        .dropdown-menu button:hover { background: rgba(0, 242, 255, 0.2); }
 
-        /* CONTENT */
-        .hero-section { text-align: center; margin: 40px 0; z-index: 10; }
+        /* VISSZASZÁMLÁLÓ - ÖSSZEHANGOLVA */
+        .hero-section { text-align: center; margin: 30px 0; z-index: 10; width: 100%; }
 
         .target-date-label {
-            font-size: clamp(28px, 7vw, 50px);
-            letter-spacing: 15px;
-            color: var(--digit-color);
-            font-weight: 900;
-            text-shadow: 0 0 30px rgba(0, 242, 255, 0.8);
+            font-size: clamp(24px, 6vw, 46px); letter-spacing: 12px;
+            color: var(--digit-color); font-weight: 900;
+            text-shadow: 0 0 25px rgba(0, 242, 255, 0.7);
         }
 
         .status-text {
-            font-size: 14px; letter-spacing: 6px;
-            text-transform: uppercase; margin: 15px 0;
+            font-size: clamp(10px, 2vw, 14px); letter-spacing: 4px;
+            text-transform: uppercase; margin: 10px 0 25px; opacity: 0.8;
         }
 
-        #giant-countdown {
-            display: flex; justify-content: center; align-items: center;
+        .countdown-grid {
+            display: flex; justify-content: center; align-items: flex-start;
+            gap: 0; /* A separatorok adják a közt */
+        }
+
+        .time-unit {
+            display: flex; flex-direction: column; align-items: center;
+            min-width: clamp(60px, 18vw, 180px);
+        }
+
+        .time-value {
             font-weight: 900; color: #fff;
-            font-size: clamp(50px, 15vw, 170px);
+            font-size: clamp(40px, 13vw, 150px);
             text-shadow: 0 0 40px var(--digit-color);
+            line-height: 1;
         }
 
-        .separator { margin: 0 10px; animation: blink 1s infinite; }
+        .time-label {
+            color: var(--digit-color); font-size: clamp(8px, 1.5vw, 12px);
+            text-transform: uppercase; letter-spacing: 3px;
+            margin-top: 10px; opacity: 0.8;
+        }
+
+        .separator {
+            font-weight: 900; color: #fff;
+            font-size: clamp(30px, 10vw, 120px);
+            line-height: 0.8; padding: 0 5px;
+            animation: blink 1s infinite;
+        }
+
         @keyframes blink { 50% { opacity: 0.1; } }
 
-        .labels {
-            display: flex; justify-content: center;
-            gap: clamp(40px, 12vw, 130px);
-            color: var(--digit-color);
-            font-size: 10px; text-transform: uppercase;
-            letter-spacing: 4px; opacity: 0.8;
-        }
-
+        /* KONTÉNER */
         .main-container {
-            width: 95%; max-width: 960px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
+            width: 95%; max-width: 940px;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
             border-top: 4px solid var(--hungarian-red);
             border-bottom: 4px solid var(--hungarian-green);
-            padding: 30px;
-            margin-bottom: 80px;
-            box-shadow: 0 0 60px rgba(0,0,0,1);
+            padding: 25px; margin-bottom: 60px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
 
         .main-video-wrapper {
             width: 100%; aspect-ratio: 16/9;
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            margin-bottom: 40px;
-            background: #000;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            margin-bottom: 30px; background: #000;
         }
 
         .main-video { width: 100%; height: 100%; }
 
         .glass-box {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 50px 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02); padding: 40px 20px;
+            text-align: center; border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .quote { font-size: clamp(14px, 3.5vw, 26px); line-height: 2; letter-spacing: 3px; }
+        .quote { font-size: clamp(14px, 3.2vw, 22px); line-height: 1.8; letter-spacing: 2px; }
 
         .glitch-text {
             text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-blue);
@@ -207,12 +181,12 @@
             66% { transform: translate(1px, -0.5px); }
         }
 
-        footer { padding: 50px; opacity: 0.5; font-size: 10px; letter-spacing: 5px; }
+        footer { padding: 40px; opacity: 0.4; font-size: 9px; letter-spacing: 4px; }
 
         @media (max-width: 600px) {
-            .nav-container { gap: 10px; }
-            .menu-trigger { padding: 10px 15px; font-size: 9px; }
-            .labels { gap: clamp(30px, 14vw, 80px); }
+            .nav-container { gap: 8px; }
+            .menu-trigger { padding: 8px 12px; font-size: 8px; }
+            .time-unit { min-width: 20vw; }
         }
     </style>
 </head>
@@ -250,14 +224,26 @@
         <div class="target-date-label">2026. 04. 12.</div>
         <div class="status-text glitch-text">Rendszerváltás még:</div>
 
-        <div id="giant-countdown">
-            <span id="days">000</span><span class="separator">:</span>
-            <span id="hours">00</span><span class="separator">:</span>
-            <span id="minutes">00</span><span class="separator">:</span>
-            <span id="seconds">00</span>
-        </div>
-        <div class="labels">
-            <span>Nap</span><span>Óra</span><span>Perc</span><span>Mp</span>
+        <div class="countdown-grid">
+            <div class="time-unit">
+                <span class="time-value" id="days">000</span>
+                <span class="time-label">Nap</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-unit">
+                <span class="time-value" id="hours">00</span>
+                <span class="time-label">Óra</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-unit">
+                <span class="time-value" id="minutes">00</span>
+                <span class="time-label">Perc</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-unit">
+                <span class="time-value" id="seconds">00</span>
+                <span class="time-label">Mp</span>
+            </div>
         </div>
     </div>
 
@@ -299,21 +285,12 @@
             }
         }
 
-        // SZINKRONIZÁLT VÁLTÁS
         function changeVideo(videoId) {
-            const timestamp = new Date().getTime(); // Cache busting megelőzése, ha ugyanazt töltjük újra
-            
-            // Fő lejátszó (hanggal)
             document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0`;
-            
-            // Háttér Ambilight (néma, loop)
-            // A playlist paraméter elengedhetetlen a YouTube loop-hoz
             document.getElementById('bg-video-iframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&iv_load_policy=3&start=0`;
-            
             window.scrollTo({ top: document.querySelector('header').offsetHeight, behavior: 'smooth' });
         }
 
-        // VISSZASZÁMLÁLÓ
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
 
         function updateCountdown() {
@@ -322,7 +299,6 @@
 
             if (distance < 0) {
                 document.querySelector(".status-text").innerText = "A VÁLTOZÁS ELINDULT!";
-                document.getElementById("giant-countdown").innerHTML = "00:00:00:00";
                 return;
             }
 
