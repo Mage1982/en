@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --bg-blue-overlay: rgba(1, 5, 15, 0.9);
+            --bg-blue-overlay: rgba(1, 5, 15, 0.85);
             --digit-color: #00f2ff;
             --glitch-red: rgba(255, 0, 128, 0.8);
             --glitch-blue: rgba(0, 255, 255, 0.8);
@@ -19,7 +19,7 @@
         }
 
         @keyframes pageReveal {
-            0% { opacity: 0; transform: scale(1.01); filter: blur(10px); }
+            0% { opacity: 0; transform: scale(1.02); filter: blur(15px); }
             100% { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
@@ -35,113 +35,109 @@
             flex-direction: column;
             align-items: center;
             opacity: 0;
-            animation: pageReveal 1s ease-out forwards;
+            animation: pageReveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        /* AMBILIGHT HÁTTÉR - Mobilon egyszerűsítve a teljesítményért */
+        /* AMBILIGHT HÁTTÉR */
         .video-bg-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; overflow: hidden; background: #000;
-            pointer-events: none;
         }
 
         #bg-video-iframe {
             position: absolute; top: 50%; left: 50%;
-            width: 150vw; height: 150vh; /* Nagyobb ráhagyás a blur miatt */
+            width: 115vw; height: 115vh;
             transform: translate(-50%, -50%);
-            border: none; opacity: 0.4;
-            filter: blur(40px) brightness(0.4);
+            border: none; opacity: 0.55;
+            filter: blur(55px) brightness(0.5) contrast(1.2);
+            pointer-events: none;
         }
 
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, transparent 0%, var(--bg-blue-overlay) 100%);
+            background: radial-gradient(circle at center, transparent 10%, var(--bg-blue-overlay) 100%);
             z-index: -1;
         }
 
         /* NAVIGÁCIÓ */
         header {
-            width: 100%; padding: 10px 0; position: sticky; top: 0; z-index: 1000;
-            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px);
+            width: 100%; padding: 15px 0; position: sticky; top: 0; z-index: 1000;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 242, 255, 0.2);
         }
 
-        .nav-container { 
-            display: flex; justify-content: center; gap: 10px; 
-            max-width: 100%; padding: 0 10px;
-        }
+        .nav-container { display: flex; justify-content: center; gap: 15px; padding: 0 10px; }
 
         .menu-trigger {
             background: transparent; border: 1px solid var(--digit-color);
-            color: var(--digit-color); padding: 12px 15px;
-            font-family: 'Orbitron', sans-serif; font-size: 9px;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--digit-color); padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif; font-size: 10px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
             transition: all 0.3s ease;
-            white-space: nowrap;
         }
 
-        .menu-trigger.active {
+        .menu-trigger:hover, .menu-trigger.active {
             background: var(--digit-color); color: #000;
-            box-shadow: 0 0 15px var(--digit-color);
+            box-shadow: 0 0 20px var(--digit-color);
         }
 
         .dropdown-menu {
             display: none; position: absolute; top: 100%; left: 50%;
-            transform: translateX(-50%); background: rgba(1, 10, 25, 0.95);
-            border: 1px solid var(--digit-color); width: 90vw; max-width: 300px;
+            transform: translateX(-50%); background: rgba(1, 10, 25, 0.98);
+            border: 1px solid var(--digit-color); min-width: 240px;
             margin-top: 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.9);
         }
 
-        .dropdown-menu.show { display: block; animation: pageReveal 0.2s ease-out; }
+        .dropdown-menu.show { display: block; animation: pageReveal 0.3s ease-out; }
 
         .dropdown-menu button {
-            width: 100%; padding: 18px; background: none; border: none;
-            color: #fff; text-align: center; font-family: 'Orbitron', sans-serif;
-            font-size: 11px; text-transform: uppercase; cursor: pointer;
+            width: 100%; padding: 15px; background: none; border: none;
+            color: #fff; text-align: left; font-family: 'Orbitron', sans-serif;
+            font-size: 10px; text-transform: uppercase; cursor: pointer;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* VISSZASZÁMLÁLÓ */
-        .hero-section { text-align: center; margin: 20px 0; z-index: 10; width: 100%; padding: 0 10px; }
+        /* VISSZASZÁMLÁLÓ - Desktop fókuszált méretek */
+        .hero-section { text-align: center; margin: 30px 0; z-index: 10; width: 100%; }
 
         .target-date-label {
-            font-size: clamp(20px, 8vw, 40px); letter-spacing: 5px;
+            font-size: clamp(24px, 6vw, 46px); letter-spacing: 12px;
             color: var(--digit-color); font-weight: 900;
-            text-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
+            text-shadow: 0 0 25px rgba(0, 242, 255, 0.7);
         }
 
         .status-text {
-            font-size: 11px; letter-spacing: 2px;
-            text-transform: uppercase; margin: 5px 0 15px; opacity: 0.8;
+            font-size: clamp(10px, 2vw, 14px); letter-spacing: 4px;
+            text-transform: uppercase; margin: 10px 0 25px; opacity: 0.8;
         }
 
         .countdown-grid {
-            display: flex; justify-content: center; align-items: center;
-            gap: 5px; width: 100%;
+            display: flex; justify-content: center; align-items: flex-start;
+            gap: 0;
         }
 
         .time-unit {
             display: flex; flex-direction: column; align-items: center;
-            flex: 1; max-width: 80px;
+            min-width: clamp(70px, 18vw, 200px); /* Visszaállítva a nagy szélesség desktopra */
         }
 
         .time-value {
             font-weight: 900; color: #fff;
-            font-size: clamp(28px, 9vw, 80px);
-            text-shadow: 0 0 20px var(--digit-color);
-            line-height: 1.1;
+            font-size: clamp(40px, 13vw, 150px); /* Desktopon marad 150px */
+            text-shadow: 0 0 40px var(--digit-color);
+            line-height: 1;
         }
 
         .time-label {
-            color: var(--digit-color); font-size: 8px;
-            text-transform: uppercase; letter-spacing: 1px;
-            margin-top: 5px; opacity: 0.7;
+            color: var(--digit-color); font-size: clamp(8px, 1.5vw, 12px);
+            text-transform: uppercase; letter-spacing: 3px;
+            margin-top: 10px; opacity: 0.8;
         }
 
         .separator {
             font-weight: 900; color: #fff;
-            font-size: clamp(20px, 7vw, 60px);
-            line-height: 1; padding-bottom: 15px;
+            font-size: clamp(30px, 10vw, 120px);
+            line-height: 0.8; padding: 0 5px;
             animation: blink 1s infinite;
         }
 
@@ -149,40 +145,50 @@
 
         /* KONTÉNER ÉS VIDEÓ */
         .main-container {
-            width: 95%;
-            max-width: 1000px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            border-top: 3px solid var(--hungarian-red);
-            border-bottom: 3px solid var(--hungarian-green);
-            padding: 10px;
-            margin-bottom: 40px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            width: 98%;
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            border-top: 4px solid var(--hungarian-red);
+            border-bottom: 4px solid var(--hungarian-green);
+            padding: clamp(10px, 3vw, 40px);
+            margin-bottom: 60px;
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
         }
 
         .main-video-wrapper {
             width: 100%;
             position: relative;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            border: 1px solid rgba(0, 242, 255, 0.2);
+            padding-top: 56.25%;
+            border: 1px solid rgba(0, 242, 255, 0.3);
             background: #000;
         }
 
-        .main-video { 
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; border: none; 
+        .main-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        .glitch-text {
+            text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-blue);
+            animation: glitch 3s infinite;
         }
 
-        footer { padding: 30px; opacity: 0.5; font-size: 8px; letter-spacing: 2px; text-align: center; }
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(-1px, 0.5px); }
+            66% { transform: translate(1px, -0.5px); }
+        }
 
-        /* MOBIL SPECIFIKUS FINOMÍTÁSOK */
-        @media (max-width: 480px) {
-            .nav-container { gap: 5px; }
-            .menu-trigger { padding: 10px 8px; font-size: 8px; flex: 1; }
-            .target-date-label { letter-spacing: 2px; }
-            .time-value { font-size: clamp(24px, 11vw, 40px); }
-            .video-bg-wrapper { display: none; } /* Mobilon az ambilight sokat fogyaszt, opcionálisan kikapcsolható */
-            body { background: #01050f; }
+        footer { padding: 40px; opacity: 0.4; font-size: 9px; letter-spacing: 4px; text-align: center; }
+
+        /* MOBIL FINOMÍTÁSOK - Csak itt vesszük vissza a méreteket */
+        @media (max-width: 600px) {
+            .nav-container { gap: 8px; }
+            .menu-trigger { padding: 8px 12px; font-size: 8px; flex: 1; }
+            .target-date-label { letter-spacing: 4px; }
+            .time-unit { min-width: 22vw; }
+            .time-value { font-size: 11vw; }
+            .separator { font-size: 8vw; }
+            .main-container { width: 100%; border-left: none; border-right: none; }
+            .dropdown-menu { width: 90vw; }
         }
     </style>
 </head>
@@ -218,11 +224,11 @@
 
     <div class="hero-section">
         <div class="target-date-label">2026. 04. 12.</div>
-        <div class="status-text">Rendszerváltás még:</div>
+        <div class="status-text glitch-text">Rendszerváltás még:</div>
 
         <div class="countdown-grid">
             <div class="time-unit">
-                <span class="time-value" id="days">00</span>
+                <span class="time-value" id="days">000</span>
                 <span class="time-label">Nap</span>
             </div>
             <span class="separator">:</span>
@@ -235,7 +241,7 @@
                 <span class="time-value" id="minutes">00</span>
                 <span class="time-label">Perc</span>
             </div>
-            <span class="separator" id="sec-sep">:</span>
+            <span class="separator">:</span>
             <div class="time-unit">
                 <span class="time-value" id="seconds">00</span>
                 <span class="time-label">Mp</span>
@@ -245,7 +251,7 @@
 
     <div class="main-container">
         <div class="main-video-wrapper">
-            <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ?enablejsapi=1&rel=0" allow="autoplay; fullscreen"></iframe>
+            <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ?enablejsapi=1" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -267,25 +273,16 @@
             }
         }
 
-        // Kívülre kattintás bezárja a menüt
-        document.addEventListener('click', function(event) {
+        window.onclick = function(event) {
             if (!event.target.matches('.menu-trigger')) {
                 document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
                 document.querySelectorAll('.menu-trigger').forEach(t => t.classList.remove('active'));
             }
-        });
+        }
 
         function changeVideo(videoId) {
-            // Fő videó frissítése
             document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0`;
-            
-            // Háttérvideó frissítése (ha látható)
-            const bgVideo = document.getElementById('bg-video-iframe');
-            if (bgVideo) {
-                bgVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&iv_load_policy=3`;
-            }
-            
-            // Finom görgetés a videóhoz
+            document.getElementById('bg-video-iframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&iv_load_policy=3&start=0`;
             window.scrollTo({ top: 100, behavior: 'smooth' });
         }
 
