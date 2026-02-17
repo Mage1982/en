@@ -97,7 +97,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* VISSZASZÁMLÁLÓ - Desktop fókuszált méretek */
+        /* VISSZASZÁMLÁLÓ OPTIMALIZÁLVA */
         .hero-section { text-align: center; margin: 30px 0; z-index: 10; width: 100%; }
 
         .target-date-label {
@@ -112,40 +112,46 @@
         }
 
         .countdown-grid {
-            display: flex; justify-content: center; align-items: flex-start;
-            gap: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Ez húzza középre a kettőspontot a számokhoz képest */
+            gap: 5px;
         }
 
         .time-unit {
             display: flex; flex-direction: column; align-items: center;
-            min-width: clamp(70px, 18vw, 200px); /* Visszaállítva a nagy szélesség desktopra */
+            min-width: clamp(60px, 15vw, 180px);
         }
 
         .time-value {
             font-weight: 900; color: #fff;
-            font-size: clamp(40px, 13vw, 150px); /* Desktopon marad 150px */
-            text-shadow: 0 0 40px var(--digit-color);
-            line-height: 1;
+            font-size: clamp(35px, 12vw, 150px);
+            text-shadow: 0 0 30px var(--digit-color);
+            line-height: 1; /* Fixálja a betű körüli extra helyet */
+            font-variant-numeric: tabular-nums; /* Biztosítja, hogy a számok ne ugráljanak */
         }
 
         .time-label {
-            color: var(--digit-color); font-size: clamp(8px, 1.5vw, 12px);
-            text-transform: uppercase; letter-spacing: 3px;
-            margin-top: 10px; opacity: 0.8;
+            color: var(--digit-color); font-size: clamp(7px, 1.2vw, 12px);
+            text-transform: uppercase; letter-spacing: 2px;
+            margin-top: 8px; opacity: 0.8;
         }
 
         .separator {
             font-weight: 900; color: #fff;
-            font-size: clamp(30px, 10vw, 120px);
-            line-height: 0.8; padding: 0 5px;
+            font-size: clamp(25px, 9vw, 110px);
+            line-height: 1;
+            /* Finomhangolás a kettőspont vizuális elcsúszása ellen az Orbitron fontnál */
+            transform: translateY(-5%); 
+            padding: 0 5px;
             animation: blink 1s infinite;
         }
 
-        @keyframes blink { 50% { opacity: 0.1; } }
+        @keyframes blink { 50% { opacity: 0.2; } }
 
         /* KONTÉNER ÉS VIDEÓ */
         .main-container {
-            width: 98%;
+            width: 95%;
             max-width: 1200px;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(15px);
@@ -179,14 +185,18 @@
 
         footer { padding: 40px; opacity: 0.4; font-size: 9px; letter-spacing: 4px; text-align: center; }
 
-        /* MOBIL FINOMÍTÁSOK - Csak itt vesszük vissza a méreteket */
+        /* TABLET ÉS MOBIL OPTIMALIZÁLÁS */
+        @media (max-width: 992px) {
+            .time-unit { min-width: 18vw; }
+        }
+
         @media (max-width: 600px) {
             .nav-container { gap: 8px; }
             .menu-trigger { padding: 8px 12px; font-size: 8px; flex: 1; }
             .target-date-label { letter-spacing: 4px; }
-            .time-unit { min-width: 22vw; }
-            .time-value { font-size: 11vw; }
-            .separator { font-size: 8vw; }
+            .countdown-grid { gap: 2px; }
+            .time-unit { min-width: 20vw; }
+            .separator { transform: translateY(-3%); } /* Mobilon kisebb eltolás kell */
             .main-container { width: 100%; border-left: none; border-right: none; }
             .dropdown-menu { width: 90vw; }
         }
