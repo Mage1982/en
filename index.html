@@ -170,30 +170,63 @@
 
         .main-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* SZAVAZZ HAZA CTA SZEKCIÓ */
+        /* ÚJ ANIMÁLT CTA SZEKCIÓ */
         .cta-section {
             width: 95%; max-width: 1100px;
             background: rgba(1, 10, 25, 0.7);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--digit-color);
+            border: 1px solid rgba(0, 242, 255, 0.3);
             padding: 40px 20px;
             margin-bottom: 50px;
             text-align: center;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+            position: relative; /* A pásztázó fényhez kell */
+            overflow: hidden; /* Hogy a fény ne lógjon ki */
+            transition: 0.3s all ease;
+        }
+
+        /* Pásztázó fény animáció */
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
+            transform: skewX(-20deg);
+            animation: scan-beam 5s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes scan-beam {
+            0% { left: -150%; }
+            100% { left: 150%; }
+        }
+
+        /* Hover effektek a dobozon */
+        .cta-section:hover {
+            border-color: var(--digit-color);
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.4);
         }
 
         .cta-section h2 {
             color: #fff; font-size: clamp(20px, 4vw, 32px);
             margin-bottom: 15px; text-transform: uppercase; letter-spacing: 3px;
             text-shadow: 0 0 10px var(--digit-color);
+            transition: 0.3s;
         }
 
         .cta-section p {
             color: #ccc; font-size: clamp(10px, 2vw, 14px);
             margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;
-            opacity: 0.8;
+            opacity: 0.8; transition: 0.3s;
         }
 
+        /* Szöveg glitch hoverkor */
+        .cta-section:hover h2, .cta-section:hover p {
+            text-shadow: 3px 0 var(--glitch-red), -3px 0 var(--glitch-blue);
+        }
+
+        /* CTA Gomb */
         .cta-button {
             display: inline-block;
             background: transparent;
@@ -207,19 +240,20 @@
             border: 2px solid var(--digit-color);
             transition: 0.3s ease;
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.3), inset 0 0 10px rgba(0, 242, 255, 0.2);
+            position: relative; z-index: 2;
             animation: pulse-border 2s infinite;
         }
 
         .cta-button:hover {
             background: var(--digit-color);
             color: #000;
-            box-shadow: 0 0 30px var(--digit-color);
+            box-shadow: 0 0 40px var(--digit-color), inset 0 0 20px rgba(255,255,255,0.5);
             transform: scale(1.05);
         }
 
         @keyframes pulse-border {
             0% { box-shadow: 0 0 15px rgba(0, 242, 255, 0.3), inset 0 0 10px rgba(0, 242, 255, 0.2); }
-            50% { box-shadow: 0 0 25px rgba(0, 242, 255, 0.6), inset 0 0 20px rgba(0, 242, 255, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(0, 242, 255, 0.7), inset 0 0 20px rgba(0, 242, 255, 0.4); }
             100% { box-shadow: 0 0 15px rgba(0, 242, 255, 0.3), inset 0 0 10px rgba(0, 242, 255, 0.2); }
         }
 
@@ -245,10 +279,9 @@
         <div class="nav-container">
             <button class="menu-trigger" onclick="toggleMenu('tisza-menu', this)">Tisza Párt ▼</button>
             <div id="tisza-menu" class="dropdown-menu">
+                <button onclick="window.open('https://www.youtube.com/@magyarpeterofficial', '_blank')">Hivatalos YouTube Csatorna ↗</button>
                 <button onclick="changeVideo('7IC-7l9JOcQ')">ÉLŐ: Rendszerváltás</button>
                 <button onclick="changeVideo('EpebxMhRi7g')">A program</button>
-                <button onclick="changeVideo('m0XWP6B5nfU')">Csézy</button>
-                <button onclick="window.open('https://www.youtube.com/@magyarpeterofficial', '_blank')">Hivatalos YouTube Csatorna ↗</button>
             </div>
             
             <button class="menu-trigger" onclick="toggleMenu('influ-menu', this)">Influenszerek ▼</button>
