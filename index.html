@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>RENDSZERVÁLTÁS 2026</title>
 
-    <meta property="og:title" content="RENDSZERVÁLTÁS 2026 - Visszaszámlálás">
-    <meta property="og:description" content="Csatlakozz te is! Országos önkéntes találkozó és tájékoztató. Ne hagyd elveszni a hangod!">
+    <meta property="og:title" content="RENDSZERVÁLTÁS 2026">
+    <meta property="og:description" content="Országos önkéntes találkozó a kampány első napján. Csatlakozz te is a változáshoz!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rendszer-valtas.hu">
-    <meta property="og:image" content="https://rendszer-valtas.hu/preview-image.jpg"> <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://rendszer-valtas.hu/social.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RENDSZERVÁLTÁS 2026">
+    <meta name="twitter:description" content="Országos önkéntes találkozó a kampány első napján.">
+    <meta name="twitter:image" content="https://rendszer-valtas.hu/social.png">
 
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
@@ -22,7 +29,7 @@
             --glitch-blue: rgba(0, 255, 255, 0.8);
             --hungarian-red: #ce1126;
             --hungarian-green: #008751;
-            --max-content-width: 1100px;
+            --max-w: 1100px;
         }
 
         @keyframes pageReveal {
@@ -45,7 +52,7 @@
             animation: pageReveal 1s ease-out forwards;
         }
 
-        /* DINAMIKUS VIDEÓ HÁTTÉR */
+        /* HÁTTÉR VIDEÓ */
         .video-bg-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; overflow: hidden; background: #000;
@@ -66,7 +73,7 @@
             z-index: -1;
         }
 
-        /* NAVBAR OPTIMALIZÁLÁS */
+        /* HEADER & MENÜ */
         header {
             width: 100%; padding: clamp(10px, 2vh, 20px) 0; 
             position: sticky; top: 0; z-index: 1000;
@@ -75,17 +82,16 @@
         }
 
         .nav-container { 
-            display: flex; justify-content: center; gap: clamp(5px, 2vw, 20px); 
-            padding: 0 10px; max-width: var(--max-content-width); margin: 0 auto;
+            display: flex; justify-content: center; gap: clamp(8px, 2vw, 20px); 
+            padding: 0 15px; max-width: var(--max-w); margin: 0 auto;
         }
 
         .menu-trigger {
             background: transparent; border: 1px solid var(--digit-color);
-            color: var(--digit-color); padding: 8px 12px;
-            font-family: 'Orbitron', sans-serif; font-size: clamp(8px, 1.5vw, 11px);
+            color: var(--digit-color); padding: 10px 16px;
+            font-family: 'Orbitron', sans-serif; font-size: clamp(8px, 1.6vw, 11px);
             cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
+            transition: 0.3s; white-space: nowrap;
         }
 
         .menu-trigger:hover { background: var(--digit-color); color: #000; box-shadow: 0 0 15px var(--digit-color); }
@@ -93,7 +99,7 @@
         .dropdown-menu {
             display: none; position: absolute; top: 100%; left: 50%;
             transform: translateX(-50%); background: rgba(1, 10, 25, 0.98);
-            border: 1px solid var(--digit-color); width: 280px;
+            border: 1px solid var(--digit-color); width: clamp(280px, 80vw, 400px);
             margin-top: 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.9);
         }
 
@@ -101,87 +107,85 @@
         @keyframes menuIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
         .dropdown-menu button {
-            width: 100%; padding: 14px; background: none; border: none;
+            width: 100%; padding: 16px; background: none; border: none;
             color: #fff; text-align: left; font-family: 'Orbitron', sans-serif;
             font-size: 10px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
             transition: 0.2s; line-height: 1.4;
         }
+        .dropdown-menu button:hover { background: rgba(0, 242, 255, 0.1); color: var(--digit-color); }
 
-        /* VISSZASZÁMLÁLÓ ADAPTÍV DESIGN */
-        .hero-section { text-align: center; margin: clamp(20px, 5vh, 60px) 0; z-index: 10; width: 100%; padding: 0 10px; }
+        /* HERO & VISSZASZÁMLÁLÓ */
+        .hero-section { text-align: center; margin: clamp(30px, 6vh, 70px) 0; z-index: 10; width: 100%; padding: 0 10px; }
         
         .target-date-label {
-            font-size: clamp(18px, 6vw, 42px); letter-spacing: clamp(4px, 1vw, 8px);
+            font-size: clamp(20px, 7vw, 42px); letter-spacing: clamp(4px, 1.5vw, 10px);
             color: var(--digit-color); font-weight: 900; text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
         }
 
         .countdown-grid {
             display: flex; justify-content: center; align-items: center; 
-            gap: clamp(2px, 1vw, 10px); margin-top: 20px;
+            gap: clamp(2px, 1.5vw, 15px); margin-top: 25px;
         }
         
-        .time-unit { min-width: clamp(60px, 18vw, 150px); }
+        .time-unit { min-width: clamp(70px, 20vw, 160px); }
         .time-value {
-            font-weight: 900; font-size: clamp(30px, 10vw, 110px);
-            text-shadow: 0 0 20px var(--digit-color); line-height: 1;
+            font-weight: 900; font-size: clamp(35px, 11vw, 110px);
+            text-shadow: 0 0 25px var(--digit-color); line-height: 0.9;
         }
         .time-label {
-            color: var(--digit-color); font-size: clamp(7px, 1.5vw, 11px);
-            text-transform: uppercase; margin-top: 5px; opacity: 0.8;
+            color: var(--digit-color); font-size: clamp(8px, 1.5vw, 12px);
+            text-transform: uppercase; margin-top: 10px; opacity: 0.8; letter-spacing: 2px;
         }
 
-        /* MAIN VIDEO RESPONSIVITY */
+        /* VIDEO KONTÉNER */
         .main-container {
-            width: 95%; max-width: var(--max-content-width);
+            width: 95%; max-width: var(--max-w);
             background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
             border-top: 3px solid var(--hungarian-red);
             border-bottom: 3px solid var(--hungarian-green);
-            padding: clamp(5px, 2vw, 25px); margin-bottom: 30px;
+            padding: clamp(8px, 2vw, 25px); margin-bottom: 40px;
         }
 
         .main-video-wrapper {
-            width: 100%; position: relative; padding-top: 56.25%; /* 16:9 ratio */
-            background: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            width: 100%; position: relative; padding-top: 56.25%;
+            background: #000;
         }
 
         .main-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* CTA & SHARE */
+        /* CTA SZEKCIÓ */
         .cta-section {
-            width: 95%; max-width: var(--max-content-width);
+            width: 95%; max-width: var(--max-w);
             background: rgba(1, 10, 25, 0.8); border: 1px solid rgba(0, 242, 255, 0.3);
-            padding: 30px 15px; margin-bottom: 30px; text-align: center;
+            padding: 40px 20px; margin-bottom: 40px; text-align: center;
         }
 
         .cta-button {
             display: inline-block; background: transparent; color: var(--digit-color);
-            text-decoration: none; padding: clamp(12px, 3vw, 18px) clamp(20px, 5vw, 45px);
-            font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+            text-decoration: none; padding: 18px 45px;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 3px;
             border: 2px solid var(--digit-color); transition: 0.3s;
-            font-size: clamp(12px, 2vw, 16px);
+            font-size: clamp(14px, 2.5vw, 18px);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
         }
+        .cta-button:hover { background: var(--digit-color); color: #000; box-shadow: 0 0 30px var(--digit-color); transform: scale(1.05); }
 
-        .share-container { margin: 20px 0 50px; text-align: center; }
-        .share-icons { display: flex; gap: 15px; justify-content: center; margin-top: 15px; }
+        /* MEGOSZTÁS IKONOK */
+        .share-container { margin-bottom: 60px; text-align: center; }
+        .share-icons { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
         .share-link {
-            width: 45px; height: 45px; border: 1px solid rgba(0, 242, 255, 0.4);
+            width: 50px; height: 50px; border: 1px solid rgba(0, 242, 255, 0.4);
             display: flex; align-items: center; justify-content: center;
-            color: white; transition: 0.3s; background: rgba(0,0,0,0.3);
+            color: white; transition: 0.3s; background: rgba(255,255,255,0.05);
         }
-        .share-link:hover { background: var(--digit-color); color: #000; box-shadow: 0 0 20px var(--digit-color); }
-        .share-link svg { width: 22px; height: 22px; fill: currentColor; }
+        .share-link:hover { background: var(--digit-color); color: #000; transform: translateY(-5px); box-shadow: 0 0 20px var(--digit-color); }
+        .share-link svg { width: 24px; height: 24px; fill: currentColor; }
 
-        footer { padding: 40px; opacity: 0.4; font-size: 9px; letter-spacing: 2px; }
-
-        /* TABLET & DESKTOP FINE TUNING */
-        @media (min-width: 768px) {
-            .dropdown-menu { width: 350px; }
-            .time-unit { min-width: 140px; }
-        }
+        footer { padding: 40px; opacity: 0.4; font-size: 10px; letter-spacing: 3px; text-align: center; }
 
         @media (max-width: 480px) {
-            .countdown-grid { gap: 0; }
-            .separator { font-size: 20px; }
+            .countdown-grid { gap: 5px; }
+            .time-unit { min-width: 22vw; }
         }
     </style>
 </head>
@@ -197,9 +201,10 @@
             <div style="position: relative;">
                 <button class="menu-trigger" onclick="toggleMenu('tisza-menu')">Tisza Párt ▼</button>
                 <div id="tisza-menu" class="dropdown-menu">
-                    <button onclick="window.open('https://www.youtube.com/@magyarpeterofficial', '_blank')">Hivatalos YouTube ↗</button>
-                    <button onclick="changeVideo('uMkgzjdHLLU')">Országos önkéntes találkozó - Kampány start</button>
+                    <button onclick="window.open('https://www.youtube.com/@magyarpeterofficial', '_blank')">Hivatalos YouTube Csatorna ↗</button>
+                    <button onclick="changeVideo('uMkgzjdHLLU')">Országos önkéntes találkozó a kampány első napján</button>
                     <button onclick="changeVideo('7IC-7l9JOcQ')">ÉLŐ: Rendszerváltás</button>
+                    <button onclick="changeVideo('EpebxMhRi7g')">A program</button>
                 </div>
             </div>
             
@@ -215,7 +220,7 @@
 
     <main class="hero-section">
         <div class="target-date-label">2026. 04. 12.</div>
-        <div class="status-text" style="font-size: 10px; margin-top: 10px; opacity: 0.6; letter-spacing: 3px;">MAGYARORSZÁG MEGÚJUL</div>
+        <div class="status-text" style="font-size: 11px; margin-top: 15px; opacity: 0.7; letter-spacing: 4px;">RENDSZERVÁLTÁS VISSZASZÁMLÁLÁS</div>
 
         <div class="countdown-grid">
             <div class="time-unit"><span class="time-value" id="days">00</span><span class="time-label">Nap</span></div>
@@ -232,23 +237,28 @@
     </div>
 
     <section class="cta-section">
-        <h2 style="font-size: clamp(16px, 4vw, 24px); margin-bottom: 20px;">KÜLFÖLDI MAGYAR VAGY?</h2>
-        <a href="https://szavazzhaza.hu/" target="_blank" class="cta-button">REGISZTRÁCIÓ ÉS INFO ➔</a>
+        <h2 style="font-size: clamp(18px, 4vw, 26px); margin-bottom: 25px; letter-spacing: 2px;">KÜLFÖLDÖN ÉLSZ?</h2>
+        <a href="https://szavazzhaza.hu/" target="_blank" class="cta-button">SZAVAZZ HAZA! ➔</a>
     </section>
 
     <div class="share-container">
-        <p style="font-size: 10px; letter-spacing: 2px; opacity: 0.7;">OSZD MEG A REMÉNYT:</p>
+        <p style="font-size: 11px; letter-spacing: 3px; opacity: 0.6; text-transform: uppercase;">Oszd meg a változást:</p>
         <div class="share-icons">
-            <a href="#" onclick="share('fb')" class="share-link"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-            <a href="#" onclick="share('tw')" class="share-link"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-            <a href="#" onclick="share('wa')" class="share-link"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></a>
+            <a href="#" onclick="share('fb')" class="share-link" title="Megosztás Facebookon">
+                <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="#" onclick="share('tw')" class="share-link" title="Megosztás X-en">
+                <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+            <a href="#" onclick="share('wa')" class="share-link" title="Küldés WhatsAppon">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </a>
         </div>
     </div>
 
     <footer>© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
-        // Menü kezelés
         function toggleMenu(menuId) {
             const target = document.getElementById(menuId);
             const isShow = target.classList.contains('show');
@@ -262,35 +272,31 @@
             }
         }
 
-        // Videó váltás
         function changeVideo(id) {
             document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${id}?autoplay=1&enablejsapi=1`;
             document.getElementById('bg-video-iframe').src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&modestbranding=1`;
         }
 
-        // Megosztás funkciók
         function share(plat) {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent("Csatlakozz te is a 2026-os rendszerváltáshoz!");
+            const url = encodeURIComponent('https://rendszer-valtas.hu');
+            const text = encodeURIComponent('Országos önkéntes találkozó a kampány első napján! Csatlakozz te is: ');
             let link = "";
             if(plat === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
             if(plat === 'tw') link = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
             if(plat === 'wa') link = `https://api.whatsapp.com/send?text=${text}%20${url}`;
             window.open(link, '_blank', 'width=600,height=400');
+            return false;
         }
 
-        // Visszaszámláló
         const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
         function update() {
             const now = new Date().getTime();
             const diff = targetDate - now;
             if (diff < 0) return;
-            
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
-            
             document.getElementById("days").innerText = String(d).padStart(2, '0');
             document.getElementById("hours").innerText = String(h).padStart(2, '0');
             document.getElementById("minutes").innerText = String(m).padStart(2, '0');
