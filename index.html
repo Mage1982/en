@@ -180,12 +180,11 @@
             margin-bottom: 50px;
             text-align: center;
             box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
-            position: relative; /* A pásztázó fényhez kell */
-            overflow: hidden; /* Hogy a fény ne lógjon ki */
+            position: relative;
+            overflow: hidden;
             transition: 0.3s all ease;
         }
 
-        /* Pásztázó fény animáció */
         .cta-section::before {
             content: '';
             position: absolute;
@@ -202,7 +201,6 @@
             100% { left: 150%; }
         }
 
-        /* Hover effektek a dobozon */
         .cta-section:hover {
             border-color: var(--digit-color);
             box-shadow: 0 0 40px rgba(0, 242, 255, 0.4);
@@ -221,12 +219,10 @@
             opacity: 0.8; transition: 0.3s;
         }
 
-        /* Szöveg glitch hoverkor */
         .cta-section:hover h2, .cta-section:hover p {
             text-shadow: 3px 0 var(--glitch-red), -3px 0 var(--glitch-blue);
         }
 
-        /* CTA Gomb */
         .cta-button {
             display: inline-block;
             background: transparent;
@@ -259,7 +255,6 @@
 
         footer { padding: 30px; opacity: 0.3; font-size: 8px; letter-spacing: 3px; text-align: center; margin-bottom: 20px; }
 
-        /* MOBIL SPECIFIKUS JAVÍTÁSOK */
         @media (max-width: 600px) {
             .countdown-grid { gap: 0; }
             .time-unit { min-width: 21vw; }
@@ -271,7 +266,7 @@
 <body>
 
     <div class="video-bg-wrapper">
-        <iframe id="bg-video-iframe" src="https://www.youtube.com/embed/7IC-7l9JOcQ?autoplay=1&mute=1&loop=1&playlist=7IC-7l9JOcQ&controls=0&modestbranding=1&iv_load_policy=3" allow="autoplay"></iframe>
+        <iframe id="bg-video-iframe" src="https://www.youtube.com/embed/uMkgzjdHLLU?autoplay=1&mute=1&loop=1&playlist=uMkgzjdHLLU&controls=0&modestbranding=1&iv_load_policy=3" allow="autoplay"></iframe>
     </div>
     <div class="video-overlay"></div>
 
@@ -280,6 +275,7 @@
             <button class="menu-trigger" onclick="toggleMenu('tisza-menu', this)">Tisza Párt ▼</button>
             <div id="tisza-menu" class="dropdown-menu">
                 <button onclick="window.open('https://www.youtube.com/@magyarpeterofficial', '_blank')">Hivatalos YouTube Csatorna ↗</button>
+                <button onclick="changeVideo('uMkgzjdHLLU')">ÚJ: Tájékoztató (02.21.)</button>
                 <button onclick="changeVideo('7IC-7l9JOcQ')">ÉLŐ: Rendszerváltás</button>
                 <button onclick="changeVideo('EpebxMhRi7g')">A program</button>
             </div>
@@ -321,7 +317,7 @@
 
     <div class="main-container">
         <div class="main-video-wrapper">
-            <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/7IC-7l9JOcQ?enablejsapi=1" allowfullscreen></iframe>
+            <iframe id="videoPlayer" class="main-video" src="https://www.youtube.com/embed/uMkgzjdHLLU?enablejsapi=1" allowfullscreen></iframe>
         </div>
     </div>
 
