@@ -23,7 +23,7 @@
             --bg-dark: #00050a;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             background-color: var(--bg-dark);
@@ -34,133 +34,123 @@
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* KREATÍV HÁTTÉR KEZELÉS */
+        /* HÁTTÉR */
         .bg-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            background-image: url('social.png');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.6; /* Kicsit visszavéve, hogy ne zavarja a szemet */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; background-image: url('social.png');
+            background-size: cover; background-position: center; opacity: 0.5;
         }
 
         .bg-vignette {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            /* Középen világosabb, szélein sötétebb és trikolor átmenet */
-            background: radial-gradient(circle at center, transparent 20%, var(--bg-dark) 80%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(circle at center, transparent 10%, var(--bg-dark) 90%);
         }
 
-        /* HEADER */
+        /* NAVBAR - MOBILON IS KÉNYELMES */
         header {
-            width: 100%; padding: 20px 0; position: sticky; top: 0; z-index: 1000;
-            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
+            width: 100%; padding: 15px 0; position: sticky; top: 0; z-index: 1000;
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
             border-bottom: 2px solid var(--h-white);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        .nav-container { display: flex; justify-content: center; gap: 20px; }
+        .nav-container { 
+            display: flex; justify-content: center; gap: clamp(10px, 3vw, 25px); 
+            max-width: 1200px; margin: 0 auto; padding: 0 10px;
+        }
 
         .menu-trigger {
             background: transparent; border: 1px solid var(--digit-color);
-            color: var(--digit-color); padding: 10px 20px;
-            font-family: 'Orbitron', sans-serif; font-size: 11px;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s;
+            color: var(--digit-color); padding: 12px clamp(10px, 2vw, 25px);
+            font-family: 'Orbitron', sans-serif; font-size: clamp(9px, 1.2vw, 12px);
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.3s; flex-shrink: 0;
         }
-        .menu-trigger:hover { background: var(--digit-color); color: #000; box-shadow: 0 0 15px var(--digit-color); }
 
         .dropdown-menu {
             display: none; position: absolute; top: 100%; left: 50%;
             transform: translateX(-50%); background: rgba(0, 5, 15, 0.98);
-            border: 1px solid var(--digit-color); width: 320px; margin-top: 10px;
+            border: 1px solid var(--digit-color); width: 280px; margin-top: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         .dropdown-menu.show { display: block; }
         .dropdown-menu button {
             width: 100%; padding: 15px; background: none; border: none;
             color: #fff; text-align: left; font-family: 'Orbitron', sans-serif;
-            font-size: 10px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 11px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* TRIKOLOR VISSZASZÁMLÁLÓ */
+        /* VISSZASZÁMLÁLÓ - ADAPTÍV RENDSZER */
         .hero-section { 
-            text-align: center; 
-            margin: 60px 0; 
-            padding: 40px;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-            border-radius: 20px;
-            /* ERŐTELJES TRIKOLOR KERET ÉS GLOW */
-            border-top: 4px solid var(--h-red);
-            border-bottom: 4px solid var(--h-green);
-            box-shadow: 0 0 40px rgba(206, 17, 38, 0.2), 0 0 40px rgba(0, 135, 81, 0.2);
+            text-align: center; width: 95%; max-width: 900px;
+            margin: clamp(30px, 5vh, 60px) 0; padding: clamp(20px, 4vw, 50px);
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+            border-top: 4px solid var(--h-red); border-bottom: 4px solid var(--h-green);
         }
         
         .target-label {
-            font-size: 14px; letter-spacing: 8px; color: var(--h-white);
-            margin-bottom: 40px; text-transform: uppercase; opacity: 0.9;
+            font-size: clamp(10px, 1.5vw, 14px); letter-spacing: clamp(3px, 1vw, 8px); 
+            color: var(--h-white); margin-bottom: clamp(20px, 4vh, 40px); text-transform: uppercase;
         }
 
         .countdown-grid {
-            display: flex; justify-content: center; align-items: baseline; gap: 30px;
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); /* Desktop: 4 oszlop */
+            gap: clamp(10px, 2vw, 30px);
+            align-items: baseline;
         }
 
         .time-box { display: flex; flex-direction: column; align-items: center; }
 
         .time-value {
             font-weight: 900; 
-            font-size: clamp(60px, 18vw, 180px); /* MÉG NAGYOBB SZÁMOK */
-            color: #fff; 
-            line-height: 0.8;
-            letter-spacing: -5px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            font-size: clamp(45px, 15vw, 150px); /* Dinamikus óriás méret */
+            color: #fff; line-height: 0.8;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
         .time-label {
-            font-size: 12px; color: var(--h-white);
-            text-transform: uppercase; margin-top: 15px; letter-spacing: 4px; font-weight: 700;
+            font-size: clamp(8px, 1.2vw, 12px); color: var(--h-white);
+            text-transform: uppercase; margin-top: 15px; letter-spacing: 2px;
         }
 
-        .sep { font-size: 80px; color: var(--h-white); opacity: 0.3; }
-
-        /* VIDEO */
+        /* VIDEÓ */
         .main-container {
-            width: 95%; max-width: 1100px;
-            background: #000;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px; margin-bottom: 60px;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
+            width: 95%; max-width: 1100px; background: #000;
+            border: 1px solid rgba(255,255,255,0.1); padding: 5px; margin-bottom: 40px;
         }
         .video-wrapper { position: relative; padding-top: 56.25%; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         /* CTA */
         .cta-section {
-            width: 95%; max-width: 600px; 
-            background: linear-gradient(to right, rgba(206, 17, 38, 0.1), rgba(0, 135, 81, 0.1));
-            border: 1px solid var(--h-white);
-            padding: 50px; text-align: center; margin-bottom: 80px;
+            width: 95%; max-width: 600px; padding: 40px 20px; text-align: center;
+            border: 1px solid var(--h-white); margin-bottom: 60px;
+            background: linear-gradient(to bottom, rgba(206,17,38,0.05), rgba(0,135,81,0.05));
         }
 
         .cta-btn {
             display: inline-block; background: var(--h-white); color: #000;
-            padding: 18px 40px; font-weight: 900; text-transform: uppercase; 
-            letter-spacing: 3px; text-decoration: none; transition: 0.3s;
+            padding: 18px 35px; font-weight: 900; text-transform: uppercase; 
+            letter-spacing: 2px; text-decoration: none; font-size: 14px;
         }
-        .cta-btn:hover { background: var(--digit-color); transform: scale(1.05); }
 
-        footer { padding: 40px; opacity: 0.5; font-size: 10px; letter-spacing: 5px; text-align: center; }
+        footer { padding: 30px; opacity: 0.5; font-size: 9px; letter-spacing: 3px; text-align: center; }
 
-        @media (max-width: 768px) {
-            .countdown-grid { gap: 10px; }
-            .time-value { font-size: 80px; letter-spacing: -2px; }
-            .sep { display: none; }
-            .hero-section { padding: 20px 10px; }
+        /* MOBIL ÉS TABLET SPECIFIKUS MÓDOSÍTÁSOK */
+        @media (max-width: 650px) {
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr); /* Mobilon 2x2-es elrendezés */
+                gap: 30px 10px;
+            }
+            .time-value { font-size: clamp(60px, 25vw, 100px); }
+            .hero-section { padding: 30px 10px; }
+            .dropdown-menu { width: 90vw; }
+        }
+
+        @media (min-width: 1200px) {
+            .time-value { font-size: 180px; } /* Asztali gépen maradjon brutális */
         }
     </style>
 </head>
@@ -178,10 +168,12 @@
                     <button onclick="changeV('7IC-7l9JOcQ')">ÉLŐ KÖZVETÍTÉS</button>
                 </div>
             </div>
-            <button class="menu-trigger" onclick="toggleM('influ')">INFLUENSZEREK ▼</button>
-            <div id="influ" class="dropdown-menu">
-                <button onclick="changeV('ApQLK2-mB0w')">JUHI</button>
-                <button onclick="changeV('fsv5WlC1oLE')">FÓKUSZCSOPORT</button>
+            <div style="position: relative;">
+                <button class="menu-trigger" onclick="toggleM('influ')">INFLUENSZEREK ▼</button>
+                <div id="influ" class="dropdown-menu">
+                    <button onclick="changeV('ApQLK2-mB0w')">JUHI</button>
+                    <button onclick="changeV('fsv5WlC1oLE')">FÓKUSZCSOPORT</button>
+                </div>
             </div>
         </div>
     </header>
@@ -193,17 +185,14 @@
                 <span class="time-value" id="d">00</span>
                 <span class="time-label">Nap</span>
             </div>
-            <span class="sep">:</span>
             <div class="time-box">
                 <span class="time-value" id="h">00</span>
                 <span class="time-label">Óra</span>
             </div>
-            <span class="sep">:</span>
             <div class="time-box">
                 <span class="time-value" id="m">00</span>
                 <span class="time-label">Perc</span>
             </div>
-            <span class="sep">:</span>
             <div class="time-box">
                 <span class="time-value" id="s">00</span>
                 <span class="time-label">Mp</span>
@@ -218,11 +207,11 @@
     </div>
 
     <section class="cta-section">
-        <h2 style="margin-bottom: 20px; letter-spacing: 2px;">KÜLFÖLDÖN ÉLSZ?</h2>
+        <h2 style="margin-bottom: 20px; font-size: 18px;">KÜLFÖLDÖN ÉLSZ?</h2>
         <a href="https://szavazzhaza.hu/" target="_blank" class="cta-btn">SZAVAZZ HAZA! ➔</a>
     </section>
 
-    <footer>© 2026 RENDSZER-VALTAS.HU - MAGYARORSZÁG MEGÚJUL</footer>
+    <footer>© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
         function toggleM(id) {
@@ -232,7 +221,11 @@
             if(!is) m.classList.add('show');
         }
 
-        window.onclick = e => { if (!e.target.matches('.menu-trigger')) document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show')); }
+        window.onclick = e => { 
+            if (!e.target.matches('.menu-trigger')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+            }
+        }
 
         function changeV(id) {
             document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
