@@ -12,7 +12,7 @@
     <meta property="og:image" content="https://rendszer-valtas.hu/social.jpg">
     <meta property="og:type" content="website">
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo+Narrow:wght@700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -20,8 +20,8 @@
             --h-red: #ce1126;
             --h-green: #008751;
             --h-white: #ffffff;
-            --bg-dark: #000205; /* Még sötétebb alap */
-            --glass: rgba(0, 4, 10, 0.85);
+            --bg-dark: #000205;
+            --glass: rgba(0, 4, 10, 0.88);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -37,18 +37,18 @@
             overflow-x: hidden;
         }
 
-        /* HÁTTÉR - SÖTÉTÍTETT RÉTEG A JOBB OLVASHATÓSÁGÉRT */
+        /* DINAMIKUS HÁTTÉR KEZELÉS */
         .bg-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; background-image: url('social.jpg');
             background-size: cover; background-position: center; 
-            opacity: 0.45; /* Visszavéve, hogy ne legyen tolakodó */
+            opacity: 0.4;
         }
 
         .bg-overlay-fix {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; 
-            background: radial-gradient(circle at center, rgba(0,2,5,0.4) 0%, var(--bg-dark) 90%);
+            background: radial-gradient(circle at center, rgba(0,2,5,0.3) 0%, var(--bg-dark) 95%);
         }
 
         /* NAVBAR */
@@ -84,64 +84,63 @@
             font-size: 11px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* VISSZASZÁMLÁLÓ - KÖZÉPRE IGAZÍTVA, VIDEÓ SZÉLESSÉG */
+        /* VISSZASZÁMLÁLÓ - KESKENY, VASKOOS SZÁMOKKAL */
         .hero-section { 
             text-align: center; 
             width: 95%; 
             max-width: 1100px; 
-            margin: clamp(40px, 6vh, 80px) 0; 
-            padding: clamp(40px, 6vw, 70px) 20px;
+            margin: clamp(30px, 5vh, 70px) 0; 
+            padding: clamp(30px, 5vw, 60px) 15px;
             background: var(--glass);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-top: 6px solid var(--h-red); 
             border-bottom: 6px solid var(--h-green);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
         
         .target-label {
-            font-size: clamp(12px, 1.8vw, 18px); letter-spacing: 8px; 
-            color: var(--h-white); margin-bottom: clamp(30px, 5vh, 50px); 
+            font-size: clamp(11px, 1.6vw, 16px); letter-spacing: 6px; 
+            color: var(--h-white); margin-bottom: clamp(25px, 4vh, 40px); 
             text-transform: uppercase; font-weight: 900;
         }
 
         .countdown-grid {
             display: flex; 
             width: 100%;
-            max-width: 950px;
-            justify-content: center; /* Matematikai középpont */
+            justify-content: center;
             align-items: center;
-            gap: clamp(10px, 2.5vw, 40px);
+            gap: clamp(8px, 2.2vw, 35px);
         }
 
         .time-box { 
             display: flex; flex-direction: column; align-items: center; 
-            min-width: clamp(70px, 14vw, 180px);
+            min-width: clamp(65px, 15vw, 170px);
         }
 
         .time-value {
-            font-weight: 900; 
-            font-size: clamp(55px, 15vw, 180px); 
+            font-family: 'Archivo Narrow', sans-serif; /* Keskenyebb, de vaskos betű */
+            font-weight: 700; 
+            font-size: clamp(60px, 18vw, 220px); 
             color: #fff; line-height: 0.8;
-            text-shadow: 0 0 40px rgba(0, 242, 255, 0.4);
+            text-shadow: 0 0 40px rgba(0, 242, 255, 0.5);
         }
 
         .time-label {
             font-size: clamp(9px, 1.4vw, 16px); color: var(--digit-color);
-            text-transform: uppercase; margin-top: 25px; letter-spacing: clamp(2px, 0.5vw, 5px); font-weight: 900;
+            text-transform: uppercase; margin-top: 20px; letter-spacing: clamp(2px, 0.4vw, 5px); font-weight: 900;
         }
 
         .quartz-sep {
+            font-family: 'Archivo Narrow', sans-serif;
             font-size: clamp(40px, 10vw, 140px);
             color: var(--h-white);
-            font-weight: 900;
-            padding-bottom: clamp(15px, 3vw, 30px);
-            opacity: 0.4;
-            animation: blink 1.5s infinite;
-            display: flex; align-items: center;
+            font-weight: 700;
+            padding-bottom: clamp(15px, 3.5vw, 35px);
+            opacity: 0.35;
+            animation: blink 2s infinite;
         }
 
         @keyframes blink { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.1; } }
@@ -150,7 +149,7 @@
         .main-container {
             width: 95%; max-width: 1100px; background: #000;
             border: 2px solid rgba(255,255,255,0.1); padding: 8px; margin-bottom: 60px;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
+            box-shadow: 0 0 60px rgba(0,0,0,1);
         }
         .video-wrapper { position: relative; padding-top: 56.25%; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
@@ -165,22 +164,22 @@
         .cta-btn {
             display: inline-block; background: var(--h-white); color: #000;
             padding: 22px 60px; font-weight: 900; text-transform: uppercase; 
-            letter-spacing: 4px; text-decoration: none; font-size: clamp(16px, 2vw, 20px);
+            letter-spacing: 4px; text-decoration: none; font-size: clamp(15px, 2vw, 19px);
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .cta-btn:hover { background: var(--digit-color); transform: scale(1.1); box-shadow: 0 0 30px var(--digit-color); }
+        .cta-btn:hover { background: var(--digit-color); transform: scale(1.08); box-shadow: 0 0 35px var(--digit-color); }
 
-        footer { width: 100%; padding: 50px; background: rgba(0,0,0,0.9); font-size: 11px; letter-spacing: 6px; text-align: center; }
+        footer { width: 100%; padding: 50px; background: rgba(0,0,0,0.9); font-size: 11px; letter-spacing: 5px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
 
-        /* MOBIL OPTIMALIZÁLÁS */
+        /* MOBIL ÉS TABLET OPTIMALIZÁLÁS */
         @media (max-width: 768px) {
             .countdown-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr; 
-                gap: 40px 10px;
+                gap: 45px 10px;
             }
             .quartz-sep { display: none; } 
-            .time-value { font-size: clamp(70px, 22vw, 130px); }
+            .time-value { font-size: clamp(80px, 24vw, 140px); }
             .hero-section { padding: 40px 10px; width: 98%; }
         }
     </style>
@@ -241,12 +240,12 @@
     </div>
 
     <section class="cta-section">
-        <h2 style="margin-bottom: 25px; font-size: clamp(20px, 3vw, 28px); letter-spacing: 3px;">KÜLFÖLDÖN ÉLSZ?</h2>
-        <p style="margin-bottom: 40px; opacity: 0.9;">Legyen beleszólásod a hazád jövőjébe!</p>
+        <h2 style="margin-bottom: 25px; font-size: clamp(18px, 2.5vw, 26px); letter-spacing: 3px;">KÜLFÖLDÖN ÉLSZ?</h2>
+        <p style="margin-bottom: 40px; opacity: 0.9;">Ne hagyd, hogy mások döntsenek helyetted.</p>
         <a href="https://szavazzhaza.hu/" target="_blank" class="cta-btn">SZAVAZZ HAZA! ➔</a>
     </section>
 
-    <footer>© 2026 RENDSZER-VALTAS.HU - A JÖVŐT MI ÍRJUK</footer>
+    <footer>© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
         function toggleM(id) {
