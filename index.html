@@ -26,6 +26,8 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
+        html { scroll-behavior: smooth; }
+
         body {
             background-color: var(--bg-dark);
             color: white;
@@ -41,7 +43,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; background-image: url('social.jpg');
             background-size: cover; background-position: center; 
-            opacity: 0.35;
+            opacity: 0.25;
         }
 
         .bg-overlay-fix {
@@ -57,119 +59,106 @@
         }
 
         .nav-container { 
-            display: flex; justify-content: center; gap: clamp(10px, 3vw, 30px); 
-            max-width: 1100px; margin: 0 auto; padding: 0 15px;
+            display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(5px, 2vw, 20px); 
+            max-width: 1200px; margin: 0 auto; padding: 0 10px;
         }
 
-        .menu-trigger {
+        .menu-trigger, .nav-link {
             background: transparent; border: 1px solid var(--digit-color);
-            color: var(--digit-color); padding: 12px 28px;
-            font-family: 'Orbitron', sans-serif; font-size: clamp(10px, 1.2vw, 13px);
+            color: var(--digit-color); padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif; font-size: clamp(9px, 1.1vw, 12px);
             cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s; font-weight: 700;
+            transition: 0.3s; font-weight: 700; text-decoration: none;
+            display: inline-block;
         }
+
+        .menu-trigger:hover, .nav-link:hover { background: rgba(0, 242, 255, 0.1); }
 
         .dropdown-menu {
             display: none; position: absolute; top: 100%; left: 50%;
             transform: translateX(-50%); background: rgba(0, 5, 15, 0.98);
-            border: 1px solid var(--digit-color); width: 300px; margin-top: 10px;
+            border: 1px solid var(--digit-color); width: 250px; margin-top: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .dropdown-menu.show { display: block; }
         .dropdown-menu button {
-            width: 100%; padding: 18px; background: none; border: none;
+            width: 100%; padding: 15px; background: none; border: none;
             color: #fff; text-align: left; font-family: 'Orbitron', sans-serif;
-            font-size: 11px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 10px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* HATÁROZOTT, SZÉLES VISSZASZÁMLÁLÓ */
+        /* HERO / COUNTDOWN */
         .hero-section { 
-            text-align: center; 
-            width: 95%; 
-            max-width: 1100px; 
-            margin: clamp(30px, 5vh, 60px) 0; 
-            padding: clamp(30px, 6vw, 80px) 10px;
-            background: var(--glass);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-top: 6px solid var(--h-red); 
-            border-bottom: 6px solid var(--h-green);
+            text-align: center; width: 95%; max-width: 1100px; 
+            margin: 40px 0; padding: clamp(30px, 6vw, 60px) 10px;
+            background: var(--glass); backdrop-filter: blur(25px);
+            border-top: 6px solid var(--h-red); border-bottom: 6px solid var(--h-green);
             box-shadow: 0 50px 100px rgba(0,0,0,0.95);
         }
         
         .target-label {
-            font-size: clamp(10px, 1.5vw, 15px); letter-spacing: 10px; 
-            color: var(--h-white); margin-bottom: 50px; text-transform: uppercase; font-weight: 900;
+            font-size: clamp(10px, 1.5vw, 14px); letter-spacing: 8px; 
+            color: var(--h-white); margin-bottom: 40px; text-transform: uppercase; font-weight: 900;
         }
 
-        .countdown-grid {
-            display: flex; 
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            gap: clamp(5px, 1.5vw, 20px);
-        }
-
-        .time-box { 
-            display: flex; flex-direction: column; align-items: center; 
-            flex: 1;
-        }
-
-        .time-value {
-            font-weight: 900; /* Legvaskosabb Orbitron */
-            font-size: clamp(45px, 13vw, 160px); 
-            color: #fff; line-height: 0.8;
-            text-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
-            letter-spacing: -2px;
-        }
-
-        .time-label {
-            font-size: clamp(8px, 1.2vw, 14px); color: var(--digit-color);
-            text-transform: uppercase; margin-top: 25px; letter-spacing: 4px; font-weight: 900;
-        }
-
-        .quartz-sep {
-            font-size: clamp(30px, 8vw, 110px);
-            color: var(--h-white);
-            font-weight: 900;
-            padding: 0 5px 30px 5px; /* Biztosítja a távolságot a betűktől */
-            opacity: 0.4;
-            animation: blink 2s infinite;
-        }
+        .countdown-grid { display: flex; width: 100%; justify-content: center; align-items: center; gap: clamp(5px, 1.5vw, 15px); }
+        .time-box { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .time-value { font-weight: 900; font-size: clamp(40px, 11vw, 140px); color: #fff; line-height: 0.8; text-shadow: 0 0 30px rgba(0, 242, 255, 0.3); }
+        .time-label { font-size: clamp(7px, 1vw, 12px); color: var(--digit-color); text-transform: uppercase; margin-top: 15px; letter-spacing: 3px; font-weight: 900; }
+        .quartz-sep { font-size: clamp(25px, 7vw, 100px); color: var(--h-white); font-weight: 900; padding-bottom: 20px; opacity: 0.4; animation: blink 2s infinite; }
 
         @keyframes blink { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.1; } }
 
+        /* VIDEÓ ÉS HÍREK SZEKCIÓK */
+        .section-title {
+            width: 100%; max-width: 1100px; margin: 60px 0 30px 0;
+            border-left: 5px solid var(--digit-color); padding-left: 20px;
+            font-size: clamp(18px, 3vw, 28px); letter-spacing: 5px; text-transform: uppercase;
+        }
+
         .main-container {
             width: 95%; max-width: 1100px; background: #000;
-            border: 2px solid rgba(255,255,255,0.1); padding: 8px; margin-bottom: 60px;
+            border: 2px solid rgba(255,255,255,0.1); padding: 8px; margin-bottom: 40px;
         }
         .video-wrapper { position: relative; padding-top: 56.25%; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
+        /* VÁLASZTÁSI HÍREK RÁCS */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px; width: 95%; max-width: 1200px; margin-bottom: 80px;
+        }
+
+        .news-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; overflow: hidden;
+            transition: 0.3s;
+        }
+        .news-card:hover { border-color: var(--digit-color); transform: translateY(-5px); }
+
         .cta-section {
-            width: 95%; max-width: 700px; padding: 60px 20px; text-align: center;
-            border: 2px solid var(--h-white); margin-bottom: 100px;
-            background: var(--glass); backdrop-filter: blur(10px);
+            width: 95%; max-width: 700px; padding: 50px 20px; text-align: center;
+            border: 2px solid var(--h-white); margin-bottom: 80px;
+            background: var(--glass);
         }
 
         .cta-btn {
             display: inline-block; background: var(--h-white); color: #000;
-            padding: 22px 55px; font-weight: 900; text-transform: uppercase; 
-            letter-spacing: 4px; text-decoration: none; font-size: clamp(14px, 2vw, 18px);
+            padding: 20px 45px; font-weight: 900; text-transform: uppercase; 
+            letter-spacing: 3px; text-decoration: none; font-size: clamp(12px, 1.8vw, 16px);
             transition: 0.3s;
         }
         .cta-btn:hover { background: var(--digit-color); transform: translateY(-3px); box-shadow: 0 10px 30px var(--digit-color); }
 
-        footer { width: 100%; padding: 50px; background: #000; font-size: 10px; letter-spacing: 6px; text-align: center; opacity: 0.8; }
+        footer { width: 100%; padding: 40px; background: #000; font-size: 9px; letter-spacing: 4px; text-align: center; opacity: 0.7; }
 
-        /* MOBIL NÉZET - 2x2 RÁCS */
         @media (max-width: 850px) {
-            .countdown-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr; 
-                gap: 50px 10px;
-            }
+            .countdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 10px; }
             .quartz-sep { display: none; } 
-            .time-value { font-size: clamp(70px, 22vw, 130px); }
-            .hero-section { padding: 50px 15px; }
+            .time-value { font-size: clamp(60px, 20vw, 110px); }
+            .nav-container { flex-direction: row; }
         }
     </style>
 </head>
@@ -179,7 +168,7 @@
     <div class="bg-overlay-fix"></div>
 
     <header>
-        <div class="nav-container">
+        <nav class="nav-container">
             <div style="position: relative;">
                 <button class="menu-trigger" onclick="toggleM('tisza')">TISZA PÁRT ▼</button>
                 <div id="tisza" class="dropdown-menu">
@@ -194,37 +183,42 @@
                     <button onclick="changeV('fsv5WlC1oLE')">FÓKUSZCSOPORT</button>
                 </div>
             </div>
-        </div>
+            <a href="#hirek" class="nav-link">VÁLASZTÁSI HÍREK</a>
+        </nav>
     </header>
 
     <main class="hero-section">
         <div class="target-label">RENDSZERVÁLTÁS: 2026. ÁPRILIS 12.</div>
         <div class="countdown-grid">
-            <div class="time-box">
-                <span class="time-value" id="d">00</span>
-                <span class="time-label">Nap</span>
-            </div>
+            <div class="time-box"><span class="time-value" id="d">00</span><span class="time-label">Nap</span></div>
             <span class="quartz-sep">:</span>
-            <div class="time-box">
-                <span class="time-value" id="h">00</span>
-                <span class="time-label">Óra</span>
-            </div>
+            <div class="time-box"><span class="time-value" id="h">00</span><span class="time-label">Óra</span></div>
             <span class="quartz-sep">:</span>
-            <div class="time-box">
-                <span class="time-value" id="m">00</span>
-                <span class="time-label">Perc</span>
-            </div>
+            <div class="time-box"><span class="time-value" id="m">00</span><span class="time-label">Perc</span></div>
             <span class="quartz-sep">:</span>
-            <div class="time-box">
-                <span class="time-value" id="s">00</span>
-                <span class="time-label">Mp</span>
-            </div>
+            <div class="time-box"><span class="time-value" id="s">00</span><span class="time-label">Mp</span></div>
         </div>
     </main>
 
+    <div class="section-title">KIEMELT VIDEÓ</div>
     <div class="main-container">
         <div class="video-wrapper">
             <iframe id="player" src="https://www.youtube.com/embed/uMkgzjdHLLU?enablejsapi=1" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div id="hirek" class="section-title">VÁLASZTÁSI HÍREK</div>
+    <div class="news-grid">
+        <div class="news-card">
+            <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpeter.magyar.102%2Fposts%2Fpfbid02YZKSR7eqJuWbur31eN9RRnZe62pM6FLGnBmPDCCc2oYfiwjiWW4XRNd6PCdn39p6l&show_text=true&width=500" width="100%" height="450" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        </div>
+        
+        <div class="news-card">
+             <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ftelexhu%2Fposts%2Fpfbid0amwue61NYThNZHRQwEikoWWXRovUDSBTymZL8HQrE3GW6wTrJ8jMpYbuG55tTCH9l&show_text=true&width=450" width="100%" height="450" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+        </div>
+
+        <div class="news-card">
+             <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkardblog%2Fposts%2Fpfbid028ioiJYqhG24Yd7R9m73ZHZtCU6Hj3EQjiDT7rdKAR1gmSZkxWv3LNg9jkxRm9fNYl&show_text=true&width=450" width="100%" height="450" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
         </div>
     </div>
 
@@ -247,6 +241,7 @@
 
         function changeV(id) {
             document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+            window.scrollTo({ top: document.querySelector('.main-container').offsetTop - 120, behavior: 'smooth' });
         }
 
         const target = new Date(2026, 3, 12, 0, 0, 0).getTime();
@@ -254,7 +249,10 @@
         function update() {
             const now = new Date().getTime();
             const diff = target - now;
-            if(diff < 0) return;
+            if(diff < 0) {
+                document.querySelector('.countdown-grid').innerHTML = "<div style='font-size:30px; color:var(--h-green); font-weight:900;'>ELJÖTT A RENDSZERVÁLTÁS NAPJA!</div>";
+                return;
+            }
 
             document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
             document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
