@@ -13,9 +13,9 @@
             --h-red: #ce1126;
             --h-green: #008751;
             --h-white: #ffffff;
-            --text-main: #f0f0f0; /* Könnyebben olvasható off-white */
+            --text-main: #f5f5f5; /* Világosabb, tiszta szövegszín */
             --bg-dark: #000205;
-            --glass: rgba(0, 4, 10, 0.92);
+            --glass: rgba(0, 4, 10, 0.94);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -98,7 +98,7 @@
 
         .full-menu a:hover { background: var(--digit-color); color: #000; box-shadow: 0 0 25px var(--digit-color); }
 
-        /* Blog Specifikus tartalom */
+        /* Blog Specifikus tartalom - HELVETICA FÓKUSSZAL */
         .blog-container {
             width: 95%; max-width: 900px; margin: 120px 0 60px 0;
             background: var(--glass); backdrop-filter: blur(25px);
@@ -109,18 +109,22 @@
 
         .blog-header { text-align: center; margin-bottom: 50px; }
         .date-tag { color: var(--digit-color); font-size: 13px; letter-spacing: 5px; font-weight: 700; margin-bottom: 15px; display: block; }
-        .blog-title { font-size: clamp(22px, 5vw, 42px); line-height: 1.1; letter-spacing: 2px; text-transform: uppercase; color: var(--h-white); text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .blog-title { font-size: clamp(22px, 5vw, 42px); line-height: 1.1; letter-spacing: 2px; text-transform: uppercase; color: var(--h-white); }
 
         .blog-content { 
+            /* Helvetica beállítása a posztnál */
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             line-height: 1.9; 
             color: var(--text-main); 
-            font-size: 18px; /* Megnövelt betűméret a jobb olvashatóságért */
+            font-size: 19px; 
             text-align: justify;
+            letter-spacing: 0.2px;
         }
         
         .blog-content p { margin-bottom: 30px; }
         
         .blog-content h3 { 
+            font-family: 'Orbitron', sans-serif; /* A címek maradnak tech stílusúak */
             color: var(--digit-color); 
             margin: 50px 0 25px 0; 
             letter-spacing: 3px; 
@@ -139,16 +143,15 @@
             background: rgba(206, 17, 38, 0.15);
             border: 2px solid var(--h-red);
             padding: 35px; margin: 45px 0;
-            box-shadow: inset 0 0 20px rgba(206, 17, 38, 0.1);
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
-        .highlight-box strong { color: var(--h-white); font-size: 20px; display: block; margin-bottom: 10px; }
+        .highlight-box strong { font-family: 'Orbitron', sans-serif; color: var(--h-white); font-size: 20px; display: block; margin-bottom: 10px; }
 
-        footer { width: 100%; padding: 40px; background: #000; font-size: 10px; letter-spacing: 4px; text-align: center; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer { width: 100%; padding: 40px; background: #000; font-size: 10px; letter-spacing: 4px; text-align: center; opacity: 0.8; }
 
         @media (max-width: 600px) {
-            .blog-content { font-size: 16px; text-align: left; }
-            .blog-container { padding: 30px 20px; }
+            .blog-content { font-size: 17px; text-align: left; }
         }
     </style>
 </head>
@@ -167,7 +170,6 @@
     <nav class="full-menu" id="fullMenu">
         <div class="menu-content">
             <div class="menu-section">
-                <span style="color:white; letter-spacing: 5px; font-size: 12px; display:block; margin-bottom:20px; opacity:0.6;">MENÜ</span>
                 <div class="menu-links">
                     <a href="index.html">VISSZA A FŐOLDALRA</a>
                     <a href="blog.html" style="border-color: #fff; color: #fff;">BLOG / HÍREK</a>
@@ -184,12 +186,12 @@
         </header>
 
         <div class="blog-content">
-            <p>2003. április 12-én Magyarország népe egyértelmű és megmásíthatatlan döntést hozott: a Nyugathoz, a fejlődéshez és az Európai Unióhoz akartunk tartozni. Akkor egy olyan jövőre mondtunk igent, ahol a jogállam, a közös jólét és a szabadság nem csak vágyott eszmék, hanem a mindennapi életünk alapkövei. **Magyarország lelke és kultúrája ezer éve Európához tartozik, és ezen a történelmi úton nincs visszaút.**</p>
+            <p>2003. április 12-én Magyarország népe egyértelmű és megmásíthatatlan döntést hozott: a Nyugathoz, a fejlődéshez és az Európai Unióhoz akartunk tartozni. Akkor egy olyan jövőre mondtunk igent, ahol a jogállam, a közös jólét és a szabadság nem csak vágyott eszmék, hanem a mindennapi életünk alapkövei. <strong>Magyarország lelke és kultúrája ezer éve Európához tartozik, és ezen a történelmi úton nincs visszaút.</strong></p>
 
             <img src="image_0.png" alt="A sorsdöntő pillanat: 2003 és 2026 egysége" class="blog-image">
 
             <h3>Ahol a döntésünk gyökerezik</h3>
-            <p>Magyarország nem véletlenül választotta Európát anno. Ez a döntés a szabadságról szólt, arról, hogy soha többé ne legyünk egy elszigetelt, keleti típusú önkény kiszolgáltatottjai. Az EU-csatlakozással hazánk kaput nyitott a világra. Az elért sikereink, a felépült városaink és a gyermekeink jövője mind azt igazolják: **Magyarország Európa mellett döntött akkor, és Európa mellett dönt most is.**</p>
+            <p>Magyarország nem véletlenül választotta Európát anno. Ez a döntés a szabadságról szólt, arról, hogy soha többé ne legyünk egy elszigetelt, keleti típusú önkény kiszolgáltatottjai. Az EU-csatlakozással hazánk kaput nyitott a világra. Az elért sikereink, a felépült városaink és a gyermekeink jövője mind azt igazolják: <strong>Magyarország Európa mellett döntött akkor, és Európa mellett dönt most is.</strong></p>
 
             <div class="highlight-box">
                 <strong>A 2026-OS RENDSZERVÁLTÁS: AZ IGAZSÁG PILLANATA</strong>
@@ -201,7 +203,7 @@
 
             <p>2026. április 12-én újra felemelt fővel mondjuk ki: Magyarország Európa szerves része, és ezt a tagságunkat most egy valódi rendszerváltással pecsételjük meg.</p>
             
-            <p style="text-align: center; color: var(--digit-color); font-weight: 900; margin-top: 60px; letter-spacing: 6px; font-size: 22px; text-shadow: 0 0 15px rgba(0,242,255,0.4);">A JÖVŐ EURÓPAI. 2026.04.12.</p>
+            <p style="text-align: center; color: var(--digit-color); font-weight: 900; margin-top: 60px; letter-spacing: 6px; font-size: 22px; font-family: 'Orbitron', sans-serif;">A JÖVŐ EURÓPAI. 2026.04.12.</p>
         </div>
     </article>
 
