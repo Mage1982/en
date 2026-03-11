@@ -22,6 +22,7 @@
             --h-white: #ffffff;
             --bg-dark: #000205;
             --glass: rgba(0, 4, 10, 0.9);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -39,6 +40,7 @@
             overflow-x: hidden;
         }
 
+        /* Háttér elemek */
         .bg-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; background-image: url('social.jpg');
@@ -52,47 +54,77 @@
             background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
         }
 
+        /* Fejléc és Hamburger */
         header {
-            width: 100%; padding: 15px 0; position: sticky; top: 0; z-index: 1000;
-            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 2px solid var(--h-white);
+            width: 100%; padding: 20px; position: fixed; top: 0; z-index: 2000;
+            display: flex; justify-content: flex-end; align-items: center;
         }
 
-        .nav-container { 
-            display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(5px, 2vw, 20px); 
-            max-width: 1200px; margin: 0 auto; padding: 0 10px;
+        .nav-toggle {
+            cursor: pointer; width: 40px; height: 30px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            z-index: 3000; background: none; border: none;
         }
 
-        .menu-trigger, .nav-link {
+        .nav-toggle span {
+            display: block; width: 100%; height: 3px;
+            background: var(--digit-color);
+            transition: var(--transition);
+            box-shadow: 0 0 10px var(--digit-color);
+        }
+
+        .nav-toggle.active span:nth-child(1) { transform: translateY(13.5px) rotate(45deg); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: translateY(-13.5px) rotate(-45deg); }
+
+        /* Fullscreen Menü */
+        .full-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 2, 5, 0.98);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 2500;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+
+        .full-menu.open { opacity: 1; visibility: visible; }
+
+        .menu-content {
+            width: 90%; max-width: 800px; text-align: center;
+            display: flex; flex-direction: column; gap: 30px;
+        }
+
+        .menu-section { margin-bottom: 20px; }
+        .menu-label { 
+            color: var(--h-white); font-size: 12px; letter-spacing: 5px; 
+            margin-bottom: 15px; display: block; opacity: 0.6;
+        }
+
+        .menu-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+
+        .full-menu a, .full-menu button {
             background: transparent; border: 1px solid var(--digit-color);
-            color: var(--digit-color); padding: 10px 20px;
-            font-family: 'Orbitron', sans-serif; font-size: clamp(9px, 1.1vw, 12px);
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--digit-color); padding: 15px 30px;
+            font-family: 'Orbitron', sans-serif; font-size: clamp(10px, 1.5vw, 14px);
+            cursor: pointer; text-transform: uppercase; letter-spacing: 3px;
             transition: 0.3s; font-weight: 700; text-decoration: none;
-            display: inline-block;
         }
 
-        .menu-trigger:hover, .nav-link:hover { background: rgba(0, 242, 255, 0.1); }
-
-        .dropdown-menu {
-            display: none; position: absolute; top: 100%; left: 50%;
-            transform: translateX(-50%); background: rgba(0, 5, 15, 0.98);
-            border: 1px solid var(--digit-color); width: 250px; margin-top: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .dropdown-menu.show { display: block; }
-        .dropdown-menu button {
-            width: 100%; padding: 15px; background: none; border: none;
-            color: #fff; text-align: left; font-family: 'Orbitron', sans-serif;
-            font-size: 10px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
+        .full-menu a:hover, .full-menu button:hover {
+            background: var(--digit-color); color: #000;
+            box-shadow: 0 0 20px var(--digit-color);
         }
 
-        /* Új videó konténer a visszaszámláló előtt */
+        .blog-link { border-color: var(--h-white) !important; color: var(--h-white) !important; }
+        .blog-link:hover { background: var(--h-white) !important; color: #000 !important; }
+
+        /* Fő tartalom igazítás a fix header miatt */
         .intro-video-container {
-            width: 95%; max-width: 1100px; margin: 40px 0 0 0;
+            width: 95%; max-width: 1100px; margin: 100px 0 0 0;
             border: 2px solid var(--digit-color); background: #000; padding: 5px;
         }
 
+        /* --- Meglévő stílusok megtartása --- */
         .hero-section { 
             text-align: center; width: 95%; max-width: 1100px; 
             margin: 20px 0 40px 0; padding: clamp(30px, 6vw, 60px) 10px;
@@ -127,15 +159,8 @@
         .video-wrapper { position: relative; padding-top: 56.25%; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        .featured-post-container {
-            width: 100%; display: flex; justify-content: center; margin: 20px 0; padding: 0 10px;
-        }
-
-        .news-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px; overflow: hidden; transition: 0.3s; display: flex; justify-content: center;
-        }
-        .news-card:hover { border-color: var(--digit-color); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1); }
+        .featured-post-container { width: 100%; display: flex; justify-content: center; margin: 20px 0; padding: 0 10px; }
+        .news-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; display: flex; justify-content: center; }
 
         .cta-section {
             width: 95%; max-width: 700px; padding: 50px 20px; text-align: center;
@@ -165,23 +190,47 @@
     <div class="bg-overlay-fix"></div>
 
     <header>
-        <nav class="nav-container">
-            <div style="position: relative;">
-                <button class="menu-trigger" onclick="toggleM('tisza')">TISZA PÁRT ▼</button>
-                <div id="tisza" class="dropdown-menu">
-                    <button onclick="changeV('uMkgzjdHLLU')">KAMPÁNY START</button>
-                    <button onclick="changeV('7IC-7l9JOcQ')">ÉLŐ ADÁS</button>
-                </div>
-            </div>
-            <div style="position: relative;">
-                <button class="menu-trigger" onclick="toggleM('influ')">INFLUENSZEREK ▼</button>
-                <div id="influ" class="dropdown-menu">
-                    <button onclick="changeV('ApQLK2-mB0w')">JUHI</button>
-                    <button onclick="changeV('fsv5WlC1oLE')">FÓKUSZCSOPORT</button>
-                </div>
-            </div>
-        </nav>
+        <button class="nav-toggle" id="navToggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <nav class="full-menu" id="fullMenu">
+        <div class="menu-content">
+            <div class="menu-section">
+                <span class="menu-label">NAVIGÁCIÓ</span>
+                <div class="menu-links">
+                    <a href="index.htm">Kezdőlap</a>
+                    <a href="blog.htm" class="blog-link">BLOG (Hírek)</a>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <span class="menu-label">TISZA PÁRT</span>
+                <div class="menu-links">
+                    <button onclick="changeV('uMkgzjdHLLU')">Kampány Start</button>
+                    <button onclick="changeV('7IC-7l9JOcQ')">Élő Adás</button>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <span class="menu-label">INFLUENSZEREK</span>
+                <div class="menu-links">
+                    <button onclick="changeV('ApQLK2-mB0w')">Juhi</button>
+                    <button onclick="changeV('fsv5WlC1oLE')">Fókuszcsoport</button>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <span class="menu-label">KÜLFÖLD</span>
+                <div class="menu-links">
+                    <a href="https://szavazzhaza.hu/" target="_blank">Szavazz Haza!</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <div class="intro-video-container">
         <div class="video-wrapper">
@@ -223,20 +272,28 @@
     <footer>© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
-        function toggleM(id) {
-            const m = document.getElementById(id);
-            const is = m.classList.contains('show');
-            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
-            if(!is) m.classList.add('show');
+        // Menü kezelése
+        function toggleMenu() {
+            const btn = document.getElementById('navToggle');
+            const menu = document.getElementById('fullMenu');
+            btn.classList.toggle('active');
+            menu.classList.toggle('open');
+            
+            // Ha megnyitjuk a menüt, letiltjuk a görgetést a háttérben
+            if(menu.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         }
-
-        window.onclick = e => { if (!e.target.matches('.menu-trigger')) document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show')); }
 
         function changeV(id) {
             document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+            toggleMenu(); // Menü bezárása videóváltás után
             window.scrollTo({ top: document.querySelector('.main-container').offsetTop - 120, behavior: 'smooth' });
         }
 
+        // Visszaszámláló kódja
         const target = new Date(2026, 3, 12, 0, 0, 0).getTime();
         
         function update() {
