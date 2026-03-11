@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>RENDSZERVÁLTÁS 2026 | ELszámoltatás</title>
+    <title>RENDSZERVÁLTÁS 2026 | Elszámoltatás</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -18,7 +18,8 @@
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
         body {
             background-color: var(--bg-dark);
             color: white;
@@ -30,6 +31,7 @@
             overflow-x: hidden;
         }
 
+        /* Háttér rétegek */
         .bg-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; background-image: url('social.jpg');
@@ -43,6 +45,7 @@
             background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
         }
 
+        /* Fejléc */
         header {
             width: 100%; padding: 20px; position: fixed; top: 0; z-index: 2000;
             display: flex; justify-content: space-between; align-items: center;
@@ -54,6 +57,7 @@
             text-decoration: none; border-left: 3px solid var(--digit-color); padding-left: 10px;
         }
 
+        /* Hamburger Gomb */
         .nav-toggle {
             cursor: pointer; width: 45px; height: 35px;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -65,6 +69,38 @@
             background: var(--digit-color);
             transition: var(--transition);
             box-shadow: 0 0 12px var(--digit-color);
+        }
+
+        .nav-toggle.active span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
+
+        /* Fullscreen Menü Overlay */
+        .full-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 2, 5, 0.98);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            z-index: 2500;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+
+        .full-menu.open { opacity: 1; visibility: visible; }
+        .menu-content { width: 90%; max-width: 800px; text-align: center; display: flex; flex-direction: column; gap: 40px; }
+        .menu-label { color: var(--h-white); font-size: 11px; letter-spacing: 6px; margin-bottom: 15px; display: block; opacity: 0.5; font-weight: 700; }
+        .menu-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+
+        .full-menu a, .full-menu button {
+            background: transparent; border: 1px solid var(--digit-color);
+            color: var(--digit-color); padding: 14px 28px;
+            font-family: 'Orbitron', sans-serif; font-size: 13px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 3px;
+            transition: 0.3s; font-weight: 700; text-decoration: none;
+        }
+
+        .full-menu a:hover, .full-menu button:hover {
+            background: var(--digit-color); color: #000;
+            box-shadow: 0 0 25px var(--digit-color);
         }
 
         /* Blog Specifikus tartalom */
@@ -105,10 +141,28 @@
 
     <header>
         <a href="index.html" class="logo-text">RENDSZERVÁLTÁS 2026</a>
-        <button class="nav-toggle" onclick="toggleMenu()">
+        <button class="nav-toggle" id="navToggle" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </button>
     </header>
+
+    <nav class="full-menu" id="fullMenu">
+        <div class="menu-content">
+            <div class="menu-section">
+                <span class="menu-label">NAVIGÁCIÓ</span>
+                <div class="menu-links">
+                    <a href="index.html">VISSZA A FŐOLDALRA</a>
+                    <a href="blog.html" style="border-color: #fff; color: #fff;">BLOG / HÍREK</a>
+                </div>
+            </div>
+            <div class="menu-section">
+                <span class="menu-label">HASZNOS</span>
+                <div class="menu-links">
+                    <a href="https://szavazzhaza.hu/" target="_blank">SZAVAZZ HAZA!</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <article class="blog-container">
         <header class="blog-header">
@@ -139,8 +193,17 @@
 
     <script>
         function toggleMenu() {
-            // Itt a főoldal menü logikája marad
-            alert("Menü funkció aktív - Navigáljon a főoldalra!");
+            const btn = document.getElementById('navToggle');
+            const menu = document.getElementById('fullMenu');
+            btn.classList.toggle('active');
+            menu.classList.toggle('open');
+            
+            // Háttér görgetés kezelése
+            if (menu.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         }
     </script>
 </body>
