@@ -15,7 +15,7 @@
             --h-white: #ffffff;
             --text-main: #f5f5f5;
             --bg-dark: #000205;
-            --glass: rgba(0, 4, 10, 0.94);
+            --glass: rgba(0, 4, 10, 0.96);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -38,12 +38,6 @@
             z-index: -2; background-image: url('social.jpg');
             background-size: cover; background-position: center; 
             opacity: 0.15;
-        }
-
-        .bg-overlay-fix {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; 
-            background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
         }
 
         header {
@@ -78,16 +72,13 @@
         .full-menu {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 2, 5, 0.98);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            z-index: 2500;
+            backdrop-filter: blur(25px); z-index: 2500;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: var(--transition);
         }
 
         .full-menu.open { opacity: 1; visibility: visible; }
-        .menu-content { width: 90%; max-width: 800px; text-align: center; display: flex; flex-direction: column; gap: 40px; }
         .menu-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-
         .full-menu a {
             background: transparent; border: 1px solid var(--digit-color);
             color: var(--digit-color); padding: 14px 28px;
@@ -96,19 +87,24 @@
             transition: 0.3s; font-weight: 700; text-decoration: none;
         }
 
-        .full-menu a:hover { background: var(--digit-color); color: #000; box-shadow: 0 0 25px var(--digit-color); }
-
         .blog-container {
-            width: 95%; max-width: 900px; margin: 120px 0 60px 0;
+            width: 95%; max-width: 900px; margin: 140px 0 60px 0;
             background: var(--glass); backdrop-filter: blur(25px);
             border-top: 6px solid var(--h-red); border-bottom: 6px solid var(--h-green);
             padding: clamp(25px, 6vw, 70px);
             box-shadow: 0 50px 100px rgba(0,0,0,0.95);
         }
 
-        .blog-header { text-align: center; margin-bottom: 50px; }
-        .date-tag { color: var(--digit-color); font-size: 13px; letter-spacing: 5px; font-weight: 700; margin-bottom: 15px; display: block; }
-        .blog-title { font-size: clamp(22px, 5vw, 42px); line-height: 1.1; letter-spacing: 2px; text-transform: uppercase; color: var(--h-white); }
+        .blog-header { text-align: center; margin-bottom: 50px; position: relative; }
+        
+        .blog-title { 
+            font-size: clamp(24px, 5.5vw, 48px); 
+            line-height: 1.1; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            color: var(--h-white);
+            margin-top: 10px;
+        }
 
         .blog-content { 
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -140,18 +136,15 @@
             background: rgba(255, 255, 255, 0.05);
             border-top: 1px solid var(--digit-color);
             border-bottom: 1px solid var(--digit-color);
-            padding: 40px;
-            margin: 45px 0;
-            text-align: center;
-            font-style: italic;
+            padding: 40px; margin: 45px 0; text-align: center;
         }
 
         .quote-box p { 
-            font-size: 24px; 
+            font-size: clamp(18px, 3vw, 24px); 
             color: var(--h-white); 
-            margin-bottom: 0;
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 2px;
+            font-style: italic;
         }
 
         .highlight-box {
@@ -168,7 +161,6 @@
 <body>
 
     <div class="bg-container"></div>
-    <div class="bg-overlay-fix"></div>
 
     <header>
         <a href="index.html" class="logo-text">RENDSZERVÁLTÁS 2026</a>
@@ -179,24 +171,21 @@
 
     <nav class="full-menu" id="fullMenu">
         <div class="menu-content">
-            <div class="menu-section">
-                <div class="menu-links">
-                    <a href="index.html">VISSZA A FŐOLDALRA</a>
-                    <a href="blog.html" style="border-color: #fff; color: #fff;">BLOG / HÍREK</a>
-                    <a href="https://szavazzhaza.hu/" target="_blank">SZAVAZZ HAZA!</a>
-                </div>
+            <div class="menu-links">
+                <a href="index.html">VISSZA A FŐOLDALRA</a>
+                <a href="blog.html" style="border-color: #fff; color: #fff;">BLOG / HÍREK</a>
+                <a href="https://szavazzhaza.hu/" target="_blank">SZAVAZZ HAZA!</a>
             </div>
         </div>
     </nav>
 
     <article class="blog-container">
         <header class="blog-header">
-            <span class="date-tag">2026. MÁRCIUS 11. | MANIFESZTUM</span>
             <h1 class="blog-title">Április 12: A nap, amikor visszavesszük Magyarországot</h1>
         </header>
 
         <div class="blog-content">
-            <p>Huszonhárom évvel ezelőtt, 2003. április 12-én Magyarország népe egy történelmi válaszúthoz érkezett. A népszavazás alkalmával elsöprő többséggel mondtunk igent az Európai Unióhoz való csatlakozásra. Akkor nemcsak egy gazdasági közösség mellett döntöttünk, hanem hitet tettünk a szabadság, a jogállamiság és az ezeréves európai örökségünk mellett. Azt hittük, végleg magunk mögött hagytuk a keleti típusú önkényt.</p>
+            <p>Huszonhárom évvel ezelőtt, 2003. április 12-én Magyarország népe egy történelmi válaszúthoz érkezett. A népszavazás alkalmával elsöprő többséggel mondtunk igent az Európai Unióhoz való csatlakozásra. Akkor nemcsak egy gazdasági közösség mellett döntöttünk, hanem hitet tettünk a szabadság, a jogállamiság és az ezeréves európai örökségünk mellett.</p>
 
             <img src="image_0.png" alt="2003 és 2026 történelmi íve" class="blog-image">
 
@@ -205,7 +194,7 @@
 
             <div class="highlight-box">
                 <strong>VÉGET VETÜNK AZ ÖNKÉNYNEK</strong>
-                <p>2026 áprilisában nem csupán kormányt váltunk: <strong>rendszert váltunk.</strong> Eltöröljük azt a morális és erkölcsi mocsarat, amelybe az országot kényszerítették. Minden egyes elpazarolt fillérért, minden egyes elnyomott hangért és minden tönkretett sorsért felelősséget kell vállalniuk az elkövetőknek. A hatóságok előtt fognak felelni a magyar nép ellen elkövetett bűneikért.</p>
+                <p>2026 áprilisában nem csupán kormányt váltunk: <strong>rendszert váltunk.</strong> Eltöröljük azt a morális és erkölcsi mocsarat, amelybe az országot kényszerítették. Minden egyes elpazarolt fillérért és minden tönkretett sorsért felelniük kell az elkövetőknek a hatóságok előtt.</p>
             </div>
 
             <div class="quote-box">
@@ -213,10 +202,8 @@
             </div>
 
             <h3>Április 12: A mi választásunk</h3>
-            <p>Magyarország Európához tartozik. Magyarország Európa mellett döntött 2003-ban, és Európa mellett dönt 2026. április 12-én is. Ez a nap a megtisztulás napja lesz. Visszaadjuk az ország méltóságát, helyreállítjuk a hitet a jogban és az igazságban, és újra elfoglaljuk méltó helyünket az európai nemzetek családjában.</p>
+            <p>Magyarország Európához tartozik. Magyarország Európa mellett döntött 2003-ban, és Európa mellett dönt 2026. április 12-én is. Ez a nap a megtisztulás napja lesz. Visszaadjuk az ország méltóságát, és újra elfoglaljuk méltó helyünket az európai nemzetek családjában.</p>
 
-            <p>Nincs többé félelem, nincs többé bizonytalanság. Áprilisban lezárjuk a válság korszakát, és megnyitjuk az újjáépítés évtizedét.</p>
-            
             <p style="text-align: center; color: var(--digit-color); font-weight: 900; margin-top: 60px; letter-spacing: 6px; font-size: 22px; font-family: 'Orbitron', sans-serif;">RENDSZERVÁLTÁS. 2026.04.12.</p>
         </div>
     </article>
