@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>RENDSZERVÁLTÁS 2026 | Elszámoltatás</title>
+    <title>RENDSZERVÁLTÁS 2026 | Európai Magyarország</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -13,8 +13,9 @@
             --h-red: #ce1126;
             --h-green: #008751;
             --h-white: #ffffff;
+            --text-main: #f0f0f0; /* Könnyebben olvasható off-white */
             --bg-dark: #000205;
-            --glass: rgba(0, 4, 10, 0.9);
+            --glass: rgba(0, 4, 10, 0.92);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -22,16 +23,16 @@
         
         body {
             background-color: var(--bg-dark);
-            color: white;
+            color: var(--text-main);
             font-family: 'Orbitron', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Háttér rétegek */
         .bg-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; background-image: url('social.jpg');
@@ -45,11 +46,11 @@
             background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
         }
 
-        /* Fejléc */
         header {
             width: 100%; padding: 20px; position: fixed; top: 0; z-index: 2000;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
         }
 
         .logo-text {
@@ -57,7 +58,6 @@
             text-decoration: none; border-left: 3px solid var(--digit-color); padding-left: 10px;
         }
 
-        /* Hamburger Gomb */
         .nav-toggle {
             cursor: pointer; width: 45px; height: 35px;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -75,7 +75,6 @@
         .nav-toggle.active span:nth-child(2) { opacity: 0; }
         .nav-toggle.active span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
 
-        /* Fullscreen Menü Overlay */
         .full-menu {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 2, 5, 0.98);
@@ -87,10 +86,9 @@
 
         .full-menu.open { opacity: 1; visibility: visible; }
         .menu-content { width: 90%; max-width: 800px; text-align: center; display: flex; flex-direction: column; gap: 40px; }
-        .menu-label { color: var(--h-white); font-size: 11px; letter-spacing: 6px; margin-bottom: 15px; display: block; opacity: 0.5; font-weight: 700; }
         .menu-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
 
-        .full-menu a, .full-menu button {
+        .full-menu a {
             background: transparent; border: 1px solid var(--digit-color);
             color: var(--digit-color); padding: 14px 28px;
             font-family: 'Orbitron', sans-serif; font-size: 13px;
@@ -98,40 +96,60 @@
             transition: 0.3s; font-weight: 700; text-decoration: none;
         }
 
-        .full-menu a:hover, .full-menu button:hover {
-            background: var(--digit-color); color: #000;
-            box-shadow: 0 0 25px var(--digit-color);
-        }
+        .full-menu a:hover { background: var(--digit-color); color: #000; box-shadow: 0 0 25px var(--digit-color); }
 
         /* Blog Specifikus tartalom */
         .blog-container {
             width: 95%; max-width: 900px; margin: 120px 0 60px 0;
             background: var(--glass); backdrop-filter: blur(25px);
             border-top: 6px solid var(--h-red); border-bottom: 6px solid var(--h-green);
-            padding: clamp(20px, 5vw, 60px);
+            padding: clamp(25px, 6vw, 70px);
             box-shadow: 0 50px 100px rgba(0,0,0,0.95);
         }
 
-        .blog-header { text-align: center; margin-bottom: 40px; }
-        .date-tag { color: var(--digit-color); font-size: 12px; letter-spacing: 4px; font-weight: 700; margin-bottom: 10px; display: block; }
-        .blog-title { font-size: clamp(20px, 4vw, 36px); line-height: 1.2; letter-spacing: 2px; text-transform: uppercase; color: var(--h-white); }
+        .blog-header { text-align: center; margin-bottom: 50px; }
+        .date-tag { color: var(--digit-color); font-size: 13px; letter-spacing: 5px; font-weight: 700; margin-bottom: 15px; display: block; }
+        .blog-title { font-size: clamp(22px, 5vw, 42px); line-height: 1.1; letter-spacing: 2px; text-transform: uppercase; color: var(--h-white); text-shadow: 0 0 20px rgba(255,255,255,0.1); }
 
-        .blog-content { line-height: 1.8; color: #ddd; font-size: 16px; }
-        .blog-content p { margin-bottom: 25px; }
-        .blog-content h3 { color: var(--digit-color); margin: 40px 0 20px 0; letter-spacing: 3px; text-transform: uppercase; font-size: 20px; border-left: 4px solid var(--digit-color); padding-left: 15px; }
+        .blog-content { 
+            line-height: 1.9; 
+            color: var(--text-main); 
+            font-size: 18px; /* Megnövelt betűméret a jobb olvashatóságért */
+            text-align: justify;
+        }
+        
+        .blog-content p { margin-bottom: 30px; }
+        
+        .blog-content h3 { 
+            color: var(--digit-color); 
+            margin: 50px 0 25px 0; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            font-size: 22px; 
+            border-left: 5px solid var(--digit-color); 
+            padding-left: 20px; 
+        }
 
         .blog-image {
             width: 100%; border: 2px solid var(--digit-color);
-            margin: 30px 0; box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            margin: 40px 0; box-shadow: 0 0 40px rgba(0, 242, 255, 0.25);
         }
 
         .highlight-box {
-            background: rgba(206, 17, 38, 0.1);
-            border: 1px solid var(--h-red);
-            padding: 20px; margin: 30px 0;
+            background: rgba(206, 17, 38, 0.15);
+            border: 2px solid var(--h-red);
+            padding: 35px; margin: 45px 0;
+            box-shadow: inset 0 0 20px rgba(206, 17, 38, 0.1);
         }
 
-        footer { width: 100%; padding: 40px; background: #000; font-size: 9px; letter-spacing: 4px; text-align: center; opacity: 0.7; }
+        .highlight-box strong { color: var(--h-white); font-size: 20px; display: block; margin-bottom: 10px; }
+
+        footer { width: 100%; padding: 40px; background: #000; font-size: 10px; letter-spacing: 4px; text-align: center; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        @media (max-width: 600px) {
+            .blog-content { font-size: 16px; text-align: left; }
+            .blog-container { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -149,15 +167,10 @@
     <nav class="full-menu" id="fullMenu">
         <div class="menu-content">
             <div class="menu-section">
-                <span class="menu-label">NAVIGÁCIÓ</span>
+                <span style="color:white; letter-spacing: 5px; font-size: 12px; display:block; margin-bottom:20px; opacity:0.6;">MENÜ</span>
                 <div class="menu-links">
                     <a href="index.html">VISSZA A FŐOLDALRA</a>
                     <a href="blog.html" style="border-color: #fff; color: #fff;">BLOG / HÍREK</a>
-                </div>
-            </div>
-            <div class="menu-section">
-                <span class="menu-label">HASZNOS</span>
-                <div class="menu-links">
                     <a href="https://szavazzhaza.hu/" target="_blank">SZAVAZZ HAZA!</a>
                 </div>
             </div>
@@ -166,30 +179,33 @@
 
     <article class="blog-container">
         <header class="blog-header">
-            <span class="date-tag">2026. ÁPRILIS 12. | A VALÓDI RENDSZERVÁLTÁS</span>
-            <h1 class="blog-title">Visszatérés Európába: 23 év után bevégezzük a munkát</h1>
+            <span class="date-tag">2026. ÁPRILIS 12. | NEMZETI SORSDÖNTÉS</span>
+            <h1 class="blog-title">Magyarország Európa: <br>23 év után bevégezzük a munkát</h1>
         </header>
 
         <div class="blog-content">
-            <p>2003. április 12-én Magyarország népe egyértelmű döntést hozott: a Nyugathoz, a fejlődéshez és az Európai Unióhoz akartunk tartozni. Akkor egy olyan jövőre mondtunk igent, ahol a jogállam, a jólét és a szabadság nem csak szavak, hanem a mindennapi valóság. <strong>Az EU-csatlakozással hazánk óriási lehetőséget kapott, és az elért sikereink bizonyítják: Európában van a helyünk.</strong></p>
+            <p>2003. április 12-én Magyarország népe egyértelmű és megmásíthatatlan döntést hozott: a Nyugathoz, a fejlődéshez és az Európai Unióhoz akartunk tartozni. Akkor egy olyan jövőre mondtunk igent, ahol a jogállam, a közös jólét és a szabadság nem csak vágyott eszmék, hanem a mindennapi életünk alapkövei. **Magyarország lelke és kultúrája ezer éve Európához tartozik, és ezen a történelmi úton nincs visszaút.**</p>
 
-            <img src="image_0.png" alt="2003 vs 2026: A szabadság útja" class="blog-image">
+            <img src="image_0.png" alt="A sorsdöntő pillanat: 2003 és 2026 egysége" class="blog-image">
 
-            <h3>Az ellopott évtizedek és a rossz politika vége</h3>
-            <p>Sajnos az utóbbi évek politikája módszeresen próbálta lebontani azt, amit 2003-ban felépítettünk. A korrupció, a szövetségeseinkkel való szembefordulás és a saját zsebek megtömése elszigetelte hazánkat. De 2026. április 12-én a kör bezárul. Nem csak választunk, hanem megerősítjük azt az elkötelezettséget, amelyre 23 éve vágytunk.</p>
+            <h3>Ahol a döntésünk gyökerezik</h3>
+            <p>Magyarország nem véletlenül választotta Európát anno. Ez a döntés a szabadságról szólt, arról, hogy soha többé ne legyünk egy elszigetelt, keleti típusú önkény kiszolgáltatottjai. Az EU-csatlakozással hazánk kaput nyitott a világra. Az elért sikereink, a felépült városaink és a gyermekeink jövője mind azt igazolják: **Magyarország Európa mellett döntött akkor, és Európa mellett dönt most is.**</p>
 
             <div class="highlight-box">
-                <p><strong>A 2026-os rendszerváltás nem ígéret, hanem végrehajtás:</strong> Az elmúlt évek káros politikájának felelőseit a hatóságok elé állítjuk. Nincs több következmények nélküli ország. Az európai forrásokat nem luxusberuházásokra, hanem a magyar emberek felemelésére fogjuk fordítani.</p>
+                <strong>A 2026-OS RENDSZERVÁLTÁS: AZ IGAZSÁG PILLANATA</strong>
+                <p>Az elmúlt évek káros és Európa-ellenes politikájának felelőseit a hatóságok elé állítjuk. Nem engedhetjük, hogy egy szűk réteg érdekcsoportja elvágja azokat a szálakat, amiket mi, magyarok közösen fontunk Európával. A korrupciónak vége: az európai forrásoknak a magyar embereket, a kórházakat és az iskolákat kell szolgálniuk, nem a magánvagyonok gyarapítását.</p>
             </div>
 
-            <h3>Elszámoltatás és Újjáépítés</h3>
-            <p>Ez a választás a sorsdöntő pillanat, amikor Magyarország visszaveszi az irányítást. Megerősítjük EU-s tagságunkat, helyreállítjuk a jogrendet, és elszámoltatjuk azokat, akik elárulták a magyar emberek bizalmát. Április 12. többé nem csak egy évforduló lesz, hanem az a nap, amikor Magyarország végleg a fejlődés útjára lépett.</p>
+            <h3>Április 12: A megerősítés napja</h3>
+            <p>Ez a választás több, mint egyszerű politikai küzdelem. Ez a nap a hitvallásunkról szól. Megmutatjuk a világnak, hogy Magyarország nem fordít hátat a szövetségeseinek, és nem hagyja magát kiszakítani az európai közösségből. Helyreállítjuk a jogrendet, és visszavezetjük az országot oda, ahová Szent István óta tartozik.</p>
+
+            <p>2026. április 12-én újra felemelt fővel mondjuk ki: Magyarország Európa szerves része, és ezt a tagságunkat most egy valódi rendszerváltással pecsételjük meg.</p>
             
-            <p style="text-align: center; color: var(--digit-color); font-weight: bold; margin-top: 50px; letter-spacing: 5px;">A JÖVŐT NEM LEHET MEGÁLLÍTANI. 2026.04.12.</p>
+            <p style="text-align: center; color: var(--digit-color); font-weight: 900; margin-top: 60px; letter-spacing: 6px; font-size: 22px; text-shadow: 0 0 15px rgba(0,242,255,0.4);">A JÖVŐ EURÓPAI. 2026.04.12.</p>
         </div>
     </article>
 
-    <footer>© 2026 RENDSZER-VALTAS.HU</footer>
+    <footer>© 2026 RENDSZER-VALTAS.HU | A VÁLTOZÁS NAPJA</footer>
 
     <script>
         function toggleMenu() {
@@ -197,13 +213,7 @@
             const menu = document.getElementById('fullMenu');
             btn.classList.toggle('active');
             menu.classList.toggle('open');
-            
-            // Háttér görgetés kezelése
-            if (menu.classList.contains('open')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : 'auto';
         }
     </script>
 </body>
