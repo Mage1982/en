@@ -1,0 +1,18 @@
+<div id="countdown-banner" style="background: #ff4444; color: white; padding: 10px; text-align: center; font-weight: bold;">
+  A rendszerváltásig hátralévő idő: <span id="timer"></span>
+</div>
+
+<script>
+  // A cél dátumot a Markdown fájlból is átveheti a rendszer
+  const targetDate = new Date("{{ page.countdown_target }}").getTime();
+  
+  setInterval(function() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    
+    document.getElementById("timer").innerHTML = days + " nap " + hours + " óra ";
+  }, 1000);
+</script>
