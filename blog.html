@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>RENDSZERVÁLTÁS 2026 | Történelmi Igazságtétel</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -24,7 +24,7 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Rajdhani', sans-serif; /* Alapértelmezett ékezetbarát */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -50,110 +50,100 @@
         .logo-text {
             color: var(--h-white); font-weight: 900; letter-spacing: 3px; font-size: 14px;
             text-decoration: none; border-left: 3px solid var(--digit-color); padding-left: 10px;
+            font-family: 'Orbitron', sans-serif;
         }
 
-        .nav-toggle {
-            cursor: pointer; width: 45px; height: 35px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            z-index: 3000; background: none; border: none; padding: 5px;
+        /* Elrendezés: Grid a tartalomnak és a sidebarnak */
+        .layout-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 300px; /* Fő tartalom + Sidebar */
+            gap: 40px;
+            width: 95%;
+            max-width: 1200px;
+            margin: 140px 0 60px 0;
         }
 
-        .nav-toggle span {
-            display: block; width: 100%; height: 3px;
-            background: var(--digit-color);
-            transition: var(--transition);
-            box-shadow: 0 0 12px var(--digit-color);
+        .blog-container {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border-top: 6px solid var(--h-red);
+            border-bottom: 6px solid var(--h-green);
+            padding: clamp(25px, 5vw, 60px);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.95);
         }
 
+        /* SIDEBAR STÍLUS */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-widget {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 25px;
+        }
+
+        .widget-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: var(--digit-color);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--digit-color);
+            padding-bottom: 10px;
+        }
+
+        .archive-list { list-style: none; }
+        .archive-list li { margin-bottom: 12px; }
+        .archive-list a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+            display: block;
+        }
+        .archive-list a:hover { color: var(--digit-color); padding-left: 5px; }
+
+        /* BLOG TARTALOM */
+        .blog-title { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(22px, 4vw, 40px); 
+            line-height: 1.2; letter-spacing: 1px; 
+            text-transform: uppercase; color: var(--h-white);
+            margin-bottom: 30px;
+        }
+
+        .blog-content { font-size: 18px; text-align: justify; }
+        .blog-content h3 { 
+            font-family: 'Orbitron', sans-serif; color: var(--digit-color); 
+            margin: 40px 0 20px 0; font-size: 20px; 
+        }
+
+        .highlight-box {
+            background: rgba(206, 17, 38, 0.1); border: 2px solid var(--h-red);
+            padding: 25px; margin: 30px 0;
+        }
+
+        /* Mobil nézet */
+        @media (max-width: 950px) {
+            .layout-wrapper { grid-template-columns: 1fr; }
+            .sidebar { order: 2; }
+        }
+
+        /* Menü stílusa marad a korábbi */
+        .nav-toggle { cursor: pointer; width: 45px; height: 35px; display: flex; flex-direction: column; justify-content: space-between; background: none; border: none; }
+        .nav-toggle span { display: block; width: 100%; height: 3px; background: var(--digit-color); transition: var(--transition); box-shadow: 0 0 12px var(--digit-color); }
         .nav-toggle.active span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
         .nav-toggle.active span:nth-child(2) { opacity: 0; }
         .nav-toggle.active span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
 
-        .full-menu {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 2, 5, 0.98);
-            backdrop-filter: blur(25px); z-index: 2500;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: var(--transition);
-        }
-
+        .full-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 2, 5, 0.98); backdrop-filter: blur(25px); z-index: 2500; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: var(--transition); }
         .full-menu.open { opacity: 1; visibility: visible; }
-        .menu-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-        .full-menu a {
-            background: transparent; border: 1px solid var(--digit-color);
-            color: var(--digit-color); padding: 14px 28px;
-            font-family: 'Orbitron', sans-serif; font-size: 13px;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 3px;
-            transition: 0.3s; font-weight: 700; text-decoration: none;
-        }
-
-        .blog-container {
-            width: 95%; max-width: 900px; margin: 140px 0 60px 0;
-            background: var(--glass); backdrop-filter: blur(25px);
-            border-top: 6px solid var(--h-red); border-bottom: 6px solid var(--h-green);
-            padding: clamp(25px, 6vw, 70px);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.95);
-        }
-
-        .blog-header { text-align: center; margin-bottom: 50px; position: relative; }
-        
-        .blog-title { 
-            font-size: clamp(24px, 5.5vw, 48px); 
-            line-height: 1.1; 
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-            color: var(--h-white);
-            margin-top: 10px;
-        }
-
-        .blog-content { 
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            line-height: 1.9; 
-            color: var(--text-main); 
-            font-size: 19px; 
-            text-align: justify;
-        }
-        
-        .blog-content p { margin-bottom: 30px; }
-        
-        .blog-content h3 { 
-            font-family: 'Orbitron', sans-serif;
-            color: var(--digit-color); 
-            margin: 50px 0 25px 0; 
-            letter-spacing: 3px; 
-            text-transform: uppercase; 
-            font-size: 22px; 
-            border-left: 5px solid var(--digit-color); 
-            padding-left: 20px; 
-        }
-
-        .blog-image {
-            width: 100%; border: 2px solid var(--digit-color);
-            margin: 40px 0; box-shadow: 0 0 40px rgba(0, 242, 255, 0.25);
-        }
-
-        .quote-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-top: 1px solid var(--digit-color);
-            border-bottom: 1px solid var(--digit-color);
-            padding: 40px; margin: 45px 0; text-align: center;
-        }
-
-        .quote-box p { 
-            font-size: clamp(18px, 3vw, 24px); 
-            color: var(--h-white); 
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
-            font-style: italic;
-        }
-
-        .highlight-box {
-            background: rgba(206, 17, 38, 0.15);
-            border: 2px solid var(--h-red);
-            padding: 35px; margin: 45px 0;
-        }
-
-        .highlight-box strong { font-family: 'Orbitron', sans-serif; color: var(--h-white); font-size: 20px; display: block; margin-bottom: 10px; }
+        .menu-links { display: flex; flex-direction: column; gap: 15px; text-align: center; }
+        .full-menu a { border: 1px solid var(--digit-color); color: var(--digit-color); padding: 14px 28px; text-transform: uppercase; text-decoration: none; font-weight: 700; letter-spacing: 2px; }
 
         footer { width: 100%; padding: 40px; background: #000; font-size: 10px; letter-spacing: 4px; text-align: center; opacity: 0.8; }
     </style>
@@ -170,53 +160,59 @@
     </header>
 
     <nav class="full-menu" id="fullMenu">
-        <div class="menu-content">
-            <div class="menu-links">
-                <a href="index.html">VISSZA A FŐOLDALRA</a>
-                <a href="blog.html" style="border-color: #fff; color: #fff;">BLOG / HÍREK</a>
-                <a href="https://szavazzhaza.hu/" target="_blank">SZAVAZZ HAZA!</a>
-            </div>
+        <div class="menu-links">
+            <a href="index.html">Vissza a főoldalra</a>
+            <a href="blog.html">Blog / Tények</a>
+            <a href="https://szavazzhaza.hu/" target="_blank">Szavazz Haza!</a>
+            <a href="#" onclick="toggleMenu()" style="border:none; font-size:12px;">[ Bezárás ]</a>
         </div>
     </nav>
 
-    <article class="blog-container">
-        <header class="blog-header">
+    <div class="layout-wrapper">
+        <article class="blog-container">
             <h1 class="blog-title">Április 12: A nap, amikor visszavesszük Magyarországot</h1>
-        </header>
+            
+            <div class="blog-content">
+                <p>Huszonhárom évvel ezelőtt, 2003. április 12-én Magyarország népe történelmi válaszúthoz érkezett. Akkor hitet tettünk a szabadság és a jogállamiság mellett.</p>
+                
+                <div class="highlight-box">
+                    <strong>VÉGET VETÜNK AZ ÖNKÉNYNEK</strong>
+                    <p>2026 áprilisában nem csupán kormányt váltunk: rendszert váltunk. Eltöröljük a morális mocsarat.</p>
+                </div>
 
-        <div class="blog-content">
-            <p>Huszonhárom évvel ezelőtt, 2003. április 12-én Magyarország népe egy történelmi válaszúthoz érkezett. A népszavazás alkalmával elsöprő többséggel mondtunk igent az Európai Unióhoz való csatlakozásra. Akkor nemcsak egy gazdasági közösség mellett döntöttünk, hanem hitet tettünk a szabadság, a jogállamiság és az ezeréves európai örökségünk mellett.</p>
+                <h3>Válság és felelősség</h3>
+                <p>A hatalom elárulta 2003 ígéretét. Az elszigetelődés és a közvagyon elsajátítása után most eljött az elszámoltatás ideje. Minden egyes tönkretett sorsért felelniük kell.</p>
+            </div>
+        </article>
 
-            <img src="image_0.png" alt="2003 és 2026 történelmi íve" class="blog-image">
-
-            <h3>Válság és árulás</h3>
-            <p>Mára azonban világosan látszik: a hatalom elárulta 2003 ígéretét. Az elmúlt évek rossz kormányzása hazánkat egy mély, többdimenziós válságba taszította. Gazdasági kilátástalanság, erkölcsi züllés és morális válság emészti az ország szöveteit. Elszigetelődtünk szövetségeseinktől, miközben a közös javakat egy szűk érdekcsoport saját vagyonaként kezelte. </p>
-
-            <div class="highlight-box">
-                <strong>VÉGET VETÜNK AZ ÖNKÉNYNEK</strong>
-                <p>2026 áprilisában nem csupán kormányt váltunk: <strong>rendszert váltunk.</strong> Eltöröljük azt a morális és erkölcsi mocsarat, amelybe az országot kényszerítették. Minden egyes elpazarolt fillérért és minden tönkretett sorsért felelniük kell az elkövetőknek a hatóságok előtt.</p>
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Archívum</h3>
+                <ul class="archive-list">
+                    <li><a href="#">2026. Március (12)</a></li>
+                    <li><a href="#">2026. Február (8)</a></li>
+                    <li><a href="#">2026. Január (5)</a></li>
+                    <li><a href="#">2025. December (14)</a></li>
+                </ul>
             </div>
 
-            <div class="quote-box">
-                <p>"A magyar név megint szép lesz,<br>Méltó régi nagy hiréhez,"</p>
+            <div class="sidebar-widget" style="border-color: var(--h-red);">
+                <h3 class="widget-title" style="color: var(--h-red);">Fontos tények</h3>
+                <ul class="archive-list">
+                    <li><a href="#">➔ Jogi menetrend</a></li>
+                    <li><a href="#">➔ Gazdasági átállás</a></li>
+                    <li><a href="#">➔ Elszámoltatási terv</a></li>
+                </ul>
             </div>
-
-            <h3>Április 12: A mi választásunk</h3>
-            <p>Magyarország Európához tartozik. Magyarország Európa mellett döntött 2003-ban, és Európa mellett dönt 2026. április 12-én is. Ez a nap a megtisztulás napja lesz. Visszaadjuk az ország méltóságát, és újra elfoglaljuk méltó helyünket az európai nemzetek családjában.</p>
-
-            <p style="text-align: center; color: var(--digit-color); font-weight: 900; margin-top: 60px; letter-spacing: 6px; font-size: 22px; font-family: 'Orbitron', sans-serif;">RENDSZERVÁLTÁS. 2026.04.12.</p>
-        </div>
-    </article>
+        </aside>
+    </div>
 
     <footer>© 2026 RENDSZER-VALTAS.HU | A VÁLTOZÁS NAPJA</footer>
 
     <script>
         function toggleMenu() {
-            const btn = document.getElementById('navToggle');
-            const menu = document.getElementById('fullMenu');
-            btn.classList.toggle('active');
-            menu.classList.toggle('open');
-            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : 'auto';
+            document.getElementById('navToggle').classList.toggle('active');
+            document.getElementById('fullMenu').classList.toggle('open');
         }
     </script>
 </body>
