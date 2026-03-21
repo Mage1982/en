@@ -21,7 +21,7 @@
             --h-green: #008751;
             --h-white: #ffffff;
             --bg-dark: #000205;
-            --glass: rgba(0, 4, 10, 0.9);
+            --glass: rgba(0, 4, 10, 0.95);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -52,46 +52,101 @@
             background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
         }
 
+        /* JAVÍTOTT FEJLÉC */
         header {
-            width: 100%; padding: 15px 0; position: sticky; top: 0; z-index: 1000;
-            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            width: 100%; 
+            position: sticky; 
+            top: 0; 
+            z-index: 9999;
+            background: var(--glass); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 2px solid var(--h-white);
+            padding: 10px 0;
         }
 
         .nav-container { 
-            display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(5px, 2vw, 20px); 
-            max-width: 1200px; margin: 0 auto; padding: 0 10px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            flex-wrap: wrap; 
+            gap: 15px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 15px;
         }
+
+        .menu-item { position: relative; }
 
         .menu-trigger, .nav-link {
-            background: transparent; border: 1px solid var(--digit-color);
-            color: var(--digit-color); padding: 10px 20px;
-            font-family: 'Orbitron', sans-serif; font-size: clamp(9px, 1.1vw, 12px);
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s; font-weight: 700; text-decoration: none;
-            display: inline-block;
+            background: transparent; 
+            border: 1px solid var(--digit-color);
+            color: var(--digit-color); 
+            padding: 10px 18px;
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 11px;
+            cursor: pointer; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            transition: all 0.3s ease; 
+            font-weight: 700; 
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .menu-trigger:hover, .nav-link:hover { background: rgba(0, 242, 255, 0.1); }
+        .menu-trigger:hover, .nav-link:hover, .menu-trigger.active { 
+            background: rgba(0, 242, 255, 0.15); 
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
 
         .dropdown-menu {
-            display: none; position: absolute; top: 100%; left: 50%;
-            transform: translateX(-50%); background: rgba(0, 5, 15, 0.98);
-            border: 1px solid var(--digit-color); width: 250px; margin-top: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none; 
+            position: absolute; 
+            top: calc(100% + 10px); 
+            left: 50%;
+            transform: translateX(-50%); 
+            background: rgba(0, 5, 15, 0.98);
+            border: 1px solid var(--digit-color); 
+            width: 220px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            border-radius: 4px;
+            overflow: hidden;
         }
-        .dropdown-menu.show { display: block; }
 
-        /* ASCII ART STÍLUS */
+        .dropdown-menu.show { display: block; animation: fadeIn 0.2s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .dropdown-menu button {
+            width: 100%; 
+            padding: 12px 15px; 
+            background: none; 
+            border: none;
+            color: #fff; 
+            text-align: left; 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px; 
+            cursor: pointer; 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .dropdown-menu button:hover {
+            background: var(--digit-color);
+            color: #000;
+        }
+
+        /* ASCII ÉS HERO SECTION */
         .ascii-art {
-            font-family: monospace;
-            white-space: pre;
-            color: var(--digit-color);
-            font-size: clamp(8px, 1.5vw, 14px);
-            line-height: 1.2;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px var(--digit-color);
+            font-family: monospace; white-space: pre; color: var(--digit-color);
+            font-size: clamp(8px, 1.5vw, 14px); line-height: 1.2; text-align: center;
+            margin-bottom: 20px; text-shadow: 0 0 15px var(--digit-color);
             animation: glow 3s ease-in-out infinite alternate;
         }
 
@@ -118,8 +173,6 @@
         .time-value { font-weight: 900; font-size: clamp(40px, 11vw, 140px); color: #fff; line-height: 0.8; text-shadow: 0 0 30px rgba(0, 242, 255, 0.3); }
         .time-label { font-size: clamp(7px, 1vw, 12px); color: var(--digit-color); text-transform: uppercase; margin-top: 15px; letter-spacing: 3px; font-weight: 900; }
         .quartz-sep { font-size: clamp(25px, 7vw, 100px); color: var(--h-white); font-weight: 900; padding-bottom: 20px; opacity: 0.4; animation: blink 2s infinite; }
-
-        @keyframes blink { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.1; } }
 
         .section-title {
             width: 100%; max-width: 1100px; margin: 60px 0 30px 0;
@@ -149,25 +202,14 @@
         }
         .news-card:hover { border-color: var(--digit-color); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1); }
 
-        .cta-section {
-            width: 95%; max-width: 700px; padding: 50px 20px; text-align: center;
-            border: 2px solid var(--h-white); margin-bottom: 80px; background: var(--glass);
-        }
-
-        .cta-btn {
-            display: inline-block; background: var(--h-white); color: #000;
-            padding: 20px 45px; font-weight: 900; text-transform: uppercase; 
-            letter-spacing: 3px; text-decoration: none; font-size: clamp(12px, 1.8vw, 16px);
-            transition: 0.3s;
-        }
-        .cta-btn:hover { background: var(--digit-color); transform: translateY(-3px); box-shadow: 0 10px 30px var(--digit-color); }
-
         footer { width: 100%; padding: 40px; background: #000; font-size: 9px; letter-spacing: 4px; text-align: center; opacity: 0.7; }
 
         @media (max-width: 850px) {
             .countdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 10px; }
             .quartz-sep { display: none; } 
             .time-value { font-size: clamp(60px, 20vw, 110px); }
+            .nav-container { gap: 8px; }
+            .menu-trigger, .nav-link { padding: 8px 12px; font-size: 9px; }
         }
     </style>
 </head>
@@ -178,21 +220,22 @@
 
     <header>
         <nav class="nav-container">
-            <div style="position: relative;">
-                <button class="menu-trigger" onclick="toggleM('tisza')">TISZA PÁRT ▼</button>
+            <div class="menu-item">
+                <button class="menu-trigger" onclick="toggleM(event, 'tisza')">TISZA PÁRT ▾</button>
                 <div id="tisza" class="dropdown-menu">
                     <button onclick="changeV('uMkgzjdHLLU')">KAMPÁNY START</button>
                     <button onclick="changeV('7IC-7l9JOcQ')">ÉLŐ ADÁS</button>
                 </div>
             </div>
-            <div style="position: relative;">
-                <button class="menu-trigger" onclick="toggleM('influ')">INFLUENSZEREK ▼</button>
+            <div class="menu-item">
+                <button class="menu-trigger" onclick="toggleM(event, 'influ')">INFLUENSZEREK ▾</button>
                 <div id="influ" class="dropdown-menu">
                     <button onclick="changeV('ApQLK2-mB0w')">JUHI</button>
                     <button onclick="changeV('fsv5WlC1oLE')">FÓKUSZCSOPORT</button>
                 </div>
             </div>
             <a href="#hirek" class="nav-link">VÁLASZTÁSI HÍREK</a>
+            <a href="https://szavazzhaza.hu/" target="_blank" class="nav-link" style="border-color: var(--h-white); color: #fff;">SZAVAZZ HAZA!</a>
         </nav>
     </header>
 
@@ -240,32 +283,34 @@
             <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fmagyartisza%2Fposts%2Fpfbid02zvhQeWbp3ARmUNK2n6EVtij2QepaKXfR4wCbhszqcpFRZS7g6e3Z76y7mhEsQME2l&show_text=true&width=500" width="500" height="372" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
         </div>
         <div class="news-card">
-            <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkontrollponthu%2Fposts%2Fpfbid02tXbqsr1dSFwBLyYy5GfyvssupwWXpPRfzamHcDwh8j6YmqGmQdRux8Qg7DQuj24Pl&show_text=true&width=500" width="500" height="780" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        </div>
-        <div class="news-card">
-            <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F24ponthu%2Fposts%2Fpfbid02aWMM47Sg1ZJXMhA5FEsPzCv1ZSTARHzozaG4veeNLfoxccx1huLz4dLnuhGF5wmwl&show_text=true&width=500" width="500" height="481" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-        </div>
-        <div class="news-card">
             <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpeter.magyar.102%2Fposts%2Fpfbid02YZKSR7eqJuWbur31eN9RRnZe62pM6FLGnBmPDCCc2oYfiwjiWW4XRNd6PCdn39p6l&show_text=true&width=500" width="500" height="300" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
         </div>
     </div>
 
-    <section class="cta-section">
-        <h2 style="margin-bottom: 30px; font-size: 20px; letter-spacing: 3px;">KÜLFÖLDÖN ÉLSZ?</h2>
-        <a href="https://szavazzhaza.hu/" target="_blank" class="cta-btn">SZAVAZZ HAZA! ➔</a>
-    </section>
-
     <footer>© 2026 RENDSZER-VALTAS.HU</footer>
 
     <script>
-        function toggleM(id) {
-            const m = document.getElementById(id);
-            const is = m.classList.contains('show');
-            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
-            if(!is) m.classList.add('show');
+        function toggleM(event, id) {
+            event.stopPropagation();
+            const targetMenu = document.getElementById(id);
+            const targetTrigger = event.currentTarget;
+            const isOpen = targetMenu.classList.contains('show');
+            
+            // Összes menü és trigger bezárása/visszaállítása
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+            document.querySelectorAll('.menu-trigger').forEach(t => t.classList.remove('active'));
+            
+            if(!isOpen) {
+                targetMenu.classList.add('show');
+                targetTrigger.classList.add('active');
+            }
         }
 
-        window.onclick = e => { if (!e.target.matches('.menu-trigger')) document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show')); }
+        // Kattintás bárhova máshova bezárja a menüt
+        window.onclick = () => {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+            document.querySelectorAll('.menu-trigger').forEach(t => t.classList.remove('active'));
+        };
 
         function changeV(id) {
             document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
@@ -273,18 +318,15 @@
         }
 
         const target = new Date(2026, 3, 12, 0, 0, 0).getTime();
-        
         function update() {
             const now = new Date().getTime();
             const diff = target - now;
             if(diff < 0) return;
-
             document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
             document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
             document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
             document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }
-
         setInterval(update, 1000);
         update();
     </script>
