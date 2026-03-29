@@ -124,7 +124,6 @@
 
         @keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.9; } }
 
-        /* KÖZÖS STÍLUS A KONTÉNEREKNEK */
         .glass-container {
             width: 95%; max-width: 1100px; margin: 40px 0; padding: 40px 20px;
             background: linear-gradient(135deg, rgba(255, 59, 59, 0.15) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 255, 136, 0.15) 100%);
@@ -281,23 +280,29 @@
             window.scrollTo({ top: document.querySelector('.video-box').offsetTop - 120, behavior: 'smooth' });
         }
 
-        const target = new Date(2026, 3, 12, 0, 0, 0).getTime();
+        // Cél dátum: 2026. Április 12. Reggel 06:00
+        const target = new Date(2026, 3, 12, 6, 0, 0).getTime();
+        
         function update() {
             const now = new Date().getTime();
             const diff = target - now;
+            
             if(diff <= 0) {
-                document.querySelector('.countdown-grid').innerHTML = "<h2 style='color:var(--h-red); text-shadow: 0 0 15px var(--h-red);'>A RENDSZERVÁLTÁS MEGKEZDŐDÖTT!</h2>";
+                document.querySelector('.countdown-grid').innerHTML = "<h2 style='color:var(--h-red); text-shadow: 0 0 15px var(--h-red);'>A VÁLASZTÁS MEGKEZDŐDÖTT!</h2>";
                 return;
             }
+
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
+
             document.getElementById('d').innerText = d.toString().padStart(2, '0');
             document.getElementById('h').innerText = h.toString().padStart(2, '0');
             document.getElementById('m').innerText = m.toString().padStart(2, '0');
             document.getElementById('s').innerText = s.toString().padStart(2, '0');
         }
+
         setInterval(update, 1000);
         update();
     </script>
