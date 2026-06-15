@@ -7,7 +7,7 @@
     <meta name="description" content="2026. Április 12. - A nap, amikor visszavettük a jövőnket. Kövesd a rendszerváltás óta eltelt időt!">
     <meta property="og:title" content="RENDSZERVÁLTÁS 2026">
     <meta property="og:description" content="A korszakváltás elkezdődött. Kövesd az új korszak óta eltelt időt!">
-    <meta property="og:image" content="tomegfoto.jpg"> 
+    <meta property="og:image" content="tomeg.jpg"> 
     <meta property="og:url" content="https://rendszer-valtas.hu">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -34,7 +34,7 @@
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            background-image: url('tomegfoto.jpg');
+            background-image: url('tomeg.jpg');
             background-attachment: fixed;
             background-size: cover;
             background-position: center top;
@@ -107,7 +107,7 @@
     </footer>
 
     <script>
-        // Fix kezdődátum ISO formátumban: 2026. április 12. 06:00:00 (A rendszerváltás hivatalos pillanata)
+        // Fix kezdődátum ISO formátumban: 2026. április 12. 06:00:00 (A rendszerváltás pillanata)
         const target = new Date("2026-04-12T06:00:00").getTime();
         
         function update() {
@@ -133,9 +133,4 @@
             document.getElementById('s').innerText = s.toString().padStart(2, '0');
         }
 
-        // Azonnali indítás és másodpercenkénti frissítés
-        setInterval(update, 1000);
-        update();
-    </script>
-</body>
-</html>
+        // Folyamatos másodpercen
