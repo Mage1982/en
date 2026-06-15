@@ -36,8 +36,9 @@
             overflow-x: hidden;
             background-image: url('tomeg.jpg');
             background-attachment: fixed;
-            background-size: cover;
-            background-position: center top;
+            /* Háttérkép növelése 15%-kal és finomhangolása */
+            background-size: 115% auto;
+            background-position: center 20%;
             background-repeat: no-repeat;
         }
         .bg-overlay-fix {
@@ -77,9 +78,12 @@
             font-size: 11px; letter-spacing: 3px; opacity: 0.6; font-weight: 600;
         }
         @media (max-width: 850px) {
+            body { 
+                background-size: cover; /* Mobilon a fix százalék torzulhat, itt jobb a cover */
+                padding: 40px 0; 
+            }
             .countdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 15px; }
             .quartz-sep { display: none; }
-            body { padding: 40px 0; }
             footer { position: relative; margin-top: 40px; bottom: 0; }
         }
     </style>
@@ -107,25 +111,20 @@
     </footer>
 
     <script>
-        // Fix kezdődátum ISO formátumban: 2026. április 12. 06:00:00 (A rendszerváltás pillanata)
-        const target = new Date("2026-04-12T06:00:00").getTime();
+        // Minden böngészővel kompatibilis, golyóálló dátumformátum (2026. április 12. 06:00:00)
+        const target = new Date("2026/04/12 06:00:00").getTime();
         
         function update() {
             const now = new Date().getTime();
             const diff = now - target;
             
-            if (diff < 0) {
-                document.getElementById('d').innerText = "00";
-                document.getElementById('h').innerText = "00";
-                document.getElementById('m').innerText = "00";
-                document.getElementById('s').innerText = "00";
-                return;
-            }
+            // Ha valamiért negatív lenne (időzóna elcsúszás miatt), akkor is számoljon értelmesen
+            const absoluteDiff = Math.abs(diff);
 
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            const d = Math.floor(absoluteDiff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((absoluteDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((absoluteDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((absoluteDiff % (1000 * 60)) / 1000);
 
             document.getElementById('d').innerText = d.toString().padStart(2, '0');
             document.getElementById('h').innerText = h.toString().padStart(2, '0');
@@ -133,4 +132,9 @@
             document.getElementById('s').innerText = s.toString().padStart(2, '0');
         }
 
-        // Folyamatos másodpercen
+        // Indítás másodpercenként
+        setInterval(update, 1000);
+        update();
+    </script>
+</body>
+</html>
