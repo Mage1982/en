@@ -30,22 +30,35 @@
             color: white;
             font-family: 'Orbitron', sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            overflow-x: hidden;
-            background-image: url('tomeg.jpg');
+        }
+
+        /* A FIX HÁTTÉR: Ez rögzíti a képet és a sötétítést a görgetés alatt is */
+        .bg-overlay-fix {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100vh;
+            z-index: -1; 
+            background-image: linear-gradient(to bottom, rgba(1, 5, 10, 0.4), var(--bg-dark)), url('tomeg.jpg');
             background-attachment: fixed;
             background-size: 115% auto;
             background-position: center 20%;
             background-repeat: no-repeat;
-            padding: 20px 10px;
         }
-        .bg-overlay-fix {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; 
-            background: radial-gradient(circle at center, rgba(1, 5, 10, 0.3) 0%, var(--bg-dark) 130%);
+
+        /* ELSŐ KÉPERNYŐ (Hero szekció) */
+        .hero-container {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 10px;
         }
         .hero-section { 
             text-align: center; 
@@ -59,7 +72,7 @@
             border-bottom: 6px solid var(--h-green);
             box-shadow: 0 50px 100px rgba(0,0,0,0.95);
             border-radius: 8px;
-            overflow: hidden; /* Biztonsági zár */
+            overflow: hidden;
         }
         .main-title {
             font-size: clamp(28px, 7vw, 85px); 
@@ -93,7 +106,7 @@
             flex-direction: column; 
             align-items: center; 
             flex: 1; 
-            min-width: 0; /* Megakadályozza, hogy a flex elem túlnyúljon */
+            min-width: 0;
         }
         .time-value { 
             font-weight: 900; 
@@ -123,17 +136,60 @@
         }
         
         @keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.9; } }
+
+        /* ÚJ, MÁSODIK KÉPERNYŐ (Placeholder szekció) */
+        .content-container {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Gördítésnél ne ugorjon, finoman kezdődjön */
+            padding: 60px 10px 120px 10px;
+        }
+        .placeholder-section {
+            width: 100%;
+            max-width: 1100px;
+            padding: 50px 30px;
+            background: rgba(1, 5, 10, 0.8); /* Kicsit sötétebb üveghatás az olvashatóságért */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .placeholder-section h2 {
+            font-size: clamp(22px, 4vw, 40px);
+            color: var(--cyan-light);
+            text-shadow: var(--neon-text);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .placeholder-section p {
+            font-size: clamp(14px, 2vw, 18px);
+            line-height: 1.6;
+            color: #ccc;
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: sans-serif; /* A folyószöveg olvashatóbb sima betűtípussal, az Orbitron címnek jó */
+            letter-spacing: 0.5px;
+        }
         
         footer { 
-            position: absolute; bottom: 20px; width: 100%; text-align: center;
-            font-size: 11px; letter-spacing: 3px; opacity: 0.6; font-weight: 600;
+            width: 100%; 
+            text-align: center;
+            padding: 30px 0;
+            font-size: 11px; 
+            letter-spacing: 3px; 
+            opacity: 0.6; 
+            font-weight: 600;
+            background: rgba(1, 5, 10, 0.9);
         }
 
-        /* Mobil és Tablet nézet finomhangolása */
+        /* Reszponzív töréspontok */
         @media (max-width: 850px) {
-            body { 
+            .bg-overlay-fix { 
                 background-size: cover; 
-                padding: 20px 10px; 
             }
             .hero-section {
                 padding: 40px 10px;
@@ -143,15 +199,12 @@
                 grid-template-columns: repeat(2, 1fr); 
                 gap: 30px 10px; 
             }
-            /* A napok száma (idővel 3-4 jegyű is lehet), adjunk neki picit több teret */
             .time-value {
                 font-size: clamp(40px, 14vw, 75px);
             }
             .quartz-sep { display: none; }
-            footer { position: relative; margin-top: 40px; bottom: 0; }
         }
 
-        /* Egészen apró mobilokhoz (pl. iPhone SE) */
         @media (max-width: 360px) {
             .main-title { font-size: 24px; letter-spacing: 2px; }
             .target-label { font-size: 12px; }
@@ -163,20 +216,29 @@
 <body>
     <div class="bg-overlay-fix"></div>
 
-    <main class="hero-section">
-        <h1 class="main-title">RENDSZERVÁLTÁS</h1>
-        <div class="target-label">A RENDSZERVÁLTÁS ÓTA ELTELT:</div>
-        
-        <div class="countdown-grid">
-            <div class="time-box"><span class="time-value" id="d">00</span><span class="time-label">Nap</span></div>
-            <span class="quartz-sep">:</span>
-            <div class="time-box"><span class="time-value" id="h">00</span><span class="time-label">Óra</span></div>
-            <span class="quartz-sep">:</span>
-            <div class="time-box"><span class="time-value" id="m">00</span><span class="time-label">Perc</span></div>
-            <span class="quartz-sep">:</span>
-            <div class="time-box"><span class="time-value" id="s">00</span><span class="time-label">Másodperc</span></div>
-        </div>
-    </main>
+    <div class="hero-container">
+        <main class="hero-section">
+            <h1 class="main-title">RENDSZERVÁLTÁS</h1>
+            <div class="target-label">A RENDSZERVÁLTÁS ÓTA ELTELT:</div>
+            
+            <div class="countdown-grid">
+                <div class="time-box"><span class="time-value" id="d">00</span><span class="time-label">Nap</span></div>
+                <span class="quartz-sep">:</span>
+                <div class="time-box"><span class="time-value" id="h">00</span><span class="time-label">Óra</span></div>
+                <span class="quartz-sep">:</span>
+                <div class="time-box"><span class="time-value" id="m">00</span><span class="time-label">Perc</span></div>
+                <span class="quartz-sep">:</span>
+                <div class="time-box"><span class="time-value" id="s">00</span><span class="time-label">Másodperc</span></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="content-container">
+        <section class="placeholder-section">
+            <h2>KÖVETKEZŐ FEJEZET</h2>
+            <p>Ez a szekció már az új képernyő része. Ide jöhetnek a jövőbeli tartalmak, mérföldkövek, hírek vagy leírások. A háttér görgetés közben is fixen a helyén marad, biztosítva a modern, mélységérzetet keltő hatást (parallaxis-szerű működés), miközben a szövegek mobilon is tökéletesen, tördelve jelennek meg.</p>
+        </section>
+    </div>
 
     <footer>
         <p>© 2026 RENDSZER-VALTAS.HU</p>
