@@ -20,7 +20,9 @@
             --h-green: #00ff88;
             --bg-dark: #01050a;
             --glass-hero: rgba(0, 0, 0, 0.88);
-            --neon-text: 0 0 25px rgba(0, 242, 255, 0.95), 0 0 10px rgba(0, 242, 255, 0.4);
+            /* Erőteljesebb, többrétegű neon izzás a főcímnek */
+            --neon-main: 0 0 15px rgba(0, 242, 255, 0.9), 0 0 30px rgba(0, 242, 255, 0.6), 0 0 45px rgba(0, 242, 255, 0.3);
+            --neon-text: 0 0 20px rgba(0, 242, 255, 0.8), 0 0 10px rgba(0, 242, 255, 0.4);
             --neon-red: 0 0 30px rgba(255, 59, 59, 1), 0 0 15px rgba(255, 59, 59, 0.6);
             --neon-box: 0 0 40px rgba(0, 242, 255, 0.25);
         }
@@ -64,8 +66,8 @@
         .hero-section { 
             text-align: center; 
             width: 100%; 
-            max-width: 1100px; 
-            padding: 60px 15px;
+            max-width: 1200px; /* Kicsit szélesebb, hogy a hatalmas betűk kényelmesen elférjenek */
+            padding: 75px 20px;
             background: var(--glass-hero); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -75,21 +77,24 @@
             border-radius: 12px;
             overflow: hidden;
         }
+        
+        /* MAXIMÁLIS HANGSÚLYÚ FŐCÍM */
         .main-title {
-            font-size: clamp(28px, 7.5vw, 95px); 
+            font-size: clamp(34px, 9vw, 115px); /* Megnövelt méret (max 115px) */
             font-weight: 900; 
-            letter-spacing: 4px;
-            margin-bottom: 20px; 
+            letter-spacing: 8px; /* Tágasabb, tekintélyesebb betűköz */
+            text-transform: uppercase;
+            margin-bottom: 25px; 
             color: #fff; 
-            text-shadow: var(--neon-text);
-            line-height: 1.1;
+            text-shadow: var(--neon-main); /* Brutálisabb izzás */
+            line-height: 1.05;
             word-break: keep-all;
         }
         .target-label {
             font-size: clamp(12px, 2.2vw, 24px); 
             letter-spacing: 2px; 
             color: var(--h-red); 
-            margin-bottom: 50px; 
+            margin-bottom: 55px; 
             text-transform: uppercase; 
             font-weight: 900; 
             text-shadow: var(--neon-red);
@@ -104,14 +109,14 @@
             justify-content: center; 
             align-items: center; 
             gap: 8px; 
-            flex-wrap: nowrap; /* Szigorúan megtiltja a törést */
+            flex-wrap: nowrap; 
         }
         .time-box { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             flex: 1; 
-            min-width: 0; /* Engedi a rugalmas zsugorodást, nem törik */
+            min-width: 0; 
             background: rgba(255, 255, 255, 0.03);
             padding: 15px 5px;
             border-radius: 6px;
@@ -119,7 +124,7 @@
         }
         .time-value { 
             font-weight: 900; 
-            font-size: clamp(22px, 8vw, 130px); /* Kisebb minimum érték, hogy mobilon is beférjen egy sorba */
+            font-size: clamp(22px, 8vw, 130px); 
             color: #fff; 
             line-height: 0.9; 
             text-shadow: var(--neon-text); 
@@ -208,18 +213,17 @@
                 background-size: cover; 
             }
             .hero-section {
-                padding: 40px 10px;
+                padding: 50px 12px;
             }
-            /* Mobilon is megtartjuk a kettőspont elválasztókat, mert a kisebb betűk miatt már elférnek egy sorban */
             .quartz-sep { 
                 display: inline-block; 
             } 
             .video-section { padding: 25px 10px; }
         }
 
-        @media (max-width: 400px) {
-            .main-title { font-size: clamp(24px, 8vw, 32px); letter-spacing: 2px; }
-            .target-label { font-size: 10px; margin-bottom: 30px; }
+        @media (max-width: 420px) {
+            .main-title { font-size: clamp(28px, 9.5vw, 38px); letter-spacing: 4px; }
+            .target-label { font-size: 10px; margin-bottom: 35px; }
             .time-box { padding: 10px 2px; }
             .time-label { font-size: 8px; margin-top: 5px; }
         }
