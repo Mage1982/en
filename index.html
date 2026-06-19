@@ -173,8 +173,41 @@
             font-size: clamp(20px, 3.5vw, 36px);
             color: var(--cyan-light);
             text-shadow: var(--neon-text);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: 2px;
+        }
+
+        /* STÍLUSOS NEON MENÜ (Dropdown) */
+        .menu-container {
+            margin-bottom: 25px;
+        }
+        .channel-select {
+            background: rgba(1, 5, 10, 0.9);
+            color: var(--cyan-light);
+            border: 1px solid var(--cyan-dark);
+            padding: 12px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+            text-align-last: center; /* Szöveg középre igazítása a kiválasztóban */
+        }
+        .channel-select:hover, .channel-select:focus {
+            border-color: var(--cyan-light);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+        }
+        .channel-select option {
+            background: var(--bg-dark);
+            color: #fff;
+            padding: 10px;
         }
         
         .video-wrapper {
@@ -253,6 +286,7 @@
             .time-box { padding: 10px 2px; }
             .time-label { font-size: 8px; margin-top: 5px; }
             .slider-btn { padding: 8px 15px; font-size: 12px; }
+            .channel-select { font-size: 12px; padding: 10px; }
         }
     </style>
 </head>
@@ -279,6 +313,14 @@
     <div class="content-container">
         <section class="video-section">
             <h2>TÁJÉKOZÓDJ A VALÓSÁGRÓL</h2>
+            
+            <div class="menu-container">
+                <select class="channel-select" id="channelSelector" onchange="changeChannel()">
+                    <option value="jolvanez">JÓLVANEZÍGY</option>
+                    <option value="juhaszpeter">Juhász Péter | Juhi</option>
+                </select>
+            </div>
+
             <div class="video-wrapper">
                 <iframe id="videoPlayer" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
@@ -296,43 +338,62 @@
     </footer>
 
     <script>
-        // 1. VIDEÓK ID LISTÁJA (Ide tudsz bármikor újabb video ID-kat tenni)
-        const videoIds = [
-            "rGP71_s_P9M", // Balásy adás
-            "8HQTp3fmsP4", // Út a munka világába adás
-            "Rihdq6sF0Eo", // Hazugságverseny adás
-            "fTXmxgkooX0"  // Eredeti videó az alap kódból
-        ];
+        // VIDEÓK ADATBÁZISA CSATORNÁNKÉNT
+        const channelsData = {
+            jolvanez: [
+                "rGP71_s_P9M", // Balásy adás
+                "8HQTp3fmsP4", // Út a munka világába adás
+                "Rihdq6sF0Eo", // Hazugságverseny adás
+                "fTXmxgkooX0"  // Eredeti videó az alap kódból
+            ],
+            juhaszpeter: [
+                "71h1JhzjOM8", // Flex #03 (Juhi x Bogos Csaba)
+                "7_bXy3T4W8g", // NER-fajzatok adás (példa ID)
+                "u0rW8X0N_3c"  // Rogán/Havas adás (példa ID)
+            ]
+        };
 
+        let currentChannel = "jolvanez";
         let currentVideoIndex = 0;
+        
         const player = document.getElementById('videoPlayer');
         const statusText = document.getElementById('sliderStatus');
+        const channelSelector = document.getElementById('channelSelector');
 
         function loadVideo(index) {
+            const currentList = channelsData[currentChannel];
             currentVideoIndex = index;
-            // Beállítjuk a YouTube beágyazást a megfelelő ID-val
-            player.src = `https://www.youtube.com/embed/${videoIds[currentVideoIndex]}?rel=0`;
-            // Frissítjük a kijelzőt (pl. 1 / 4)
-            statusText.innerText = `${currentVideoIndex + 1} / ${videoIds.length}`;
+            
+            // Beágyazás frissítése a kiválasztott csatorna listájából
+            player.src = `https://www.youtube.com/embed/${currentList[currentVideoIndex]}?rel=0`;
+            statusText.innerText = `${currentVideoIndex + 1} / ${currentList.length}`;
         }
 
         function nextVideo() {
+            const currentList = channelsData[currentChannel];
             let nextIndex = currentVideoIndex + 1;
-            if (nextIndex >= videoIds.length) nextIndex = 0; // Vissza az elejére
+            if (nextIndex >= currentList.length) nextIndex = 0;
             loadVideo(nextIndex);
         }
 
         function prevVideo() {
+            const currentList = channelsData[currentChannel];
             let prevIndex = currentVideoIndex - 1;
-            if (prevIndex < 0) prevIndex = videoIds.length - 1; // Átugrás a legutolsóra
+            if (prevIndex < 0) prevIndex = currentList.length - 1;
             loadVideo(prevIndex);
         }
 
-        // Első videó inicializálása betöltéskor
+        // Amikor a felhasználó csatornát vált a menüben
+        function changeChannel() {
+            currentChannel = channelSelector.value;
+            loadVideo(0); // Új csatorna esetén az első videóval kezdünk
+        }
+
+        // Kezdő inicializálás az első betöltéskor
         loadVideo(0);
 
 
-        // IDŐZÍTŐ SCRIPT (Eredeti kódból változatlan)
+        // IDŐZÍTŐ SCRIPT
         const target = new Date("2026/04/12 06:00:00").getTime();
         
         function update() {
