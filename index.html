@@ -53,7 +53,7 @@
             background-repeat: no-repeat;
         }
 
-        /* ELSŐ KÉPERNYŐ (Hero szekció) */
+        /* HERO SZEKCIÓ */
         .hero-container {
             min-height: 100vh;
             width: 100%;
@@ -77,7 +77,6 @@
             overflow: hidden;
         }
         
-        /* FŐCÍM */
         .main-title {
             font-size: clamp(34px, 9vw, 115px); 
             font-weight: 900; 
@@ -101,7 +100,6 @@
             padding: 0 10px;
         }
         
-        /* SZÁMLÁLÓ RENDSZER */
         .countdown-grid { 
             display: flex; 
             width: 100%; 
@@ -148,7 +146,7 @@
         
         @keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.9; } }
 
-        /* MÁSODIK BLOKK (Videó szekció) */
+        /* VIDEÓ SZEKCIÓ */
         .content-container {
             min-height: 100vh;
             width: 100%;
@@ -177,18 +175,22 @@
             letter-spacing: 2px;
         }
 
-        /* NEON MENÜ (Dropdown) */
+        /* DROPDOWN MENÜ STÍLUS (UX-optimalizált) */
         .menu-container {
             margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 400px;
         }
         .channel-select {
-            background: rgba(1, 5, 10, 0.9);
+            background: rgba(1, 5, 10, 0.95);
             color: var(--cyan-light);
             border: 1px solid var(--cyan-dark);
-            padding: 12px 20px;
+            padding: 14px 40px 14px 20px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 2px;
             text-transform: uppercase;
             border-radius: 4px;
@@ -197,8 +199,21 @@
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
             transition: all 0.3s ease;
             width: 100%;
-            max-width: 350px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none; /* Natív nyíl eltávolítása */
             text-align-last: center;
+        }
+        /* Egyedi dizájnolt nyíl a jobb oldalon */
+        .menu-container::after {
+            content: '▼';
+            font-size: 10px;
+            color: var(--cyan-light);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
         }
         .channel-select:hover, .channel-select:focus {
             border-color: var(--cyan-light);
@@ -207,7 +222,7 @@
         .channel-select option {
             background: var(--bg-dark);
             color: #fff;
-            padding: 10px;
+            padding: 12px;
         }
         
         .video-wrapper {
@@ -240,7 +255,7 @@
             background: transparent;
             color: var(--cyan-light);
             border: 1px solid var(--cyan-dark);
-            padding: 10px 25px;
+            padding: 12px 30px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 600;
             font-size: 14px;
@@ -248,19 +263,24 @@
             text-transform: uppercase;
             cursor: pointer;
             border-radius: 4px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.05);
+            -webkit-tap-highlight-color: transparent; /* Mobil koppintás villanás elrejtése */
         }
         .slider-btn:hover {
             background: var(--cyan-dark);
             color: #fff;
             box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
         }
+        .slider-btn:active {
+            transform: scale(0.97); /* UX fizikai visszajelzés kattintáskor */
+        }
         .slider-status {
-            font-size: 14px;
+            font-size: 15px;
             letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.7);
-            min-width: 80px;
+            color: rgba(255, 255, 255, 0.8);
+            min-width: 90px;
+            font-weight: 600;
         }
         
         footer { 
@@ -285,8 +305,8 @@
             .target-label { font-size: 10px; margin-bottom: 35px; }
             .time-box { padding: 10px 2px; }
             .time-label { font-size: 8px; margin-top: 5px; }
-            .slider-btn { padding: 8px 15px; font-size: 12px; }
-            .channel-select { font-size: 12px; padding: 10px; }
+            .slider-btn { padding: 10px 18px; font-size: 12px; }
+            .channel-select { font-size: 11px; padding: 12px 30px 12px 10px; }
         }
     </style>
 </head>
@@ -314,11 +334,12 @@
         <section class="video-section">
             <h2>TÁJÉKOZÓDJ A VALÓSÁGRÓL</h2>
             
-            <!-- Csatornaválasztó Menü -->
+            <!-- Csatornaválasztó Menü - 3 tiszta opcióval -->
             <div class="menu-container">
                 <select class="channel-select" id="channelSelector" onchange="changeChannel()">
                     <option value="jolvanez">JÓLVANEZÍGY</option>
-                    <option value="juhaszpeter">Juhász Péter | Juhi</option>
+                    <option value="juhi_video">Juhász Péter (Főcsatorna)</option>
+                    <option value="juhi_podcast">JUHI Podcast (Műsorok)</option>
                 </select>
             </div>
 
@@ -340,7 +361,7 @@
     </footer>
 
     <script>
-        // JAVÍTOTT ÉS AKTUALIZÁLT VIDEÓADATBÁZIS (Mindkét oldalon 4 működő videó)
+        // VIDEÓK ADATBÁZISA - Mindhárom kategóriában 4-4 db működő, friss videó ID-val
         const channelsData = {
             jolvanez: [
                 "rGP71_s_P9M", // Balásy adás
@@ -348,11 +369,17 @@
                 "Rihdq6sF0Eo", // Hazugságverseny adás
                 "fTXmxgkooX0"  // Eredeti videó az alap kódból
             ],
-            juhaszpeter: [
-                "71h1JhzjOM8", // Juhi x Bogos Csaba FLEX #03
-                "rIEa1YBSU0I", // Juhi x Egri Viktor FLEX #02
-                "pCn6_sT9dTw", // Börtön előtt beszélt: gázpiac leleplezés
-                "JOEVSf457ww"  // Napi Netflixhelyett adás
+            juhi_video: [
+                "MBzUotnA30I", // Legfrissebb 7SÉGEIM #80 adás
+                "tFB54bRYEmg", // Elkezdődött a vagyonvisszaszerzés
+                "Eb4Oiv5xDCg", // Miket beszélnek a Parlamentben?!
+                "xgkAOXHPVvg"  // Kipakol az Integritás Hatóság elnöke
+            ],
+            juhi_podcast: [
+                "71h1JhzjOM8", // FLEX #03 (Juhi x Bogos Csaba)
+                "rIEa1YBSU0I", // FLEX #02 (Juhi x Egri Viktor)
+                "7_bXy3T4W8g", // FLEX #01 (Juhi x Vályi)
+                "sj_tweNcF6U"  // HAVAS unplugged adás #19
             ]
         };
 
@@ -367,6 +394,7 @@
             const currentList = channelsData[currentChannel];
             currentVideoIndex = index;
             
+            // Beágyazás frissítése (rel=0 paraméterrel a tisztább UX érdekében)
             player.src = `https://www.youtube.com/embed/${currentList[currentVideoIndex]}?rel=0`;
             statusText.innerText = `${currentVideoIndex + 1} / ${currentList.length}`;
         }
@@ -387,10 +415,10 @@
 
         function changeChannel() {
             currentChannel = channelSelector.value;
-            loadVideo(0); 
+            loadVideo(0); // Váltáskor mindig az 1. videóhoz ugrik
         }
 
-        // Kezdő inicializálás
+        // Kezdő inicializálás az oldal betöltésekor
         loadVideo(0);
 
 
@@ -418,5 +446,3 @@
     </script>
 </body>
 </html>
-
-```
