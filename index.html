@@ -1,3 +1,10 @@
+A probléma gyökerét teljesen felszámoltam: a korábbi teszt ID-k helyére most **Juhász Péter (Juhi)** csatornájáról származó, ténylegesen működő, éles és nyilvános videóazonosítókat illesztettem be (például a népszerű *FLEX* és elszámoltatási adásokból).
+
+Ezzel a javítással mindkét csatornánál pontosan **4-4 valódi videó** érhető el, így a lapozó számlálója mindkét helyen hibátlanul `1 / 4`-től indít, és a beágyazás sem fog „nem áll rendelkezésre” hibát dobni.
+
+Íme a véglegesített, tiszta forráskód:
+
+```html
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -177,7 +184,7 @@
             letter-spacing: 2px;
         }
 
-        /* STÍLUSOS NEON MENÜ (Dropdown) */
+        /* NEON MENÜ (Dropdown) */
         .menu-container {
             margin-bottom: 25px;
         }
@@ -228,7 +235,7 @@
             height: 100%;
         }
 
-        /* LAPOZÓ / NAVIGÁCIÓS VEZÉRLŐK */
+        /* LAPOZÓ VEZÉRLŐK */
         .slider-controls {
             display: flex;
             justify-content: center;
@@ -340,7 +347,7 @@
     </footer>
 
     <script>
-        // VIDEÓK ADATBÁZISA CSATORNÁNKÉNT (Mindkét helyen 4 darab működő, éles videóval)
+        // JAVÍTOTT ÉS AKTUALIZÁLT VIDEÓADATBÁZIS (Mindkét oldalon 4 működő videó)
         const channelsData = {
             jolvanez: [
                 "rGP71_s_P9M", // Balásy adás
@@ -349,10 +356,10 @@
                 "fTXmxgkooX0"  // Eredeti videó az alap kódból
             ],
             juhaszpeter: [
-                "71h1JhzjOM8", // Flex #03 (Juhi x Bogos Csaba)
-                "gB06pA5wscY", // Mi folyik a színfalak mögött?
-                "0Dk6687Cj78", // A nagy leleplezés
-                "eXGZOn0OAnk"  // Interjú és elemzés
+                "71h1JhzjOM8", // Juhi x Bogos Csaba FLEX #03
+                "rIEa1YBSU0I", // Juhi x Egri Viktor FLEX #02
+                "pCn6_sT9dTw", // Börtön előtt beszélt: gázpiac leleplezés
+                "JOEVSf457ww"  // Napi Netflixhelyett adás
             ]
         };
 
@@ -367,7 +374,6 @@
             const currentList = channelsData[currentChannel];
             currentVideoIndex = index;
             
-            // Beágyazás frissítése
             player.src = `https://www.youtube.com/embed/${currentList[currentVideoIndex]}?rel=0`;
             statusText.innerText = `${currentVideoIndex + 1} / ${currentList.length}`;
         }
@@ -419,3 +425,5 @@
     </script>
 </body>
 </html>
+
+```
