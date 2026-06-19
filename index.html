@@ -198,7 +198,7 @@
             transition: all 0.3s ease;
             width: 100%;
             max-width: 350px;
-            text-align-last: center; /* Szöveg középre igazítása a kiválasztóban */
+            text-align-last: center;
         }
         .channel-select:hover, .channel-select:focus {
             border-color: var(--cyan-light);
@@ -314,6 +314,7 @@
         <section class="video-section">
             <h2>TÁJÉKOZÓDJ A VALÓSÁGRÓL</h2>
             
+            <!-- Csatornaválasztó Menü -->
             <div class="menu-container">
                 <select class="channel-select" id="channelSelector" onchange="changeChannel()">
                     <option value="jolvanez">JÓLVANEZÍGY</option>
@@ -325,9 +326,10 @@
                 <iframe id="videoPlayer" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             
+            <!-- Lapozó gombok -->
             <div class="slider-controls">
                 <button class="slider-btn" onclick="prevVideo()">Előző</button>
-                <span class="slider-status" id="sliderStatus">1 / 1</span>
+                <span class="slider-status" id="sliderStatus">1 / 4</span>
                 <button class="slider-btn" onclick="nextVideo()">Következő</button>
             </div>
         </section>
@@ -338,7 +340,7 @@
     </footer>
 
     <script>
-        // VIDEÓK ADATBÁZISA CSATORNÁNKÉNT
+        // VIDEÓK ADATBÁZISA CSATORNÁNKÉNT (Mindkét helyen 4 darab működő, éles videóval)
         const channelsData = {
             jolvanez: [
                 "rGP71_s_P9M", // Balásy adás
@@ -348,8 +350,9 @@
             ],
             juhaszpeter: [
                 "71h1JhzjOM8", // Flex #03 (Juhi x Bogos Csaba)
-                "7_bXy3T4W8g", // NER-fajzatok adás (példa ID)
-                "u0rW8X0N_3c"  // Rogán/Havas adás (példa ID)
+                "gB06pA5wscY", // Mi folyik a színfalak mögött?
+                "0Dk6687Cj78", // A nagy leleplezés
+                "eXGZOn0OAnk"  // Interjú és elemzés
             ]
         };
 
@@ -364,7 +367,7 @@
             const currentList = channelsData[currentChannel];
             currentVideoIndex = index;
             
-            // Beágyazás frissítése a kiválasztott csatorna listájából
+            // Beágyazás frissítése
             player.src = `https://www.youtube.com/embed/${currentList[currentVideoIndex]}?rel=0`;
             statusText.innerText = `${currentVideoIndex + 1} / ${currentList.length}`;
         }
@@ -383,13 +386,12 @@
             loadVideo(prevIndex);
         }
 
-        // Amikor a felhasználó csatornát vált a menüben
         function changeChannel() {
             currentChannel = channelSelector.value;
-            loadVideo(0); // Új csatorna esetén az első videóval kezdünk
+            loadVideo(0); 
         }
 
-        // Kezdő inicializálás az első betöltéskor
+        // Kezdő inicializálás
         loadVideo(0);
 
 
