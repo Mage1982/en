@@ -223,32 +223,77 @@
             transform: translateY(-50%);
             pointer-events: none;
         }
-        .channel-select:hover, .channel-select:focus {
-            border-color: var(--cyan-light);
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
-        }
         .channel-select option {
             background: var(--bg-dark);
             color: #fff;
             padding: 12px;
         }
-        
+
+        /* AKCIÓDÚS KATTINTHATÓ BORÍTÓKÉP KÁRTYA STÍLUS */
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%; 
-            padding-top: 0;
             height: 0;
             overflow: hidden;
             border-radius: 8px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            background: #000;
+            cursor: pointer;
         }
-        .video-wrapper iframe {
+        .video-cover-link {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.65;
+            transition: all 0.4s ease;
+        }
+        .video-wrapper:hover .video-thumbnail {
+            opacity: 0.85;
+            transform: scale(1.02);
+        }
+        
+        /* EGYEDI NEON LEJÁTSZÁS GOMB */
+        .play-overlay-btn {
+            position: absolute;
+            background: rgba(1, 5, 10, 0.85);
+            border: 2px solid var(--cyan-light);
+            border-radius: 50%;
+            width: clamp(60px, 10vw, 90px);
+            height: clamp(60px, 10vw, 90px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--neon-main);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        .play-overlay-btn::after {
+            content: '';
+            display: block;
+            box-sizing: border-box;
+            width: 0;
+            height: 24px;
+            border-width: 12px 0 12px 20px;
+            border-style: solid;
+            border-color: transparent transparent transparent var(--cyan-light);
+            transform: translateX(3px);
+        }
+        .video-wrapper:hover .play-overlay-btn {
+            transform: scale(1.15);
+            border-color: #fff;
+            box-shadow: 0 0 30px var(--cyan-light);
         }
 
         .slider-controls {
@@ -354,7 +399,10 @@
             </div>
 
             <div class="video-wrapper">
-                <iframe id="videoPlayer" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <a id="videoLink" href="" target="_blank" class="video-cover-link">
+                    <div class="play-overlay-btn"></div>
+                    <img id="videoThumb" src="" alt="YouTube Video Thumbnail" class="video-thumbnail">
+                </a>
             </div>
             
             <div class="slider-controls">
@@ -370,7 +418,7 @@
     </footer>
 
     <script>
-        // Ellenőrzött, létező, nyilvános YouTube videó ID-k
+        // Aktuális, létező videók kódjai
         const channelsData = {
             jolvanez: [
                 "bC0A_Xb93w8",
@@ -401,14 +449,20 @@
         let currentChannel = "jolvanez";
         let currentVideoIndex = 0;
         
-        const player = document.getElementById('videoPlayer');
+        const videoLink = document.getElementById('videoLink');
+        const videoThumb = document.getElementById('videoThumb');
         const statusText = document.getElementById('sliderStatus');
         const channelSelector = document.getElementById('channelSelector');
 
         function loadVideo(index) {
             const currentList = channelsData[currentChannel];
             currentVideoIndex = index;
-            player.src = `https://www.youtube.com/embed/${currentList[currentVideoIndex]}?rel=0`;
+            const videoId = currentList[currentVideoIndex];
+            
+            // Dinamikus YouTube link generálás és borítókép behúzás max felbontásban
+            videoLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+            videoThumb.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            
             statusText.innerText = `${currentVideoIndex + 1} / ${currentList.length}`;
         }
 
@@ -431,7 +485,6 @@
             loadVideo(0); 
         }
 
-        // Első betöltés
         loadVideo(0);
 
         // IDŐZÍTŐ SCRIPT
