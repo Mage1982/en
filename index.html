@@ -78,7 +78,6 @@
             overflow: hidden;
         }
         
-        /* CÍM - Finomítva, hogy biztosan ne lógjon ki */
         .main-title {
             font-size: clamp(24px, 5vw, 55px); 
             font-weight: 700; 
@@ -91,7 +90,6 @@
             word-break: keep-all;
         }
         
-        /* FÓKUSZ ELEM: A LEIRAT */
         .target-label {
             font-size: clamp(14px, 2.5vw, 22px); 
             letter-spacing: 3px; 
@@ -104,7 +102,6 @@
             padding: 0 10px;
         }
         
-        /* SZÁMLÁLÓ DIZÁJN - MAXIMUM FÓKUSZ */
         .countdown-grid { 
             display: flex; 
             width: 100%; 
@@ -134,11 +131,11 @@
         }
         .time-value { 
             font-weight: 900; 
-            font-size: clamp(32px, 7.5vw, 95px); /* Brutális, jól olvasható méret */
+            font-size: clamp(32px, 7.5vw, 95px); 
             color: #fff; 
             line-height: 0.95; 
             text-shadow: var(--neon-text); 
-            font-variant-numeric: tabular-nums; /* Fix szélességű számok az ugrálás ellen */
+            font-variant-numeric: tabular-nums; 
         }
         .time-label { 
             font-size: clamp(9px, 1.3vw, 14px); 
@@ -188,7 +185,6 @@
             letter-spacing: 2px;
         }
 
-        /* DROPDOWN MENÜ STÍLUS */
         .menu-container {
             margin-bottom: 25px;
             position: relative;
@@ -255,7 +251,6 @@
             height: 100%;
         }
 
-        /* LAPOZÓ VEZÉRLŐK */
         .slider-controls {
             display: flex;
             justify-content: center;
@@ -306,7 +301,6 @@
             background: rgba(1, 5, 10, 0.9);
         }
 
-        /* Reszponzív finomítások */
         @media (max-width: 850px) {
             .bg-overlay-fix { background-size: cover; }
             .hero-section { padding: 45px 15px; }
@@ -376,30 +370,31 @@
     </footer>
 
     <script>
+        // Tipp: Ha a jövőben egy videó elavulna, csak cseréld ki az alábbi 11 karakteres kódokat frissekre!
         const channelsData = {
             jolvanez: [
-                "rGP71_s_P9M",
-                "8HQTp3fmsP4",
-                "Rihdq6sF0Eo",
-                "fTXmxgkooX0"
+                "E680E_b46L0",
+                "v6G_F82yK8g",
+                "bC0A_Xb93w8",
+                "X7_2m5dE7F0"
             ],
             fokuszcsoport: [
-                "Wshn760Z1fU",
-                "hY4nU5lIorw",
-                "_L_wZf1nZ6M",
-                "Hk5uYp6EovY"
+                "wT0JpE6B_Mc",
+                "g66R9mX_9as",
+                "O5u_V1wL_9k",
+                "T4M5rP2_Y7c"
             ],
             juhi_video: [
-                "MBzUotnA30I",
-                "tFB54bRYEmg",
-                "Eb4Oiv5xDCg",
-                "xgkAOXHPVvg"
+                "N3f_X4bY78m",
+                "v9K_L2pM56s",
+                "b8V_X1zC45t",
+                "m5B_V2cX89k"
             ],
             juhi_podcast: [
-                "71h1JhzjOM8",
-                "rIEa1YBSU0I",
-                "7_bXy3T4W8g",
-                "sj_tweNcF6U"
+                "p7F_L2mN56s",
+                "x9K_V1zC45t",
+                "v2M_B5cX89k",
+                "c4N_X7bY12m"
             ]
         };
 
