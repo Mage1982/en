@@ -156,15 +156,16 @@
         
         @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        /* VIDEÓ SZEKCIÓ */
+        /* KONTÉNER A TARTALMI SZEKCIÓKNAK */
         .content-container {
-            min-height: 100vh;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center; 
-            padding: 40px 15px 100px 15px;
+            padding: 20px 15px 40px 15px;
         }
+
+        /* VIDEÓ SZEKCIÓ */
         .video-section {
             width: 100%;
             max-width: 1100px;
@@ -334,6 +335,108 @@
             min-width: 90px;
             font-weight: 600;
         }
+
+        /* HÍREK SZEKCIÓ STÍLUSOK */
+        .news-section {
+            width: 100%;
+            max-width: 1100px;
+            padding: 40px 20px;
+            background: rgba(1, 5, 10, 0.85); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .news-section h2 {
+            font-size: clamp(20px, 3.5vw, 36px);
+            color: var(--cyan-light);
+            text-shadow: var(--neon-text);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .news-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 3px;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+
+        .news-card {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(0, 242, 255, 0.25);
+            border-radius: 8px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: inset 0 0 15px rgba(0, 242, 255, 0.03), var(--border-glow);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--cyan-light);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.25);
+        }
+
+        .news-card.highlight-red {
+            border-color: rgba(255, 59, 59, 0.4);
+        }
+
+        .news-card.highlight-red:hover {
+            border-color: var(--h-red);
+            box-shadow: 0 0 20px rgba(255, 59, 59, 0.3);
+        }
+
+        .news-category {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--cyan-light);
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .news-card.highlight-red .news-category {
+            color: var(--h-red);
+        }
+
+        .news-title {
+            font-size: 16px;
+            line-height: 1.35;
+            color: #fff;
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .news-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.75);
+            font-family: sans-serif;
+            margin-bottom: 18px;
+        }
+
+        .news-date {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            text-align: right;
+            font-weight: 700;
+        }
         
         footer { 
             width: 100%; 
@@ -344,6 +447,7 @@
             opacity: 0.6; 
             font-weight: 600;
             background: rgba(1, 5, 10, 0.9);
+            margin-top: 40px;
         }
 
         @media (max-width: 850px) {
@@ -351,7 +455,7 @@
             .hero-section { padding: 45px 15px; }
             .countdown-grid { gap: 8px; }
             .time-box { padding: 15px 5px; }
-            .video-section { padding: 25px 10px; }
+            .video-section, .news-section { padding: 25px 10px; }
         }
 
         @media (max-width: 420px) {
@@ -362,6 +466,7 @@
             .quartz-sep { padding-bottom: 20px; }
             .slider-btn { padding: 10px 18px; font-size: 12px; }
             .channel-select { font-size: 11px; padding: 12px 30px 12px 10px; }
+            .news-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -385,6 +490,7 @@
         </main>
     </div>
 
+    <!-- VIDEÓ SZEKCIÓ -->
     <div class="content-container">
         <section class="video-section">
             <h2>TÁJÉKOZÓDJ A VALÓSÁGRÓL</h2>
@@ -409,6 +515,56 @@
                 <button class="slider-btn" onclick="prevVideo()">Előző</button>
                 <span class="slider-status" id="sliderStatus">1 / 4</span>
                 <button class="slider-btn" onclick="nextVideo()">Következő</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- HÍREK SZEKCIÓ -->
+    <div class="content-container">
+        <section class="news-section">
+            <h2>FRISS HÍREK & ESEMÉNYEK</h2>
+            <div class="news-subtitle">AZ ELMÚLT 24 ÓRA FONTOSABB TÖRTÉNÉSEI</div>
+
+            <div class="news-grid">
+                <!-- 1. KÁRTYA: IDŐJÁRÁS -->
+                <article class="news-card highlight-red">
+                    <div class="news-category">☀️ IDŐJÁRÁS & KRÍZIS</div>
+                    <h3 class="news-title">Harmadfokú hőségriasztás és Vörös Kód lépett életbe</h3>
+                    <p class="news-text">
+                        Rendkívüli hőségriasztást és „vörös kódot” rendeltek el az ország egész területére a tartósan 40 °C közelébe emelkedő hőmérséklet miatt. Újabb rekordokat dönt az apadás a hazai folyókon: a Dunán szállodahajók futottak zátonyra, a Velencei-tó vízszintje pedig kritikus szinthez közelít.
+                    </p>
+                    <div class="news-date">24 ÓRÁN BELÜL</div>
+                </article>
+
+                <!-- 2. KÁRTYA: JOGALKOTÁS -->
+                <article class="news-card">
+                    <div class="news-category">🏛️ HAZAI POLITIKA</div>
+                    <h3 class="news-title">Megalakult a Nemzeti Vagyonvisszaszerzési Hivatal</h3>
+                    <p class="news-text">
+                        Hatályba lépett a közvagyont érintő visszaélések feltárására és a jogellenesen megszerzett vagyonok visszaszerzésére létrehozott új hivatalról szóló törvény. Ezzel párhuzamosan a kormány az állami cégek vezetői javadalmazásának csökkentését tervezi.
+                    </p>
+                    <div class="news-date">24 ÓRÁN BELÜL</div>
+                </article>
+
+                <!-- 3. KÁRTYA: NEMZETKÖZI -->
+                <article class="news-card">
+                    <div class="news-category">🌍 NEMZETKÖZI</div>
+                    <h3 class="news-title">Pusztító, 7,1-es földrengés rázta meg Japánt</h3>
+                    <p class="news-text">
+                        Kjúsú szigetét (Kumamoto térségét) erős földrengés sújtotta, amely halálos áldozatokat követelt és komoly károkat okozott az infrastruktúrában. Közben folytatódnak a kiemelt amerikai-ukrán és német-magyar diplomáciai egyeztetések.
+                    </p>
+                    <div class="news-date">24 ÓRÁN BELÜL</div>
+                </article>
+
+                <!-- 4. KÁRTYA: KULTÚRA -->
+                <article class="news-card">
+                    <div class="news-category">🎶 KULTÚRA & ZENE</div>
+                    <h3 class="news-title">50 éves korában elhunyt Kavinsky</h3>
+                    <p class="news-text">
+                        A zenei világ gyászolja Vincent Belorgey-t, a francia elektronikus zenei producert és DJ-t, aki a <em>Drive</em> című film ikonikus betétdalával (<em>Nightcall</em>) vált világhírűvé.
+                    </p>
+                    <div class="news-date">24 ÓRÁN BELÜL</div>
+                </article>
             </div>
         </section>
     </div>
