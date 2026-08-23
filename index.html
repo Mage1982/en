@@ -2,24 +2,337 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8">
-  <title>3D Model Viewer Teszt</title>
-  <!-- model-viewer script betöltése -->
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Termék Landing Page Test (.OBJ)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .landing-container {
+      width: 100%;
+      max-width: 1200px;
+      height: 1000px;
+      background: #1e293b;
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    header {
+      padding: 24px;
+      text-align: center;
+      background: #0f172a;
+      border-bottom: 1px solid #334155;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: #38bdf8;
+    }
+
+    .main-content {
+      display: flex;
+      flex: 1;
+      height: calc(1000px - 90px);
+    }
+
+    /* 3D Canvas terület */
+    .viewer-section {
+      flex: 2;
+      position: relative;
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2rem;
+      color: #38bdf8;
+      pointer-events: none;
+      display: none;
+    }
+
+    /* Termékválasztó oldalsáv */
+    .products-sidebar {
+      flex: 1;
+      padding: 24px;
+      background: #0f172a;
+      border-left: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .product-card {
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+      border-color: #0284c7;
+      transform: translateY(-2px);
+    }
+
+    .product-card.active {
+      border-color: #38bdf8;
+      background: #0284c722;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .product-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #f8fafc;
+    }
+
+    .product-card.active .product-title {
+      color: #38bdf8;
+    }
+
+    .product-desc {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 4px 8px;
+      background: #334155;
+      color: #38bdf8;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
+
+  <!-- Three.js és OBJLoader ES Module import -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 <body>
 
-  <!-- Ingyenes minta glTF/GLB modell közvetlen Google CDN-ről -->
-  <model-viewer 
-    src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" 
-    alt="3D űrhajós modell" 
-    auto-rotate 
-    camera-controls 
-    style="width: 100%; height: 1000px; background-color: #f0f0f0;">
-  </model-viewer>
+  <div class="landing-container">
+    <header>
+      <h1>3D Termékbemutató Landing Page</h1>
+    </header>
 
-  const loader = new OBJLoader();
-loader.load('path/to/model.obj', (object) => {
-    scene.add(object);
-});
+    <div class="main-content">
+      <!-- 3D Renderelési Hely -->
+      <div class="viewer-section">
+        <div id="canvas-container"></div>
+        <div id="loading" class="loading-overlay">3D Modell Betöltése...</div>
+      </div>
+
+      <!-- Termékválasztó -->
+      <div class="products-sidebar">
+        
+        <div class="product-card active" onclick="selectProduct(0)">
+          <div class="product-title">Termék 1</div>
+          <div class="product-desc">Klasszikus 3D tesztmodell (Suzanne ikonikus majomfej dizájn).</div>
+          <span class="badge">OBJ Formátum</span>
+        </div>
+
+        <div class="product-card" onclick="selectProduct(1)">
+          <div class="product-title">Termék 2</div>
+          <div class="product-desc">Walt Disney szobor / büszt részletes felületi struktúrával.</div>
+          <span class="badge">OBJ Formátum</span>
+        </div>
+
+        <div class="product-card" onclick="selectProduct(2)">
+          <div class="product-title">Termék 3</div>
+          <div class="product-desc">Absztrakt organikus geometria / formatervezési mintadarab.</div>
+          <span class="badge">OBJ Formátum</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // 3D Termék adatok (.OBJ fájlok közvetlen URL-jei)
+    const products = [
+      {
+        id: 0,
+        name: "Termék 1",
+        url: "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/obj/suzanne/suzanne.obj",
+        scale: 1.8
+      },
+      {
+        id: 1,
+        name: "Termék 2",
+        url: "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/obj/walt/WaltHead.obj",
+        scale: 0.05
+      },
+      {
+        id: 2,
+        name: "Termék 3",
+        url: "https://raw.githubusercontent.com/alecjacobson/common-3d-test-models/master/data/cerberus.obj",
+        scale: 0.03
+      }
+    ];
+
+    let scene, camera, renderer, controls, currentMesh;
+    const loader = new OBJLoader();
+    const container = document.getElementById('canvas-container');
+    const loadingEl = document.getElementById('loading');
+
+    function init3D() {
+      // Scena
+      scene = new THREE.Scene();
+
+      // Kamera
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(0, 0, 5);
+
+      // Renderelő
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(renderer.domElement);
+
+      // Megvilágítás
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene.add(ambientLight);
+
+      const dirLight1 = new THREE.DirectionalLight(0x38bdf8, 2);
+      dirLight1.position.set(5, 10, 7);
+      scene.add(dirLight1);
+
+      const dirLight2 = new THREE.DirectionalLight(0xffffff, 1);
+      dirLight2.position.set(-5, -5, -5);
+      scene.add(dirLight2);
+
+      // Forgatási vezérlő (Mouse controls)
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+
+      // Első termék betöltése
+      loadOBJModel(products[0]);
+
+      // Animációs ciklus
+      function animate() {
+        requestAnimationFrame(animate);
+        if (currentMesh) {
+          currentMesh.rotation.y += 0.005; // Lassú automata forgás
+        }
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Ablak átméretezés kezelése
+      window.addEventListener('resize', onWindowResize);
+    }
+
+    function loadOBJModel(product) {
+      loadingEl.style.display = 'block';
+
+      if (currentMesh) {
+        scene.remove(currentMesh);
+      }
+
+      loader.load(
+        product.url,
+        (obj) => {
+          currentMesh = obj;
+          
+          // Egységes prémium anyagbeállítás a modelleknek
+          const material = new THREE.MeshStandardMaterial({
+            color: 0x38bdf8,
+            roughness: 0.3,
+            metalness: 0.6
+          });
+
+          obj.traverse((child) => {
+            if (child.isMesh) {
+              child.material = material;
+            }
+          });
+
+          // Méretezés és középre igazítás
+          obj.scale.setScalar(product.scale);
+          
+          const box = new THREE.Box3().setFromObject(obj);
+          const center = box.getCenter(new THREE.Vector3());
+          obj.position.sub(center); // Középpontba tolás
+
+          scene.add(obj);
+          loadingEl.style.display = 'none';
+        },
+        (xhr) => {
+          // Progress
+        },
+        (error) => {
+          console.error("Hiba a modell betöltésekor:", error);
+          loadingEl.innerText = "Hiba történt a betöltéskor!";
+        }
+      );
+    }
+
+    function onWindowResize() {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    // Globális váltó függvény a kártyákhoz
+    window.selectProduct = function(index) {
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach((card, i) => {
+        if (i === index) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+
+      loadOBJModel(products[index]);
+    };
+
+    // Indítás
+    init3D();
+  </script>
 </body>
 </html>
