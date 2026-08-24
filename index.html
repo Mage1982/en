@@ -3,65 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Termék Landing Page (model-viewer)</title>
-  <!-- Google <model-viewer> webkomponens betöltése -->
+  <title>3D Modell Nézegető Demó</title>
+  
+  <!-- Google model-viewer web component -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background-color: #0f172a;
-      color: #f8fafc;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      height: 100vh;
+      background-color: #f4f4f9;
+      color: #333;
     }
 
-    .landing-container {
-      width: 100%;
-      max-width: 1200px;
-      height: 1000px;
-      background: #1e293b;
-      border-radius: 16px;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    /* Oldalsáv menü */
+    .sidebar {
+      width: 320px;
+      background-color: #ffffff;
+      border-right: 1px solid #e0e0e0;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+      z-index: 10;
     }
 
-    header {
-      padding: 24px;
-      text-align: center;
-      background: #0f172a;
-      border-bottom: 1px solid #334155;
+    .sidebar-header {
+      padding: 20px;
+      background-color: #1a1a2e;
+      color: #ffffff;
     }
 
-    header h1 {
-      font-size: 1.8rem;
-      color: #38bdf8;
+    .sidebar-header h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
     }
 
-    .main-content {
-      display: flex;
+    .model-list {
       flex: 1;
-      height: calc(1000px - 90px);
+      overflow-y: auto;
+      padding: 15px;
     }
 
-    /* 3D Viewer terület */
-    .viewer-section {
-      flex: 2;
-      position: relative;
-      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    .category-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin: 20px 0 10px 5px;
+      font-weight: 700;
+    }
+
+    .category-title:first-child {
+      margin-top: 5px;
+    }
+
+    .model-btn {
+      width: 100%;
+      text-align: left;
+      padding: 12px 15px;
+      margin-bottom: 6px;
+      border: 1px solid #eef0f3;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .model-btn:hover {
+      background-color: #eef2ff;
+      border-color: #c7d2fe;
+      color: #4f46e5;
+    }
+
+    .model-btn.active {
+      background-color: #4f46e5;
+      color: #ffffff;
+      border-color: #4f46e5;
+      font-weight: 600;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: #e0e7ff;
+      color: #4338ca;
+    }
+
+    .model-btn.active .badge {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    /* Fő megjelenítő terület */
+    .viewer-container {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: radial-gradient(circle, #ffffff 0%, #e8ecf2 100%);
     }
 
     model-viewer {
@@ -70,160 +123,134 @@
       --poster-color: transparent;
     }
 
-    /* Termékválasztó oldalsáv */
-    .products-sidebar {
-      flex: 1;
-      padding: 24px;
-      background: #0f172a;
-      border-left: 1px solid #334155;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow-y: auto;
-    }
-
-    .product-card {
-      background: #1e293b;
-      border: 2px solid #334155;
-      border-radius: 12px;
-      padding: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .product-card:hover {
-      border-color: #0284c7;
-      transform: translateY(-2px);
-    }
-
-    .product-card.active {
-      border-color: #38bdf8;
-      background: #0284c722;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
-    }
-
-    .product-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #f8fafc;
-    }
-
-    .product-card.active .product-title {
-      color: #38bdf8;
-    }
-
-    .product-desc {
+    .info-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 10px 18px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       font-size: 0.9rem;
-      color: #94a3b8;
-      line-height: 1.4;
+      font-weight: 500;
+      color: #374151;
+      pointer-events: none;
     }
 
-    .badge {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 4px 8px;
-      background: #334155;
-      color: #38bdf8;
-      font-size: 0.75rem;
-      border-radius: 4px;
-      font-weight: bold;
+    /* Mobil responzivitás */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column-reverse;
+      }
+      .sidebar {
+        width: 100%;
+        height: 40vh;
+      }
+      .viewer-container {
+        height: 60vh;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="landing-container">
-    <header>
-      <h1>3D Termékbemutató Landing Page</h1>
-    </header>
+  <!-- Bal oldali menüsáv -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>3D Modell Demó</h1>
+    </div>
+    
+    <div class="model-list">
+      
+      <div class="category-title">Tárgyak & Bútorok</div>
+      <button class="model-btn active" data-src="https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/SheenChair/glTF-Binary/SheenChair.glb" data-title="Sheen Chair">
+        Sheen Chair
+      </button>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/Chair.glb" data-title="Szék">
+        Szék
+      </button>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/Mixer.glb" data-title="Turmixgép">
+        Turmixgép
+      </button>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/Lantern.glb" data-title="Lásmpás">
+        Lámpás
+      </button>
 
-    <div class="main-content">
-      <!-- 3D Renderelési Hely (Google model-viewer) -->
-      <div class="viewer-section">
-        <model-viewer 
-          id="main-viewer"
-          src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" 
-          alt="3D Astronaut modell" 
-          auto-rotate 
-          camera-controls 
-          shadow-intensity="1.5"
-          exposure="1"
-          ar>
-        </model-viewer>
-      </div>
+      <div class="category-title">Karakterek & Figurák</div>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-title="Asztronauta">
+        Asztronauta
+      </button>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb" data-title="Neil Armstrong">
+        Neil Armstrong
+      </button>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" data-title="Robot" data-animated="true">
+        Robot <span class="badge">Animált</span>
+      </button>
 
-      <!-- Termékválasztó -->
-      <div class="products-sidebar">
-        
-        <div class="product-card active" onclick="selectProduct(0)">
-          <div class="product-title">Termék 1</div>
-          <div class="product-desc">Részletes űrhajós (Astronaut) 3D modell élethű anyagszerkezettel.</div>
-          <span class="badge">GLB Formátum</span>
-        </div>
+      <div class="category-title">Járművek & Ipari elemek</div>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb" data-title="Sportcipő">
+        Sportcipő
+      </button>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/ToyotaConceptCar.glb" data-title="Toyota Concept Car">
+        Toyota Concept Car
+      </button>
 
-        <div class="product-card" onclick="selectProduct(1)">
-          <div class="product-title">Termék 2</div>
-          <div class="product-desc">Retro stílusú Neil Armstrong űrhajós figura (NeilArmstrong.glb).</div>
-          <span class="badge">GLB Formátum</span>
-        </div>
+      <div class="category-title">Architektúra & Egyéb</div>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/spatula.glb" data-title="Spatula">
+        Spatula
+      </button>
+      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/coffeemat.glb" data-title="Kávé alátét">
+        Kávé alátét
+      </button>
 
-        <div class="product-card" onclick="selectProduct(2)">
-          <div class="product-title">Termék 3</div>
-          <div class="product-desc">Expresszív, animált robot figura (RobotExpressive.glb).</div>
-          <span class="badge">GLB Formátum</span>
-        </div>
-
-      </div>
     </div>
   </div>
 
+  <!-- Jobb oldali 3D nézegető -->
+  <div class="viewer-container">
+    <div class="info-bar" id="info-bar">Kiválasztva: Sheen Chair</div>
+    
+    <model-viewer 
+      id="viewer"
+      src="https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/SheenChair/glTF-Binary/SheenChair.glb"
+      alt="3D Modell"
+      camera-controls
+      auto-rotate
+      shadow-intensity="1"
+      environment-image="neutral"
+      exposure="1">
+    </model-viewer>
+  </div>
+
   <script>
-    // 3D Termékek adatai
-    const products = [
-      {
-        id: 0,
-        name: "Termék 1",
-        src: "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
-        alt: "3D Astronaut modell"
-      },
-      {
-        id: 1,
-        name: "Termék 2",
-        src: "https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb",
-        alt: "3D Neil Armstrong modell"
-      },
-      {
-        id: 2,
-        name: "Termék 3",
-        src: "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb",
-        alt: "3D RobotExpressive modell"
-      }
-    ];
+    const viewer = document.getElementById('viewer');
+    const infoBar = document.getElementById('info-bar');
+    const buttons = document.querySelectorAll('.model-btn');
 
-    const viewer = document.getElementById('main-viewer');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Aktív gomb stílus frissítése
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
 
-    function selectProduct(index) {
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach((card, i) => {
-        if (i === index) {
-          card.classList.add('active');
+        // Adatok kiolvasása
+        const modelUrl = button.getAttribute('data-src');
+        const modelTitle = button.getAttribute('data-title');
+        const isAnimated = button.getAttribute('data-animated') === 'true';
+
+        // 3D nézegető frissítése
+        viewer.src = modelUrl;
+        infoBar.textContent = `Kiválasztva: ${modelTitle}`;
+
+        // Animáció kezelése (pl. a Robot esetében)
+        if (isAnimated) {
+          viewer.setAttribute('autoplay', '');
         } else {
-          card.classList.remove('active');
+          viewer.removeAttribute('autoplay');
         }
       });
-
-      // Modell forrásának és leírásának frissítése
-      viewer.src = products[index].src;
-      viewer.alt = products[index].alt;
-
-      // Ha a robot modellt választjuk ki, elindítjuk a beépített animációját
-      if (index === 2) {
-        viewer.setAttribute('autoplay', '');
-      } else {
-        viewer.removeAttribute('autoplay');
-      }
-    }
+    });
   </script>
 </body>
 </html>
