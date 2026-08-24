@@ -164,16 +164,16 @@
     <div class="model-list">
       
       <div class="category-title">Tárgyak & Bútorok</div>
-      <button class="model-btn active" data-src="https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/SheenChair/glTF-Binary/SheenChair.glb" data-title="Sheen Chair">
+      <button class="model-btn active" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/SheenChair/glTF-Binary/SheenChair.glb" data-title="Sheen Chair">
         Sheen Chair
       </button>
-      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/Chair.glb" data-title="Szék">
+      <button class="model-btn" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/main/2.0/Chair/glTF-Binary/Chair.glb" data-title="Szék">
         Szék
       </button>
-      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/Mixer.glb" data-title="Turmixgép">
+      <button class="model-btn" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Mixer/glTF-Binary/Mixer.glb" data-title="Turmixgép">
         Turmixgép
       </button>
-      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/Lantern.glb" data-title="Lásmpás">
+      <button class="model-btn" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/main/2.0/Lantern/glTF-Binary/Lantern.glb" data-title="Lámpás">
         Lámpás
       </button>
 
@@ -189,18 +189,18 @@
       </button>
 
       <div class="category-title">Járművek & Ipari elemek</div>
-      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb" data-title="Sportcipő">
+      <button class="model-btn" data-src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/main/2.0/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb" data-title="Sportcipő">
         Sportcipő
       </button>
-      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/ToyotaConceptCar.glb" data-title="Toyota Concept Car">
+      <button class="model-btn" data-src="https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/ToyotaConceptCar.glb" data-title="Toyota Concept Car">
         Toyota Concept Car
       </button>
 
       <div class="category-title">Architektúra & Egyéb</div>
-      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/spatula.glb" data-title="Spatula">
+      <button class="model-btn" data-src="https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/spatula.glb" data-title="Spatula">
         Spatula
       </button>
-      <button class="model-btn" data-src="https://modelviewer.dev/shared-assets/models/coffeemat.glb" data-title="Kávé alátét">
+      <button class="model-btn" data-src="https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/coffeemat.glb" data-title="Kávé alátét">
         Kávé alátét
       </button>
 
@@ -213,7 +213,7 @@
     
     <model-viewer 
       id="viewer"
-      src="https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/SheenChair/glTF-Binary/SheenChair.glb"
+      src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/SheenChair/glTF-Binary/SheenChair.glb"
       alt="3D Modell"
       camera-controls
       auto-rotate
@@ -243,7 +243,7 @@
         viewer.src = modelUrl;
         infoBar.textContent = `Kiválasztva: ${modelTitle}`;
 
-        // Animáció kezelése (pl. a Robot esetében)
+        // Animáció kezelése
         if (isAnimated) {
           viewer.setAttribute('autoplay', '');
         } else {
